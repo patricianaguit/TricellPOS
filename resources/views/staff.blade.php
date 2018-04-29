@@ -10,26 +10,23 @@ ACCOUNTS
 <div class="container">
   <!--members nav-->
   <nav>
-    <h3 class="title">Members</h3>
+    <h3 class="title">Staff</h3>
     <div class="nav nav-tabs justify-content-end memberstab" id="nav-tab" role="tablist">
-      <a class="nav-item nav-link active " id="nav-members-tab" data-toggle="tab" href="/accounts/members" role="tab" aria-controls="nav-members" aria-selected="false">Members</a>
+      <a class="nav-item nav-link " id="nav-members-tab"  href="/accounts/members" role="tab" aria-controls="nav-members" aria-selected="false">Members</a>
       <a class="nav-item nav-link " id="nav-admin-tab"  href="/accounts/admin" role="tab" aria-controls="nav-admin" aria-selected="true">Admin</a>
-      <a class="nav-item nav-link" id="nav-staff-tab"  href="/accounts/staff" role="tab" aria-controls="nav-staff" aria-selected="false">Staff</a>
+      <a class="nav-item nav-link active " id="nav-staff-tab"  href="/accounts/staff" role="tab" aria-controls="nav-staff" aria-selected="false">Staff</a>
 
     </div>
   </nav>
   <!--end of members nav---->
 <!---content of tabs start-->
 <div class="tab-content" id="nav-tabContent">
-  <!-------members------>
-  <div class="tab-pane fade  show active" id="nav-members" role="tabpanel" aria-labelledby="nav-members">
+  <!-------staff------>
+   <div class="tab-pane fade show active" id="nav-staff" role="tabpanel" aria-labelledby="nav-staff-tab">
   </br>
-
   <div class="row">
     <div class="col-md-8">
-    <button type="button" class="btn btn-outline-info add-mem-btn" data-toggle="modal" data-target=".bd-example-modal-lg">
-      Add Member
-    </button>
+        <button type="button" class="btn btn-outline-info add-staff-btn" data-toggle="modal" data-target=".add_staff">Add Staff</button>
   </div>
   <div class="col-md-4">
     <form class="form ml-auto" >
@@ -42,55 +39,49 @@ ACCOUNTS
     </form>
   </div>
   </div>
-
     <table class="table table-hover">
       <thead class ="th_css">
         <tr>
-          <th scope="col">Card No.</th>
+          <th scope="col">Username</th>
           <th scope="col">Name</th>
-          <th scope="col">Contact No.</th>
           <th scope="col">Email</th>
-          <th scope="col">Card Load</th>
-          <th scope="col" colspan="2">Actions</th>
+          <th scope="col">Actions</th>
         </tr>
       </thead>
       <tbody class="td_class">
-        @foreach($members as $member)
+        @foreach($staffs as $staff)
         <tr>
-          <th scope="row">{{ $member->card_number }}</th>
-          <td>{{ $member->firstname . " " . $member->lastname }}</td>
-          <td>{{ $member->contact_number }}</td>
-          <td>{{ $member->email }}</td>
-          <td>{{ "₱" . " " . number_format($member->current_load, 2) }}</td>
-          <td><button type="button" class="btn btn-danger del-btn" data-toggle="modal" data-target=".delete"><i class="material-icons md-18">delete</i></button>
-            <button type="button" class="btn btn-primary edit-btn" data-toggle="modal" data-target=".edit"><i class="material-icons md-18">mode_edit</i></button>
+          <td>{{ $staff->username }}</td>
+          <td>{{ $staff->firstname . " " . $staff->lastname }}</td>
+          <td>{{ $staff->email }}</td>
+          <td><button type="button" class="btn btn-danger del-btn" data-toggle="modal" data-target=".delete_staff"><i class="material-icons md-18">delete</i></button>
+            <button type="button" class="btn btn-primary edit-btn" data-toggle="modal" data-target=".edit_staff"><i class="material-icons md-18">mode_edit</i></button>
           </td>
         </tr>
         @endforeach
       </tbody>
     </table>
-    <!----start of modal for add members---->
-    <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <!----start of modal for add staff---->
+    <div class="modal fade add_staff" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
      <div class="modal-dialog modal-lg">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Add New Member</h5>
+          <h5 class="modal-title" id="exampleModalLabel">Add Staff</h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
-
         <form>
         <div class="form-group">
           <div class="containter-fluid">
           <div class="row">
 
           <div class="col-md-5 mx-auto">
-          <label for="card-no" class="col-form-label modal-card">Card #:</label>
-          <input type="text" class="form-control modal-card" id="card-no"></div>
+          <label for="username" class="col-form-label modal-user">Username:</label>
+          <input type="text" class="form-control modal-card" id="username"></div>
           <div class="col-md-5 mx-auto">
-          <label for="initial-load" class="col-form-label modal-load">Initial Load:</label>
-          <input type="text" class="form-control" id="initial-load"></div>
+          <label for="password" class="col-form-label modal-password">Password:</label>
+          <input type="password" class="form-control" id="password"></div>
 
         </div>
 
@@ -110,7 +101,6 @@ ACCOUNTS
         </div>
 
         <div class="row">
-
           <div class="col-md-5 mx-auto">
           <label for="contact" class="col-form-label modal-contact">Contact #:</label>
           <input type="text" class="form-control" id="contact"></div>
@@ -125,7 +115,7 @@ ACCOUNTS
 
       </form>
         <div class="modal-footer">
-          <button type="button" class="btn btn-info btn-savemem-modal" data-dismiss="modal">Save New Member</button>
+          <button type="button" class="btn btn-info btn-savemem-modal" data-dismiss="modal">Save New Staff</button>
           <button type="button" class="btn btn-secondary btn-close-modal" data-dismiss="modal">Close</button>
         </div>
       </div>
@@ -134,11 +124,11 @@ ACCOUNTS
 
     <!----end of modal---->
     <!----start of modal for EDIT---->
-    <div class="modal fade edit" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal fade edit_staff" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Edit Member</h5>
+        <h5 class="modal-title" id="exampleModalLabel">Edit Staff</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -149,11 +139,11 @@ ACCOUNTS
         <div class="row">
 
         <div class="col-md-5 mx-auto">
-        <label for="card-no" class="col-form-label modal-card">Card #:</label>
-        <input type="text" class="form-control modal-card" id="card-no"></div>
+        <label for="username" class="col-form-label modal-user">Username:</label>
+        <input type="text" class="form-control modal-card" id="username"></div>
         <div class="col-md-5 mx-auto">
-        <label for="initial-load" class="col-form-label modal-load">Initial Load:</label>
-        <input type="text" class="form-control" id="initial-load"></div>
+        <label for="password" class="col-form-label modal-password">Password:</label>
+        <input type="password" class="form-control" id="password"></div>
 
       </div>
 
@@ -173,7 +163,6 @@ ACCOUNTS
       </div>
 
       <div class="row">
-
         <div class="col-md-5 mx-auto">
         <label for="contact" class="col-form-label modal-contact">Contact #:</label>
         <input type="text" class="form-control" id="contact"></div>
@@ -188,7 +177,7 @@ ACCOUNTS
 
     </form>
       <div class="modal-footer">
-        <button type="button" class="btn btn-info btn-savemem-modal" data-dismiss="modal">Save changes</button>
+        <button type="button" class="btn btn-info btn-savemem-modal" data-dismiss="modal">Save Changes</button>
         <button type="button" class="btn btn-secondary btn-close-modal" data-dismiss="modal">Close</button>
 
       </div>
@@ -197,7 +186,7 @@ ACCOUNTS
     </div>
     <!----end of modal---->
     <!----start of modal for DELETE---->
-    <div class="modal fade delete" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal fade delete_staff" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
     <div class="modal-content">
     <div class="modal-header">
@@ -207,7 +196,7 @@ ACCOUNTS
       </button>
     </div>
     <div class="modal-body">
-        <center>  <p> Are you sure you want to delete this <b>member?</b></p> </center>
+        <center>  <p> Are you sure you want to delete this <b>staff?</b></p> </center>
         </div>
 
     <div class="modal-footer">
@@ -218,7 +207,6 @@ ACCOUNTS
     </div>
     </div>
     </div>
-
 
     <!----end of modal---->
 

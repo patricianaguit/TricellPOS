@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\User;
 
-class MembersController extends Controller
+class AdminAccountsController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,8 +14,9 @@ class MembersController extends Controller
      */
     public function index()
     {
-        $users = User::where('role', 'admin')->get();
-        return view('members')->with('users', $users);  
+        //
+        $admins = User::where('role', 'admin')->get();
+        return view('admin')->with('admins', $admins);  
     }
 
     /**

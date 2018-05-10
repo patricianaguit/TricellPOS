@@ -1,0 +1,95 @@
+body{
+  background-color: white !important;
+}
+/**#fcfcfc**/
+.table{
+  margin-top:20px !important;
+  font-size: small !important;
+
+}
+.table thead th {
+
+    font-weight: 200;
+}
+.th_css{
+  background-color:#29323c !important;
+  font-weight: 150 !important;
+  color: #f0f3f6;
+
+}
+
+.td_class{
+  background-color: #fcfcfc !important;
+}
+
+.modal_css{
+  margin-top:15px !important;
+  align: right !important;
+}
+.table td, .table th {
+
+    text-align: center;
+}
+
+
+
+.title{
+  position:absolute;
+
+  color:#3A539B!important;
+}
+
+.btn.add-item-btn{
+  border-radius: 1.5rem;
+}
+
+.material-icons.md-18 {
+font-size: 18px;
+}
+
+.btn.edit-btn, .btn.del-btn{
+  border-radius: 1.5rem;
+}
+/*********MODAL CSS************/
+.btn.btn-save-modal, .btn.btn-close-modal{
+    border-radius: 1.5rem;
+}
+.modal-header {
+    background-color: lightgrey;
+}
+
+
+#mysearch:focus + .input-group-addon {
+	z-index: 10;
+}
+
+
+
+#search-btn.btn-group-sm > .btn, .btn-sm {
+    padding: .35rem .7rem !important;
+}
+/****NAV CSS***/
+/**.nav_custom{
+
+background-color: #29323c !important;
+height: 15% !important;
+border-bottom-color: #black !important;
+border: black !important;
+box-shadow:0 2px 2px rgba(0,0,0,.1) !important;
+
+}
+
+.nav-link{
+color: #c4cdd5  !important;
+
+   font: bold !important;
+   font-size: 12px !important;
+   font-weight: 200 !important;
+}
+
+.nav-link:hover {
+  color: #616770 !important;
+
+
+}
+/***NAV CSS***/

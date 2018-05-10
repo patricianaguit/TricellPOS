@@ -4,6 +4,10 @@
 ACCOUNTS
 @endsection
 
+@section('css')
+{{ asset('imports/css/members2.css') }}
+@endsection
+
 @section('content')
 
 </br>
@@ -12,7 +16,6 @@ ACCOUNTS
   <nav>
     <h3 class="title">Staff</h3>
     <div class="nav nav-tabs justify-content-end memberstab" id="nav-tab" role="tablist">
-      <a class="nav-item nav-link " id="nav-members-tab"  href="/accounts/members" role="tab" aria-controls="nav-members" aria-selected="false">Members</a>
       <a class="nav-item nav-link " id="nav-admin-tab"  href="/accounts/admin" role="tab" aria-controls="nav-admin" aria-selected="true">Admin</a>
       <a class="nav-item nav-link active " id="nav-staff-tab"  href="/accounts/staff" role="tab" aria-controls="nav-staff" aria-selected="false">Staff</a>
 
@@ -39,7 +42,7 @@ ACCOUNTS
     </form>
   </div>
   </div>
-    <table class="table table-hover">
+  <table class="table table-hover">
       <thead class ="th_css">
         <tr>
           <th scope="col">Username</th>
@@ -54,13 +57,15 @@ ACCOUNTS
           <td>{{ $staff->username }}</td>
           <td>{{ $staff->firstname . " " . $staff->lastname }}</td>
           <td>{{ $staff->email }}</td>
-          <td><button type="button" class="btn btn-danger del-btn" data-toggle="modal" data-target=".delete_staff"><i class="material-icons md-18">delete</i></button>
-            <button type="button" class="btn btn-primary edit-btn" data-toggle="modal" data-target=".edit_staff"><i class="material-icons md-18">mode_edit</i></button>
+          <td>
+            <button type="button" class="btn btn-primary edit-btn" data-toggle="modal" data-target=".edit_staff" onclick="show('{{ $staff->id }}')"><i class="material-icons md-18">mode_edit</i></button>
+            <button type="button" class="btn btn-danger del-btn" data-toggle="modal" data-target=".delete_staff"><i class="material-icons md-18">delete</i></button>
           </td>
         </tr>
         @endforeach
       </tbody>
     </table>
+    <input type="hidden" name="hidden_view" id="hidden_view" value="{{url('accounts/edit_staff')}}">
     <!----start of modal for add staff---->
     <div class="modal fade add_staff" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
      <div class="modal-dialog modal-lg">
@@ -133,54 +138,56 @@ ACCOUNTS
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-      <form>
+      
+      <form action="/accounts/update_staff" method="POST">
+        @csrf
+
+      <input type="hidden" name="staff_id" id="staff_id">
       <div class="form-group">
         <div class="containter-fluid">
         <div class="row">
-
         <div class="col-md-5 mx-auto">
         <label for="username" class="col-form-label modal-user">Username:</label>
-        <input type="text" class="form-control modal-card" id="username"></div>
+        <input type="text" name="username" class="form-control modal-card" id="username-edit"></div>
         <div class="col-md-5 mx-auto">
         <label for="password" class="col-form-label modal-password">Password:</label>
-        <input type="password" class="form-control" id="password"></div>
+        <input type="password" name="password" class="form-control" id="password-edit" required></div>
 
       </div>
 
       <div class="row">
         <div class="col-md-5 mx-auto">
         <label for="first-name" class="col-form-label modal-fname">First Name:</label>
-        <input type="text" class="form-control modal-fname" id="first-name"></div>
+        <input type="text" name="firstname" class="form-control modal-fname" id="firstname-edit"></div>
         <div class="col-md-5 mx-auto">
-        <label for="last-name" class="col-form-label modal-lname">Last Name:</label>
-        <input type="text" class="form-control" id="last-name"></div>
+        <label for="last-name"  class="col-form-label modal-lname">Last Name:</label>
+        <input type="text" name="lastname" class="form-control" id="lastname-edit"></div>
       </div>
 
       <div class="row">
         <div class="col-md-11 mx-auto">
         <label for="address" class="col-form-label modal-address">Address:</label>
-        <input type="text" class="form-control modal-add" id="address"></div>
+        <input type="text" name="address" class="form-control modal-add" id="address-edit"></div>
       </div>
 
       <div class="row">
         <div class="col-md-5 mx-auto">
         <label for="contact" class="col-form-label modal-contact">Contact #:</label>
-        <input type="text" class="form-control" id="contact"></div>
+        <input type="text" name="contact_number" class="form-control" id="contact-edit"></div>
         <div class="col-md-5 mx-auto">
         <label for="email" class="col-form-label modal-mobile">Email:</label>
-        <input type="text" class="form-control" id="email"></div>
+        <input type="text" name="email" class="form-control" id="email-edit"></div>
 
       </div>
 
       </div>
       </div>
 
-    </form>
       <div class="modal-footer">
-        <button type="button" class="btn btn-info btn-savemem-modal" data-dismiss="modal">Save Changes</button>
+        <button type="submit" class="btn btn-info btn-savemem-modal">Save Changes</button></a>
         <button type="button" class="btn btn-secondary btn-close-modal" data-dismiss="modal">Close</button>
-
       </div>
+    </form>
     </div>
     </div>
     </div>
@@ -211,4 +218,28 @@ ACCOUNTS
     <!----end of modal---->
 
   </div>
+    
+
+  <!--View Ajax -->
+  <script type="text/javascript">
+    function show(id)
+    {
+      var view_url = $("#hidden_view").val();
+      $.ajax({
+        url: view_url + '/',
+        type:"GET",
+        data: {"id":id},
+        success: function(result){
+        console.log(result);
+          $("#staff_id").val(result.id);
+          $("#username-edit").val(result.username);
+          $("#firstname-edit").val(result.firstname);
+          $("#lastname-edit").val(result.lastname);
+          $("#address-edit").val(result.address);
+          $("#contact-edit").val(result.contact_number);
+          $("#email-edit").val(result.email);
+        }
+      });
+    }
+  </script>
 @endsection

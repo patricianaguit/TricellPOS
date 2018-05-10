@@ -46,9 +46,15 @@ class StaffAccountsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Request $request)
     {
         //
+        if($request->ajax()){
+            $id = $request->id;
+            $info = User::find($id);
+            //echo json_decode($info);
+            return response()->json($info);
+        }
     }
 
     /**
@@ -60,6 +66,7 @@ class StaffAccountsController extends Controller
     public function edit($id)
     {
         //
+
     }
 
     /**
@@ -69,9 +76,13 @@ class StaffAccountsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
         //
+        // dd($request->all());
+        $staff = User::findOrFail($request->staff_id);
+        $staff->update($request->all());
+        return back();
     }
 
     /**

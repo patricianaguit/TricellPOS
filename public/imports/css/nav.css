@@ -1,9 +1,9 @@
 body{
   background-color: #fcfcfc !important;
+  overflow-x: hidden;
 }
 .nav_custom {
     background-color: #29323c !important;
-    height: 8% !important;
     border-bottom-color: #black !important;
     border: black !important;
     box-shadow: 0 9px 8px rgba(0,0,0,.1) !important;
@@ -31,6 +31,13 @@ color: #fff  !important;
     opacity: 0.8 !important;
     border-radius: 5px !important;
 }
+a.nav-link.active {
+    color: #fcfcfc !important;
+    background-color: #2d3f54 !important;
+    opacity: 0.8 !important;
+    border-radius: 5px !important;
+}
+
 .hello.dropdown:hover>.dropdown-menu, #logsdrop.dropdown:hover>.dropdown-menu {
   display: block;
   /*margin-left: 600px!important;*/

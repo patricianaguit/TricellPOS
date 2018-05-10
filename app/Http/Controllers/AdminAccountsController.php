@@ -26,8 +26,30 @@ class AdminAccountsController extends Controller
      */
     public function create()
     {
-        //
-    }
+    //     //
+    //     $rules = array(
+    //         'username' => 'required',
+    //         'password' => 'required',
+    //         'firstname' => 'required',
+    //         'lastname' => 'required',
+    //         'email' => 'required'
+    //     );
+
+    //     $validator = Validator::make (input::all(), $rules);
+
+    //     if($validator->fails())
+    //         return response::json(array('errors' => $validator->getMessageBag()->toarray()));
+    //     else
+    //         $admin = new user;
+    //         $admin->username = $req->username;
+    //         $admin->password = $req->password;
+    //         $admin->firstname = $req->firstname;
+    //         $admin->lastname = $req->lastname;
+    //         $admin->email = $req->lastname;
+
+    //         $admin->save();
+    //         return response()->json($admin);
+     }
 
     /**
      * Store a newly created resource in storage.
@@ -46,17 +68,17 @@ class AdminAccountsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Request $request)
     {
-        //
+        if($request->ajax()){
+            $id = $request->id;
+            $info = User::find($id);
+            //echo json_decode($info);
+            return response()->json($info);
+        }
+
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function edit($id)
     {
         //

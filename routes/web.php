@@ -16,7 +16,10 @@ Route::post('verify', 'LoginController@verify');
 Route::get('logout', 'LoginController@logout');
 
 Route::group(['middleware' => ['admin']], function () {
-	Route::get('accounts/members', 'MemberAccountsController@index');
 	Route::get('accounts/admin', 'AdminAccountsController@index');
 	Route::get('accounts/staff', 'StaffAccountsController@index');
+	Route::post('accounts/create_admin', 'AdminAccountsController@create');
+	Route::get('accounts/view_admindetails', 'AdminAccountsController@show');
+	Route::get('accounts/edit_staff', 'StaffAccountsController@show');
+	Route::post('accounts/update_staff', 'StaffAccountsController@update');
 });

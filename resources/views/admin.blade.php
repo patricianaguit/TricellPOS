@@ -4,6 +4,10 @@
 ACCOUNTS
 @endsection
 
+@section('css')
+{{ asset('imports/css/members2.css') }}
+@endsection
+
 @section('content')
 
 </br>
@@ -12,7 +16,6 @@ ACCOUNTS
   <nav>
     <h3 class="title">Admin</h3>
     <div class="nav nav-tabs justify-content-end memberstab" id="nav-tab" role="tablist">
-      <a class="nav-item nav-link " id="nav-members-tab" " href="/accounts/members" role="tab" aria-controls="nav-members" aria-selected="false">Members</a>
       <a class="nav-item nav-link active " id="nav-admin-tab"  href="/accounts/admin" role="tab" aria-controls="nav-admin" aria-selected="true">Admin</a>
       <a class="nav-item nav-link" id="nav-staff-tab"  href="/accounts/staff" role="tab" aria-controls="nav-staff" aria-selected="false">Staff</a>
 
@@ -20,7 +23,10 @@ ACCOUNTS
   </nav>
 <!----body of admin start-->
 <div class="tab-content" id="nav-tabContent">
-<div class="tab-pane fade show active" id="nav-admin" role="tabpanel" aria-labelledby="nav-admin-tab">
+
+
+  <!-------admin------>
+  <div class="tab-pane fade show active" id="nav-admin" role="tabpanel" aria-labelledby="nav-admin-tab">
   </br>
   <div class="row">
     <div class="col-md-8">
@@ -54,12 +60,13 @@ ACCOUNTS
           <td>{{ $admin->firstname . " " . $admin->lastname }}</td>
           <td>{{ $admin->email }}</td>
           <td>
-            <button type="button" class="btn btn-secondary view-btn" data-toggle="modal" data-target=".view_admin"><i class="material-icons md-18">info_outline</i></button>
+            <button type="button" class="btn btn-secondary view-btn" data-toggle="modal" data-target=".view_admin" onclick="show('{{ $admin->id }}')"><i class="material-icons md-18">info_outline</i></button>
           </td>
         </tr>
         @endforeach
       </tbody>
     </table>
+    <input type="hidden" name="hidden_view" id="hidden_view" value="{{url('accounts/view_admindetails')}}">
     <!----start of modal for add admin---->
     <div class="modal fade add_admin" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
      <div class="modal-dialog modal-lg">
@@ -114,7 +121,7 @@ ACCOUNTS
 
       </form>
         <div class="modal-footer">
-          <button type="button" class="btn btn-info btn-savemem-modal" data-dismiss="modal">Save New Admin</button>
+          <button type="button" class="btn btn-info btn-savemem-modal" data-dismiss="modal" id= "add-admin">Save New Admin</button>
           <button type="button" class="btn btn-secondary btn-close-modal" data-dismiss="modal">Close</button>
         </div>
       </div>
@@ -139,31 +146,31 @@ ACCOUNTS
 
         <div class="col-md-11 mx-auto">
         <label for="username" class="col-form-label modal-user">Username:</label>
-        <input type="text" class="form-control modal-card" id="username" disabled></div>
+        <input type="text" class="form-control modal-card" id="username-view" disabled> </div>
 
         <div class="col-md-11 mx-auto">
         <label for="password" class="col-form-label modal-password">Password:</label>
-        <input type="password" class="form-control" id="password" disabled></div>
+        <input type="password" class="form-control" value ="{{rand()}}" id="password-view" disabled></div>
 
         <div class="col-md-11 mx-auto">
         <label for="first-name" class="col-form-label modal-fname">First Name:</label>
-        <input type="text" class="form-control modal-fname" id="first-name" disabled></div>
+        <input type="text" class="form-control modal-fname" id="firstname-view" disabled></div>
 
         <div class="col-md-11 mx-auto">
         <label for="last-name" class="col-form-label modal-lname">Last Name:</label>
-        <input type="text" class="form-control" id="last-name" disabled></div>
+        <input type="text" class="form-control" id="lastname-view" disabled></div>
 
         <div class="col-md-11 mx-auto">
         <label for="address" class="col-form-label modal-address">Address:</label>
-        <input type="text" class="form-control modal-add" id="address" disabled></div>
+        <input type="text" class="form-control modal-add" id="address-view" disabled></div>
 
         <div class="col-md-11 mx-auto">
         <label for="contact" class="col-form-label modal-contact">Contact #:</label>
-        <input type="text" class="form-control" id="contact" disabled></div>
+        <input type="text" class="form-control" id="contact-view" disabled></div>
 
         <div class="col-md-11 mx-auto">
         <label for="email" class="col-form-label modal-mobile">Email:</label>
-        <input type="text" class="form-control" id="email" disabled></div>
+        <input type="text" class="form-control" id="email-view" disabled></div>
 
 
 
@@ -185,5 +192,27 @@ ACCOUNTS
 
 
   </div>
+
+  <!--View Ajax -->
+  <script type="text/javascript">
+    function show(id)
+    {
+      var view_url = $("#hidden_view").val();
+      $.ajax({
+        url: view_url + '/',
+        type:"GET",
+        data: {"id":id},
+        success: function(result){
+        console.log(result);
+          $("#username-view").val(result.username);
+          $("#firstname-view").val(result.firstname);
+          $("#lastname-view").val(result.lastname);
+          $("#address-view").val(result.address);
+          $("#contact-view").val(result.contact_number);
+          $("#email-view").val(result.email);
+        }
+      });
+    }
+  </script>
   
 @endsection

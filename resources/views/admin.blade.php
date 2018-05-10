@@ -60,13 +60,15 @@ ACCOUNTS
           <td>{{ $admin->firstname . " " . $admin->lastname }}</td>
           <td>{{ $admin->email }}</td>
           <td>
-            <button type="button" class="btn btn-secondary view-btn" data-toggle="modal" data-target=".view_admin" onclick="show('{{ $admin->id }}')"><i class="material-icons md-18">info_outline</i></button>
+            <button type="button" id="view-admin" class="btn btn-secondary view-btn" data-toggle="modal" data-target=".view_admin" data-username ="{{ $admin->username }}" data-firstname="{{$admin->firstname}}" data-lastname="{{$admin->lastname}}" data-address="{{$admin->address}}" data-contact="{{$admin->contact_number}}" data-email="{{$admin->email}}"><i class="material-icons md-18">info_outline</i></button>
           </td>
         </tr>
         @endforeach
       </tbody>
     </table>
-    <input type="hidden" name="hidden_view" id="hidden_view" value="{{url('accounts/view_admindetails')}}">
+    
+    {{$admins->links()}}
+
     <!----start of modal for add admin---->
     <div class="modal fade add_admin" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
      <div class="modal-dialog modal-lg">
@@ -195,6 +197,19 @@ ACCOUNTS
 
   <!--View Ajax -->
   <script type="text/javascript">
+
+    $(document).on('click', '#view-admin', function() {
+    $('#show').modal('show');
+    $('#username-view').val($(this).data('username'));
+    $("#firstname-view").val($(this).data('firstname'));
+    $("#lastname-view").val($(this).data('lastname'));
+    $("#address-view").val($(this).data('address'));
+    $("#contact-view").val($(this).data('contact'));
+    $("#email-view").val($(this).data('email'));
+  });
+    
+
+
     function show(id)
     {
       var view_url = $("#hidden_view").val();

@@ -67,7 +67,7 @@ ACCOUNTS
       </tbody>
     </table>
     
-    {{$admins->links()}}
+    <center><div>{{$admins->links()}}</div></center>
 
     <!----start of modal for add admin---->
     <div class="modal fade add_admin" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
@@ -148,31 +148,31 @@ ACCOUNTS
 
         <div class="col-md-11 mx-auto">
         <label for="username" class="col-form-label modal-user">Username:</label>
-        <input type="text" class="form-control modal-card" id="username-view" disabled> </div>
+        <input type="text" class="form-control modal-card" id="username-view" disabled="disabled"> </div>
 
         <div class="col-md-11 mx-auto">
         <label for="password" class="col-form-label modal-password">Password:</label>
-        <input type="password" class="form-control" value ="{{rand()}}" id="password-view" disabled></div>
+        <input type="password" class="form-control" value ="{{rand()}}" id="password-view" disabled="disabled"></div>
 
         <div class="col-md-11 mx-auto">
         <label for="first-name" class="col-form-label modal-fname">First Name:</label>
-        <input type="text" class="form-control modal-fname" id="firstname-view" disabled></div>
+        <input type="text" class="form-control modal-fname" id="firstname-view" disabled="disabled"></div>
 
         <div class="col-md-11 mx-auto">
         <label for="last-name" class="col-form-label modal-lname">Last Name:</label>
-        <input type="text" class="form-control" id="lastname-view" disabled></div>
+        <input type="text" class="form-control" id="lastname-view" disabled="disabled"></div>
 
         <div class="col-md-11 mx-auto">
         <label for="address" class="col-form-label modal-address">Address:</label>
-        <input type="text" class="form-control modal-add" id="address-view" disabled></div>
+        <input type="text" class="form-control modal-add" id="address-view" disabled="disabled"></div>
 
         <div class="col-md-11 mx-auto">
         <label for="contact" class="col-form-label modal-contact">Contact #:</label>
-        <input type="text" class="form-control" id="contact-view" disabled></div>
+        <input type="text" class="form-control" id="contact-view" disabled="disabled"></div>
 
         <div class="col-md-11 mx-auto">
         <label for="email" class="col-form-label modal-mobile">Email:</label>
-        <input type="text" class="form-control" id="email-view" disabled></div>
+        <input type="text" class="form-control" id="email-view" disabled="disabled"></div>
 
 
 
@@ -199,7 +199,6 @@ ACCOUNTS
   <script type="text/javascript">
 
     $(document).on('click', '#view-admin', function() {
-    $('#show').modal('show');
     $('#username-view').val($(this).data('username'));
     $("#firstname-view").val($(this).data('firstname'));
     $("#lastname-view").val($(this).data('lastname'));
@@ -208,26 +207,6 @@ ACCOUNTS
     $("#email-view").val($(this).data('email'));
   });
     
-
-
-    function show(id)
-    {
-      var view_url = $("#hidden_view").val();
-      $.ajax({
-        url: view_url + '/',
-        type:"GET",
-        data: {"id":id},
-        success: function(result){
-        console.log(result);
-          $("#username-view").val(result.username);
-          $("#firstname-view").val(result.firstname);
-          $("#lastname-view").val(result.lastname);
-          $("#address-view").val(result.address);
-          $("#contact-view").val(result.contact_number);
-          $("#email-view").val(result.email);
-        }
-      });
-    }
   </script>
   
 @endsection

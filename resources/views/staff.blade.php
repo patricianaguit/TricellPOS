@@ -43,6 +43,7 @@ ACCOUNTS
   </div>
   </div>
   <table class="table table-hover">
+    @csrf
       <thead class ="th_css">
         <tr>
           <th scope="col">Username</th>
@@ -53,19 +54,19 @@ ACCOUNTS
       </thead>
       <tbody class="td_class">
         @foreach($staffs as $staff)
-        <tr>
+        <tr class="staff{{$staff->id}}">
           <td>{{ $staff->username }}</td>
           <td>{{ $staff->firstname . " " . $staff->lastname }}</td>
           <td>{{ $staff->email }}</td>
           <td>
-            <button type="button" class="btn btn-primary edit-btn" data-toggle="modal" data-target=".edit_staff" onclick="show('{{ $staff->id }}')"><i class="material-icons md-18">mode_edit</i></button>
-            <button type="button" class="btn btn-danger del-btn" data-toggle="modal" data-target=".delete_staff"><i class="material-icons md-18">delete</i></button>
+            <button type="button" id="edit-staff" class="btn btn-primary edit-btn" data-toggle="modal" data-target=".edit_staff" data-id="{{ $staff->id }}" data-username ="{{ $staff->username }}" data-firstname="{{$staff->firstname}}" data-lastname="{{$staff->lastname}}" data-address="{{$staff->address}}" data-contact="{{$staff->contact_number}}" data-email="{{$staff->email}}"><i class="material-icons md-18">mode_edit</i></button>
+            <button type="button" id="delete-staff" class="btn btn-danger del-btn" data-id="{{ $staff->id }}" data-toggle="modal" data-target=".delete_staff"><i class="material-icons md-18">delete</i></button>
           </td>
         </tr>
         @endforeach
       </tbody>
     </table>
-    <input type="hidden" name="hidden_view" id="hidden_view" value="{{url('accounts/edit_staff')}}">
+    {{$staffs->links()}}
     <!----start of modal for add staff---->
     <div class="modal fade add_staff" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
      <div class="modal-dialog modal-lg">
@@ -139,10 +140,8 @@ ACCOUNTS
         </button>
       </div>
       
-      <form action="/accounts/update_staff" method="POST">
-        @csrf
-
-      <input type="hidden" name="staff_id" id="staff_id">
+      <form>
+      <input type="hidden" name="staff_id" id="staff-id-edit">
       <div class="form-group">
         <div class="containter-fluid">
         <div class="row">
@@ -183,8 +182,8 @@ ACCOUNTS
       </div>
       </div>
 
-      <div class="modal-footer">
-        <button type="submit" class="btn btn-info btn-savemem-modal">Save Changes</button></a>
+      <div class="modal-footer" id="modal-footer-staff-edit">
+        <button type="submit" id="update-staff" class="btn btn-info btn-savemem-modal">Save Changes</button></a>
         <button type="button" class="btn btn-secondary btn-close-modal" data-dismiss="modal">Close</button>
       </div>
     </form>
@@ -193,53 +192,111 @@ ACCOUNTS
     </div>
     <!----end of modal---->
     <!----start of modal for DELETE---->
+    <form>
     <div class="modal fade delete_staff" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
     <div class="modal-content">
     <div class="modal-header">
-      <h5 class="modal-title" id="exampleModalLabel">Message</h5>
+      <h5 class="modal-title" id="exampleModalLabel">Delete</h5>
       <button type="button" class="close" data-dismiss="modal" aria-label="Close">
         <span aria-hidden="true">&times;</span>
       </button>
     </div>
     <div class="modal-body">
         <center>  <p> Are you sure you want to delete this <b>staff?</b></p> </center>
+        <span class="staff-id-delete" hidden="hidden"></span>
         </div>
 
-    <div class="modal-footer">
-      <button type="button" class="btn btn-info btn-savemem-modal" data-dismiss="modal">Yes</button>
+    <div class="modal-footer" id="modal-footer-staff-delete">
+      <button type="button" id="destroy-staff" class="btn btn-info btn-savemem-modal">Yes</button>
       <button type="button" class="btn btn-secondary btn-close-modal" data-dismiss="modal">No</button>
-
     </div>
     </div>
     </div>
     </div>
+    </form>
 
     <!----end of modal---->
 
   </div>
     
-
-  <!--View Ajax -->
   <script type="text/javascript">
-    function show(id)
-    {
-      var view_url = $("#hidden_view").val();
-      $.ajax({
-        url: view_url + '/',
-        type:"GET",
-        data: {"id":id},
-        success: function(result){
-        console.log(result);
-          $("#staff_id").val(result.id);
-          $("#username-edit").val(result.username);
-          $("#firstname-edit").val(result.firstname);
-          $("#lastname-edit").val(result.lastname);
-          $("#address-edit").val(result.address);
-          $("#contact-edit").val(result.contact_number);
-          $("#email-edit").val(result.email);
-        }
-      });
-    }
+
+  // edit staff
+  $(document).on('click', '#edit-staff', function() {
+    $('#staff-id-edit').val($(this).data('id'));
+    $('#username-edit').val($(this).data('username'));
+    $("#firstname-edit").val($(this).data('firstname'));
+    $("#lastname-edit").val($(this).data('lastname'));
+    $("#address-edit").val($(this).data('address'));
+    $("#contact-edit").val($(this).data('contact'));
+    $("#email-edit").val($(this).data('email'));
+  });
+
+  $('form').submit(function(event){
+
+  event.preventDefault();
+
+});
+
+  $('#modal-footer-staff-edit').on('click', '#update-staff', function() {
+  $.ajax({
+    type: 'POST',
+    url: '{{route("update_staff")}}',
+    data: {
+            '_token': $('input[name=_token]').val(),
+            'staff_id': $("#staff-id-edit").val(),
+            'username': $("#username-edit").val(),
+            'password': $("#password-edit").val(),
+            'firstname': $("#firstname-edit").val(),
+            'lastname': $("#lastname-edit").val(),
+            'address': $("#address-edit").val(),
+            'contact': $("#contact-edit").val(),
+            'email': $("#email-edit").val()
+          },
+    success: function(data) {
+      console.log(data);
+      $('.edit_staff').modal('hide');
+          $('.staff' + data.id).replaceWith(" "+
+          "<tr class='staff" + data.id + "'>"+
+          "<td>" + data.username + "</td>"+
+          "<td>" + data.firstname + " " + data.lastname + "</td>"+
+          "<td>" + data.email + "</td>" +
+          "<td><button type='button' id='edit-staff' class='btn btn-primary edit-btn' data-toggle='modal' data-target='.edit_staff' data-id='" + data.id + "' data-username='" + data.username + "' data-firstname='" + data.firstname + "' data-lastname='" + data.lastname + "' data-address='" + data.address + "' data-contact='" + data.contact_number +"' data-email='" + data.email + "'><i class='material-icons md-18'>mode_edit</i></button> <button type='button' class='btn btn-danger del-btn' data-toggle='modal' data-target='.delete_staff'><i class='material-icons md-18'>delete</i></button></td>"+
+          "</tr>");
+             },
+             error: function(jqXHR, textStatus, errorThrown) { // What to do if we fail
+              console.log(JSON.stringify(jqXHR));
+              console.log("AJAX error: " + textStatus + ' : ' + errorThrown);
+            }
+          });
+        });
+
+
+  //delete staff'
+  $(document).on('click', '#delete-staff', function() {
+    $('.staff-id-delete').text($(this).data('id'));
+  });
+
+  $('#modal-footer-staff-delete').on('click', '#destroy-staff', function(){
+  $.ajax({
+    type: 'POST',
+    url: '{{route("delete_staff")}}',
+    data: {
+      '_token': $('input[name=_token]').val(),
+      'staff_id': $('.staff-id-delete').text()
+    },
+    success: function(data){
+       $('.delete_staff').modal('hide');
+       $('.staff' + $('.staff-id-delete').text()).remove();
+    },
+       error: function(jqXHR, textStatus, errorThrown) { // What to do if we fail
+        console.log(JSON.stringify(jqXHR));
+        console.log("AJAX error: " + textStatus + ' : ' + errorThrown);
+      }
+  });
+});
+
+
   </script>
 @endsection

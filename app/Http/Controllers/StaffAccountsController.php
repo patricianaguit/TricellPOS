@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 use App\User;
+use Hash;
 
 use Illuminate\Http\Request;
 
@@ -15,7 +16,7 @@ class StaffAccountsController extends Controller
     public function index()
     {
         //
-        $staffs = User::where('role', 'staff')->get();
+        $staffs = User::where('role', 'staff')->paginate(7);
         return view('staff')->with('staffs', $staffs);  
     }
 
@@ -63,9 +64,19 @@ class StaffAccountsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Request $request)
     {
         //
+        $staff = User::find($request->staff_id);
+        $staff->username = $request->username;
+        $staff->password = Hash::make($request->password);
+        $staff->firstname = $request->firstname;
+        $staff->lastname = $request->lastname;
+        $staff->address = $request->address;
+        $staff->contact_number = $request->contact;
+        $staff->email = $request->email;
+        $staff->save();
+        return response()->json($staff);
 
     }
 
@@ -79,10 +90,6 @@ class StaffAccountsController extends Controller
     public function update(Request $request)
     {
         //
-        // dd($request->all());
-        $staff = User::findOrFail($request->staff_id);
-        $staff->update($request->all());
-        return back();
     }
 
     /**
@@ -91,8 +98,10 @@ class StaffAccountsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request)
     {
         //
+        $staff = User::find($request->staff_id)->delete();
+        return response()->json();
     }
 }

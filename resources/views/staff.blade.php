@@ -42,16 +42,13 @@ ACCOUNTS
     </form>
   </div>
   </div>
- @if (Session::has('message'))
-  <h1>{{ session('message') }}</h1>
-@endif
   <table class="table table-hover" id="table">
     @csrf
       <thead class ="th_css">
         <tr>
           <th scope="col">Username</th>
           <th scope="col">Name</th>
-          <th scope="col">Email</th>
+          <th scope="col">E-mail Address</th>
           <th scope="col">Actions</th>
         </tr>
       </thead>
@@ -69,7 +66,9 @@ ACCOUNTS
         @endforeach
       </tbody>
     </table>
+    
     {{$staffs->links()}}
+
     <!----start of modal for add staff---->
     <div class="modal fade add_staff" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
      <div class="modal-dialog modal-lg">
@@ -85,37 +84,48 @@ ACCOUNTS
         <div class="form-group">
           <div class="containter-fluid">
           <div class="row">  
-          <div class="col-md-5 mx-auto">
+          <div class="col-md-11 mx-auto">
           <label for="username" class="col-form-label modal-user">Username:</label>
-          <input type="text" name="username" class="form-control modal-card" id="username-add" required></div>
-          <div class="col-md-5 mx-auto">
+          <input type="text" name="username" class="form-control modal-card" id="username-add">
+          <p class="error-username-add" id="error-add" hidden="hidden"></p></div>
+          <div class="col-md-11 mx-auto">
           <label for="password" class="col-form-label modal-password">Password:</label>
-          <input type="password" name="password" class="form-control" id="password-add" required></div>
+          <input type="password" name="password" class="form-control" id="password-add">
+          <p class="error-password-add" id="error-add" hidden="hidden"></p></div>
+          <div class="col-md-11 mx-auto">
+          <label for="password_confirmation" class="col-form-label modal-password">Confirm Password:</label>
+          <input type="password" name="password_confirmation" class="form-control" id="confirm-password-add">
+          <p class="error-confirm-password-add" id="error-add" hidden="hidden"></div>
 
         </div>
 
         <div class="row">
-          <div class="col-md-5 mx-auto">
+          <div class="col-md-11 mx-auto">
           <label for="first-name" class="col-form-label modal-fname">First Name:</label>
-          <input type="text" name="firstname" class="form-control modal-fname" id="firstname-add" required></div>
-          <div class="col-md-5 mx-auto">
+          <input type="text" name="firstname" class="form-control modal-fname" id="firstname-add">  
+          <p class="error-firstname-add" id="error-add" hidden="hidden"></p></div>
+          <div class="col-md-11 mx-auto">
           <label for="last-name" class="col-form-label modal-lname">Last Name:</label>
-          <input type="text" name="lastname" class="form-control" id="lastname-add" required></div>
+          <input type="text" name="lastname" class="form-control" id="lastname-add">  
+          <p class="error-lastname-add" id="error-add" hidden="hidden"></p></div>
         </div>
 
         <div class="row">
           <div class="col-md-11 mx-auto">
           <label for="address" class="col-form-label modal-address">Address:</label>
-          <input type="text" name="address" class="form-control modal-add" id="address-add" required></div>
+          <input type="text" name="address" class="form-control modal-add" id="address-add">  
+          <p class="error-address-add" id="error-add" hidden="hidden"></p></div>
         </div>
 
         <div class="row">
-          <div class="col-md-5 mx-auto">
+          <div class="col-md-11 mx-auto">
           <label for="contact" class="col-form-label modal-contact">Contact #:</label>
-          <input type="text" name="contact_number" class="form-control" id="contact-add" required></div>
-          <div class="col-md-5 mx-auto">
-          <label for="email" class="col-form-label modal-mobile">Email:</label>
-          <input type="email" name="email" class="form-control" id="email-add" required></div>
+          <input type="text" name="contact_number" class="form-control" id="contact-add"> 
+          <p class="error-contact-add" id="error-add" hidden="hidden"></p></div>
+          <div class="col-md-11 mx-auto">
+          <label for="email" class="col-form-label modal-mobile">E-mail Address:</label>
+          <input type="email" name="email" class="form-control" id="email-add"> 
+          <p class="error-email-add" id="error-add" hidden="hidden"></p></div>
 
         </div>
 
@@ -123,7 +133,7 @@ ACCOUNTS
         </div>
 
         <div class="modal-footer" id="modal-footer-staff-add">
-          <button type="submit" id="add-staff" class="btn btn-info btn-savemem-modal">Save New Staff</button>
+          <button type="button" id="add-staff" class="btn btn-info btn-savemem-modal">Save New Staff</button>
           <button type="button" class="btn btn-secondary btn-close-modal" data-dismiss="modal">Close</button>
         </div>
       </form>
@@ -183,7 +193,7 @@ ACCOUNTS
         <input type="text" name="contact_number" class="form-control" id="contact-edit">
         <p class="error-contact-edit" id="error-edit" hidden="hidden"></p></div>
         <div class="col-md-5 mx-auto">
-        <label for="email" class="col-form-label modal-mobile">Email:</label>
+        <label for="email" class="col-form-label modal-mobile">E-mail Address:</label>
         <input type="email" name="email" class="form-control" id="email-edit">
         <p class="error-email-edit" id="error-edit" hidden="hidden"></p></div>
 
@@ -193,7 +203,7 @@ ACCOUNTS
       </div>
 
       <div class="modal-footer" id="modal-footer-staff-edit">
-        <button type="submit" id="update-staff" class="btn btn-info btn-savemem-modal">Save Changes</button></a>
+        <button type="button" id="update-staff" class="btn btn-info btn-savemem-modal">Save Changes</button></a>
         <button type="button" class="btn btn-secondary btn-close-modal" data-dismiss="modal">Close</button>
       </div>
     </form>
@@ -231,6 +241,7 @@ ACCOUNTS
   </div>
     
   <script type="text/javascript">
+  
   $('.edit_staff').on('hide.bs.modal', function(){
     $('.error-username-edit').attr("hidden", true);
     $('.error-password-edit').attr("hidden", true);
@@ -238,14 +249,52 @@ ACCOUNTS
     $('.error-lastname-edit').attr("hidden", true);
     $('.error-address-edit').attr("hidden", true);
     $('.error-contact-edit').attr("hidden", true);
-    $('.error-email').attr("hidden", true);
+    $('.error-email-edit').attr("hidden", true);
+  });
+
+  $('.add_staff').on('hide.bs.modal', function(){
+    $('.error-username-add').attr("hidden", true);
+    $('.error-password-add').attr("hidden", true);
+    $('.error-confirm-password-add').attr("hidden", true);
+    $('.error-firstname-add').attr("hidden", true);
+    $('.error-lastname-add').attr("hidden", true);
+    $('.error-address-add').attr("hidden", true);
+    $('.error-contact-add').attr("hidden", true);
+    $('.error-email-add').attr("hidden", true);
   });
 
 
-  $('form').submit(function(event){
-
-    event.preventDefault();
-
+  $(document).ready(function(){
+  if(localStorage.getItem("update"))
+  {
+    swal({
+            title: "Success!",
+            text: "You have successfully updated the staff!",
+            icon: "success",
+            button: "Close",
+          });
+    localStorage.clear();
+  }
+  else if(localStorage.getItem("delete"))
+  {
+    swal({
+            title: "Success!",
+            text: "You have successfully deleted the staff!",
+            icon: "success",
+            button: "Close",
+          });
+    localStorage.clear(); 
+  }
+  else if(localStorage.getItem("add"))
+  {
+    swal({
+            title: "Success!",
+            text: "You have successfully added a staff!",
+            icon: "success",
+            button: "Close",
+          });
+    localStorage.clear(); 
+  }
   });
 
   //add staff
@@ -257,6 +306,7 @@ ACCOUNTS
             '_token': $('input[name=_token]').val(),  
             'username': $("#username-add").val(),
             'password': $("#password-add").val(),
+            'password_confirmation': $("#confirm-password-add").val(),
             'firstname': $("#firstname-add").val(),
             'lastname': $("#lastname-add").val(),
             'address': $("#address-add").val(),
@@ -265,14 +315,91 @@ ACCOUNTS
           },
     success: function(data) {
       console.log(data);
-      var $addForm = $('#add-form');
-      if(! $addForm[0].checkValidity()) 
-      {
-        return false;
+      if ((data.errors)) {
+          if(data.errors.username)
+          {
+            $('.error-username-add').removeAttr("hidden");
+            $('.error-username-add').text(data.errors.username);
+          }
+          else
+          {
+            $('.error-username-add').attr("hidden", true);
+          }
+
+          if(data.errors.password)
+          {
+            $('.error-password-add').removeAttr("hidden");
+            $('.error-password-add').text(data.errors.password);
+          }
+          else
+          {
+            $('.error-password-add').attr("hidden", true);
+          }
+
+          if(data.errors.password_confirmation)
+          {
+            $('.error-confirm-password-add').removeAttr("hidden");
+            $('.error-confirm-password-add').text(data.errors.password_confirmation);
+          }
+          else
+          {
+            $('.error-password-add').attr("hidden", true);
+          }
+
+          if(data.errors.firstname)
+          {
+            $('.error-firstname-add').removeAttr("hidden");
+            $('.error-firstname-add').text(data.errors.firstname);
+          }
+          else
+          {
+            $('.error-firstname-add').attr("hidden", true);
+          }
+
+          if(data.errors.lastname)
+          {
+            $('.error-lastname-add').removeAttr("hidden");
+            $('.error-lastname-add').text(data.errors.lastname);
+          }
+          else
+          {
+            $('.error-lastname-add').attr("hidden", true);
+          }
+
+          if(data.errors.address)
+          {
+            $('.error-address-add').removeAttr("hidden");
+            $('.error-address-add').text(data.errors.address);
+          }
+          else
+          {
+            $('.error-address-add').attr("hidden", true);
+          }
+
+          if(data.errors.contact)
+          {
+            $('.error-contact-add').removeAttr("hidden");
+            $('.error-contact-add').text(data.errors.contact);
+          }
+          else
+          {
+            $('.error-contact-add').attr("hidden", true);
+          }
+
+          if(data.errors.email)
+          {
+            $('.error-email-add').removeAttr("hidden");
+            $('.error-email-add').text(data.errors.email);
+          }
+          else
+          {
+            $('.error-email-add').attr("hidden", true);
+          }
       }
       else
       {
-      window.location.reload();
+        localStorage.setItem("add","success");
+        window.location.reload();
       }
     },
 
@@ -280,9 +407,8 @@ ACCOUNTS
         console.log(JSON.stringify(jqXHR));
         console.log("AJAX error: " + textStatus + ' : ' + errorThrown);
         }
+    });
   });
-});
-
 
 
   // edit staff
@@ -296,8 +422,6 @@ ACCOUNTS
     $("#contact-edit").val($(this).data('contact'));
     $("#email-edit").val($(this).data('email'));
   });
-
-  
 
   $('#modal-footer-staff-edit').on('click', '#update-staff', function(event) {
   $.ajax({
@@ -316,11 +440,6 @@ ACCOUNTS
           },
     success: function(data) {
       console.log(data);
-      // var $editForm = $('#edit-form');
-      // if(! $editForm[0].checkValidity()) 
-      // {
-      //   return false;
-      // }
       if ((data.errors)) {
           if(data.errors.username)
           {
@@ -389,20 +508,13 @@ ACCOUNTS
           }
           else
           {
-            $('.error-email').attr("hidden", true);
+            $('.error-email-edit').attr("hidden", true);
           }
       }
       else
       {
-         window.location.reload();
-            // $('.edit_staff').modal('hide');
-            // $('.staff' + data.id).replaceWith(" "+
-            // "<tr class='staff" + data.id + "'>"+
-            // "<td>" + data.username + "</td>"+
-            // "<td>" + data.firstname + " " + data.lastname + "</td>"+
-            // "<td>" + data.email + "</td>" +
-            // "<td><button type='button' id='edit-staff' class='btn btn-primary edit-btn' data-toggle='modal' data-target='.edit_staff' data-id='" + data.id + "' data-username='" + data.username +  "'data-firstname='" + data.firstname + "' data-lastname='" + data.lastname + "' data-address='" + data.address + "' data-contact='" + data.contact_number +"' data-email='" + data.email + "'><i class='material-icons md-18'>mode_edit</i></button> <button type='button' class='btn btn-danger del-btn' data-toggle='modal' data-target='.delete_staff'><i class='material-icons md-18'>delete</i></button></td>"+
-            // "</tr>");
+        localStorage.setItem("update","success");
+        window.location.reload();   
       }
       },
 
@@ -428,15 +540,15 @@ ACCOUNTS
       'staff_id': $('.staff-id-delete').text()
     },
     success: function(data){
+      localStorage.setItem("delete","success");
       window.location.reload();
     },
        error: function(jqXHR, textStatus, errorThrown) { // What to do if we fail
         console.log(JSON.stringify(jqXHR));
         console.log("AJAX error: " + textStatus + ' : ' + errorThrown);
       }
+    });
   });
-});
-
 
   </script>
 @endsection

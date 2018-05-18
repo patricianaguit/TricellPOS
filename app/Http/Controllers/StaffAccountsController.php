@@ -17,7 +17,7 @@ class StaffAccountsController extends Controller
     public function index()
     {
         //
-        $staffs = User::where('role', 'staff')->orderBy('id')->paginate(7);
+        $staffs = User::where('role', 'staff')->orderBy('id', 'desc')->paginate(7);
         return view('staff')->with('staffs', $staffs);  
     }
 
@@ -28,17 +28,35 @@ class StaffAccountsController extends Controller
      */
     public function create(Request $request)
     {
-        //
-        $staff = new User;
-        $staff->username = $request->username;
-        $staff->password = Hash::make($request->password);
-        $staff->firstname = $request->firstname;
-        $staff->lastname = $request->lastname;
-        $staff->address = $request->address;
-        $staff->contact_number = $request->contact;
-        $staff->email = $request->email;
-        $staff->role = 'staff';
-        $staff->save();
+        $rules = array(
+        'username' => 'required|unique:users,username',
+        'password' => 'required|confirmed',
+        'password_confirmation' => 'required',
+        'firstname' => 'required',
+        'lastname' => 'required',
+        'address' => 'required',
+        'contact' => 'required|digits_between:7,11',
+        'email' => 'required|email',
+        );
+
+        $validator = Validator::make($request->all(), $rules);
+        if ($validator->fails())
+        {
+            return Response::json(array('errors' => $validator->getMessageBag()->toArray()));
+        }
+        else
+        {
+            $staff = new User;
+            $staff->username = $request->username;
+            $staff->password = Hash::make($request->password);
+            $staff->firstname = $request->firstname;
+            $staff->lastname = $request->lastname;
+            $staff->address = $request->address;
+            $staff->contact_number = $request->contact;
+            $staff->email = $request->email;
+            $staff->role = 'staff';
+            $staff->save();
+        }
         // return Response::json($staff);
     }
 
@@ -61,13 +79,7 @@ class StaffAccountsController extends Controller
      */
     public function show(Request $request)
     {
-        //
-        if($request->ajax()){
-            $id = $request->id;
-            $info = User::find($id);
-            //echo json_decode($info);
-            return response()->json($info);
-        }
+
     }
 
     /**
@@ -78,18 +90,30 @@ class StaffAccountsController extends Controller
      */
     public function edit(Request $request)
     {
-        
+        $staff = User::find($request->staff_id);
+
+        $messages = [
+            'required.username' => 'The Username field is required.',
+            'required.password' => 'The Password field is required.',
+            'required.password_confirmation' => 'The Confirm Password field is required.',
+            'required.firstname' => 'The First Name field is required.',
+            'required.lastname' => 'The Last Name field is required.',
+            'required.address' => 'The Address field is required.',
+            'required.contact' => 'The Contact Number field is required.',
+            'required.email' => 'The Email field is required.',
+        ];
+
         $rules = array(
-        'username' => 'required',
+        'username' => "required|unique:users,username,$staff->id",
         'password' => 'required',
         'firstname' => 'required',
         'lastname' => 'required',
         'address' => 'required',
         'contact' => 'required',
-        'email' => 'required',
+        'email' => "required|email|unique:users,email,$staff->id",
         );
 
-        $validator = Validator::make($request->all(), $rules);
+        $validator = Validator::make($request->all(), $rules, $messages);
         if ($validator->fails())
         {
             return Response::json(array('errors' => $validator->getMessageBag()->toArray()));
@@ -105,7 +129,6 @@ class StaffAccountsController extends Controller
         $staff->contact_number = $request->contact;
         $staff->email = $request->email;
         $staff->save();
-        $request->session()->flash('message', 'Successfully updated the staff.');
         // return Response::json($staff);
         }
         
@@ -132,8 +155,6 @@ class StaffAccountsController extends Controller
      */
     public function destroy(Request $request)
     {
-        //
         $staff = User::find($request->staff_id)->delete();
-        $request->session()->flash('message', 'Successfully deleted the staff.');
     }
 }

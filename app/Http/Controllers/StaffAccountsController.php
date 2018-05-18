@@ -3,7 +3,8 @@
 namespace App\Http\Controllers;
 use App\User;
 use Hash;
-
+use Response;
+use Validator;
 use Illuminate\Http\Request;
 
 class StaffAccountsController extends Controller
@@ -16,7 +17,7 @@ class StaffAccountsController extends Controller
     public function index()
     {
         //
-        $staffs = User::where('role', 'staff')->paginate(7);
+        $staffs = User::where('role', 'staff')->orderBy('id')->paginate(7);
         return view('staff')->with('staffs', $staffs);  
     }
 
@@ -25,9 +26,20 @@ class StaffAccountsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
         //
+        $staff = new User;
+        $staff->username = $request->username;
+        $staff->password = Hash::make($request->password);
+        $staff->firstname = $request->firstname;
+        $staff->lastname = $request->lastname;
+        $staff->address = $request->address;
+        $staff->contact_number = $request->contact;
+        $staff->email = $request->email;
+        $staff->role = 'staff';
+        $staff->save();
+        // return Response::json($staff);
     }
 
     /**
@@ -66,7 +78,24 @@ class StaffAccountsController extends Controller
      */
     public function edit(Request $request)
     {
-        //
+        
+        $rules = array(
+        'username' => 'required',
+        'password' => 'required',
+        'firstname' => 'required',
+        'lastname' => 'required',
+        'address' => 'required',
+        'contact' => 'required',
+        'email' => 'required',
+        );
+
+        $validator = Validator::make($request->all(), $rules);
+        if ($validator->fails())
+        {
+            return Response::json(array('errors' => $validator->getMessageBag()->toArray()));
+        }
+        else
+        {
         $staff = User::find($request->staff_id);
         $staff->username = $request->username;
         $staff->password = Hash::make($request->password);
@@ -76,7 +105,10 @@ class StaffAccountsController extends Controller
         $staff->contact_number = $request->contact;
         $staff->email = $request->email;
         $staff->save();
-        return response()->json($staff);
+        $request->session()->flash('message', 'Successfully updated the staff.');
+        // return Response::json($staff);
+        }
+        
 
     }
 
@@ -102,6 +134,6 @@ class StaffAccountsController extends Controller
     {
         //
         $staff = User::find($request->staff_id)->delete();
-        return response()->json();
+        $request->session()->flash('message', 'Successfully deleted the staff.');
     }
 }

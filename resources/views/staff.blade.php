@@ -42,7 +42,10 @@ ACCOUNTS
     </form>
   </div>
   </div>
-  <table class="table table-hover">
+ @if (Session::has('message'))
+  <h1>{{ session('message') }}</h1>
+@endif
+  <table class="table table-hover" id="table">
     @csrf
       <thead class ="th_css">
         <tr>
@@ -77,53 +80,53 @@ ACCOUNTS
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
-        <form>
+
+        <form id="add-form">
         <div class="form-group">
           <div class="containter-fluid">
-          <div class="row">
-
+          <div class="row">  
           <div class="col-md-5 mx-auto">
           <label for="username" class="col-form-label modal-user">Username:</label>
-          <input type="text" class="form-control modal-card" id="username"></div>
+          <input type="text" name="username" class="form-control modal-card" id="username-add" required></div>
           <div class="col-md-5 mx-auto">
           <label for="password" class="col-form-label modal-password">Password:</label>
-          <input type="password" class="form-control" id="password"></div>
+          <input type="password" name="password" class="form-control" id="password-add" required></div>
 
         </div>
 
         <div class="row">
           <div class="col-md-5 mx-auto">
           <label for="first-name" class="col-form-label modal-fname">First Name:</label>
-          <input type="text" class="form-control modal-fname" id="first-name"></div>
+          <input type="text" name="firstname" class="form-control modal-fname" id="firstname-add" required></div>
           <div class="col-md-5 mx-auto">
           <label for="last-name" class="col-form-label modal-lname">Last Name:</label>
-          <input type="text" class="form-control" id="last-name"></div>
+          <input type="text" name="lastname" class="form-control" id="lastname-add" required></div>
         </div>
 
         <div class="row">
           <div class="col-md-11 mx-auto">
           <label for="address" class="col-form-label modal-address">Address:</label>
-          <input type="text" class="form-control modal-add" id="address"></div>
+          <input type="text" name="address" class="form-control modal-add" id="address-add" required></div>
         </div>
 
         <div class="row">
           <div class="col-md-5 mx-auto">
           <label for="contact" class="col-form-label modal-contact">Contact #:</label>
-          <input type="text" class="form-control" id="contact"></div>
+          <input type="text" name="contact_number" class="form-control" id="contact-add" required></div>
           <div class="col-md-5 mx-auto">
           <label for="email" class="col-form-label modal-mobile">Email:</label>
-          <input type="text" class="form-control" id="email"></div>
+          <input type="email" name="email" class="form-control" id="email-add" required></div>
 
         </div>
 
         </div>
         </div>
 
-      </form>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-info btn-savemem-modal" data-dismiss="modal">Save New Staff</button>
+        <div class="modal-footer" id="modal-footer-staff-add">
+          <button type="submit" id="add-staff" class="btn btn-info btn-savemem-modal">Save New Staff</button>
           <button type="button" class="btn btn-secondary btn-close-modal" data-dismiss="modal">Close</button>
         </div>
+      </form>
       </div>
     </div>
     </div>
@@ -140,42 +143,49 @@ ACCOUNTS
         </button>
       </div>
       
-      <form>
+      <form id="edit-form">
       <input type="hidden" name="staff_id" id="staff-id-edit">
       <div class="form-group">
         <div class="containter-fluid">
         <div class="row">
         <div class="col-md-5 mx-auto">
         <label for="username" class="col-form-label modal-user">Username:</label>
-        <input type="text" name="username" class="form-control modal-card" id="username-edit"></div>
+        <input type="text" name="username" class="form-control modal-card" id="username-edit">
+        <p class="error-username-edit" id="error-edit" hidden="hidden"></p></div>
         <div class="col-md-5 mx-auto">
         <label for="password" class="col-form-label modal-password">Password:</label>
-        <input type="password" name="password" class="form-control" id="password-edit" required></div>
+        <input type="password" name="password" class="form-control" id="password-edit">
+        <p class="error-password-edit" id="error-edit" hidden="hidden"></p></div>
 
       </div>
 
       <div class="row">
         <div class="col-md-5 mx-auto">
         <label for="first-name" class="col-form-label modal-fname">First Name:</label>
-        <input type="text" name="firstname" class="form-control modal-fname" id="firstname-edit"></div>
+        <input type="text" name="firstname" class="form-control modal-fname" id="firstname-edit">
+        <p class="error-firstname-edit" id="error-edit" hidden="hidden"></p></div>
         <div class="col-md-5 mx-auto">
         <label for="last-name"  class="col-form-label modal-lname">Last Name:</label>
-        <input type="text" name="lastname" class="form-control" id="lastname-edit"></div>
+        <input type="text" name="lastname" class="form-control" id="lastname-edit">
+        <p class="error-lastname-edit" id="error-edit" hidden="hidden"></p></div>
       </div>
 
       <div class="row">
         <div class="col-md-11 mx-auto">
         <label for="address" class="col-form-label modal-address">Address:</label>
-        <input type="text" name="address" class="form-control modal-add" id="address-edit"></div>
+        <input type="text" name="address" class="form-control modal-add" id="address-edit">
+        <p class="error-address-edit" id="error-edit" hidden="hidden"></p></div>
       </div>
 
       <div class="row">
         <div class="col-md-5 mx-auto">
         <label for="contact" class="col-form-label modal-contact">Contact #:</label>
-        <input type="text" name="contact_number" class="form-control" id="contact-edit"></div>
+        <input type="text" name="contact_number" class="form-control" id="contact-edit">
+        <p class="error-contact-edit" id="error-edit" hidden="hidden"></p></div>
         <div class="col-md-5 mx-auto">
         <label for="email" class="col-form-label modal-mobile">Email:</label>
-        <input type="text" name="email" class="form-control" id="email-edit"></div>
+        <input type="email" name="email" class="form-control" id="email-edit">
+        <p class="error-email-edit" id="error-edit" hidden="hidden"></p></div>
 
       </div>
 
@@ -221,11 +231,65 @@ ACCOUNTS
   </div>
     
   <script type="text/javascript">
+  $('.edit_staff').on('hide.bs.modal', function(){
+    $('.error-username-edit').attr("hidden", true);
+    $('.error-password-edit').attr("hidden", true);
+    $('.error-firstname-edit').attr("hidden", true);
+    $('.error-lastname-edit').attr("hidden", true);
+    $('.error-address-edit').attr("hidden", true);
+    $('.error-contact-edit').attr("hidden", true);
+    $('.error-email').attr("hidden", true);
+  });
+
+
+  $('form').submit(function(event){
+
+    event.preventDefault();
+
+  });
+
+  //add staff
+  $('#modal-footer-staff-add').on('click', '#add-staff', function(event) {
+  $.ajax({
+    type: 'POST',
+    url: '/accounts/add_staff',
+    data: {
+            '_token': $('input[name=_token]').val(),  
+            'username': $("#username-add").val(),
+            'password': $("#password-add").val(),
+            'firstname': $("#firstname-add").val(),
+            'lastname': $("#lastname-add").val(),
+            'address': $("#address-add").val(),
+            'contact': $("#contact-add").val(),
+            'email': $("#email-add").val()
+          },
+    success: function(data) {
+      console.log(data);
+      var $addForm = $('#add-form');
+      if(! $addForm[0].checkValidity()) 
+      {
+        return false;
+      }
+      else
+      {
+      window.location.reload();
+      }
+    },
+
+        error: function(jqXHR, textStatus, errorThrown) { // What to do if we fail
+        console.log(JSON.stringify(jqXHR));
+        console.log("AJAX error: " + textStatus + ' : ' + errorThrown);
+        }
+  });
+});
+
+
 
   // edit staff
   $(document).on('click', '#edit-staff', function() {
     $('#staff-id-edit').val($(this).data('id'));
     $('#username-edit').val($(this).data('username'));
+    $('#password-edit').val("");
     $("#firstname-edit").val($(this).data('firstname'));
     $("#lastname-edit").val($(this).data('lastname'));
     $("#address-edit").val($(this).data('address'));
@@ -233,16 +297,12 @@ ACCOUNTS
     $("#email-edit").val($(this).data('email'));
   });
 
-  $('form').submit(function(event){
+  
 
-  event.preventDefault();
-
-});
-
-  $('#modal-footer-staff-edit').on('click', '#update-staff', function() {
+  $('#modal-footer-staff-edit').on('click', '#update-staff', function(event) {
   $.ajax({
     type: 'POST',
-    url: '{{route("update_staff")}}',
+    url: '/accounts/update_staff',
     data: {
             '_token': $('input[name=_token]').val(),
             'staff_id': $("#staff-id-edit").val(),
@@ -256,21 +316,102 @@ ACCOUNTS
           },
     success: function(data) {
       console.log(data);
-      $('.edit_staff').modal('hide');
-          $('.staff' + data.id).replaceWith(" "+
-          "<tr class='staff" + data.id + "'>"+
-          "<td>" + data.username + "</td>"+
-          "<td>" + data.firstname + " " + data.lastname + "</td>"+
-          "<td>" + data.email + "</td>" +
-          "<td><button type='button' id='edit-staff' class='btn btn-primary edit-btn' data-toggle='modal' data-target='.edit_staff' data-id='" + data.id + "' data-username='" + data.username + "' data-firstname='" + data.firstname + "' data-lastname='" + data.lastname + "' data-address='" + data.address + "' data-contact='" + data.contact_number +"' data-email='" + data.email + "'><i class='material-icons md-18'>mode_edit</i></button> <button type='button' class='btn btn-danger del-btn' data-toggle='modal' data-target='.delete_staff'><i class='material-icons md-18'>delete</i></button></td>"+
-          "</tr>");
-             },
-             error: function(jqXHR, textStatus, errorThrown) { // What to do if we fail
-              console.log(JSON.stringify(jqXHR));
-              console.log("AJAX error: " + textStatus + ' : ' + errorThrown);
-            }
-          });
-        });
+      // var $editForm = $('#edit-form');
+      // if(! $editForm[0].checkValidity()) 
+      // {
+      //   return false;
+      // }
+      if ((data.errors)) {
+          if(data.errors.username)
+          {
+            $('.error-username-edit').removeAttr("hidden");
+            $('.error-username-edit').text(data.errors.username);
+          }
+          else
+          {
+            $('.error-username-edit').attr("hidden", true);
+          }
+
+          if(data.errors.password)
+          {
+            $('.error-password-edit').removeAttr("hidden");
+            $('.error-password-edit').text(data.errors.password);
+          }
+          else
+          {
+            $('.error-password-edit').attr("hidden", true);
+          }
+
+          if(data.errors.firstname)
+          {
+            $('.error-firstname-edit').removeAttr("hidden");
+            $('.error-firstname-edit').text(data.errors.firstname);
+          }
+          else
+          {
+            $('.error-firstname-edit').attr("hidden", true);
+          }
+
+          if(data.errors.lastname)
+          {
+            $('.error-lastname-edit').removeAttr("hidden");
+            $('.error-lastname-edit').text(data.errors.lastname);
+          }
+          else
+          {
+            $('.error-lastname-edit').attr("hidden", true);
+          }
+
+          if(data.errors.address)
+          {
+            $('.error-address-edit').removeAttr("hidden");
+            $('.error-address-edit').text(data.errors.address);
+          }
+          else
+          {
+            $('.error-address-edit').attr("hidden", true);
+          }
+
+          if(data.errors.contact)
+          {
+            $('.error-contact-edit').removeAttr("hidden");
+            $('.error-contact-edit').text(data.errors.contact);
+          }
+          else
+          {
+            $('.error-contact-edit').attr("hidden", true);
+          }
+
+          if(data.errors.email)
+          {
+            $('.error-email-edit').removeAttr("hidden");
+            $('.error-email-edit').text(data.errors.email);
+          }
+          else
+          {
+            $('.error-email').attr("hidden", true);
+          }
+      }
+      else
+      {
+         window.location.reload();
+            // $('.edit_staff').modal('hide');
+            // $('.staff' + data.id).replaceWith(" "+
+            // "<tr class='staff" + data.id + "'>"+
+            // "<td>" + data.username + "</td>"+
+            // "<td>" + data.firstname + " " + data.lastname + "</td>"+
+            // "<td>" + data.email + "</td>" +
+            // "<td><button type='button' id='edit-staff' class='btn btn-primary edit-btn' data-toggle='modal' data-target='.edit_staff' data-id='" + data.id + "' data-username='" + data.username +  "'data-firstname='" + data.firstname + "' data-lastname='" + data.lastname + "' data-address='" + data.address + "' data-contact='" + data.contact_number +"' data-email='" + data.email + "'><i class='material-icons md-18'>mode_edit</i></button> <button type='button' class='btn btn-danger del-btn' data-toggle='modal' data-target='.delete_staff'><i class='material-icons md-18'>delete</i></button></td>"+
+            // "</tr>");
+      }
+      },
+
+        error: function(jqXHR, textStatus, errorThrown) { // What to do if we fail
+        console.log(JSON.stringify(jqXHR));
+        console.log("AJAX error: " + textStatus + ' : ' + errorThrown);
+        }
+    });
+  });
 
 
   //delete staff'
@@ -281,14 +422,13 @@ ACCOUNTS
   $('#modal-footer-staff-delete').on('click', '#destroy-staff', function(){
   $.ajax({
     type: 'POST',
-    url: '{{route("delete_staff")}}',
+    url: '/accounts/delete_staff',
     data: {
       '_token': $('input[name=_token]').val(),
       'staff_id': $('.staff-id-delete').text()
     },
     success: function(data){
-       $('.delete_staff').modal('hide');
-       $('.staff' + $('.staff-id-delete').text()).remove();
+      window.location.reload();
     },
        error: function(jqXHR, textStatus, errorThrown) { // What to do if we fail
         console.log(JSON.stringify(jqXHR));

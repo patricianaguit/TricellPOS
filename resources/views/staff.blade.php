@@ -32,16 +32,19 @@ ACCOUNTS
         <button type="button" class="btn btn-outline-info add-staff-btn" data-toggle="modal" data-target=".add_staff">Add Staff</button>
   </div>
   <div class="col-md-4">
-    <form class="form ml-auto" >
+    <form class="form ml-auto" action="/accounts/search_staff" method="GET">
       <div class="input-group">
-          <input class="form-control" type="text" placeholder="Search" aria-label="Search" style="padding-left: 20px; border-radius: 40px;" id="mysearch">
+          <input class="form-control"  type="text" name ="staff_search" value="{{ old('username') }}" placeholder="Search by Username" aria-label="Search" style="padding-left: 20px; border-radius: 40px;" id="staff-search">
           <div class="input-group-addon" style="margin-left: -50px; z-index: 3; border-radius: 40px; background-color: transparent; border:none;">
-            <button class="btn btn-outline-info btn-sm" type="submit" style="border-radius: 100px;" id="search-btn"><i class="material-icons">search</i></button>
+            <button class="btn btn-outline-info btn-sm" type="submit" style="border-radius: 100px;" id="staff-search-submit"><i class="material-icons">search</i></button>
           </div>
       </div>
     </form>
   </div>
   </div>
+  @if(!empty($search))
+  <center><p> Showing {{$count }} results for <b> {{ $search }} </b> </p>
+  @endif
   <table class="table table-hover" id="table">
     @csrf
       <thead class ="th_css">

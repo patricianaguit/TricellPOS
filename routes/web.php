@@ -24,4 +24,5 @@ Route::get('logout', 'LoginController@logout');
 	Route::get('accounts/edit_staff', 'StaffAccountsController@show');
 	Route::post('accounts/update_staff', 'StaffAccountsController@edit');
 	Route::post('accounts/delete_staff', 'StaffAccountsController@destroy');
+	Route::get('accounts/search_staff', 'StaffAccountsController@search');
 // });

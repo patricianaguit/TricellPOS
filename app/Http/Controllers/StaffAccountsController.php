@@ -67,7 +67,8 @@ class StaffAccountsController extends Controller
 
         $rules = array(
         'username' => "required|unique:users,username,$staff->id",
-        'password' => 'required',
+        'password' => 'required|confirmed',
+        'password_confirmation' => 'required',
         'firstname' => 'required',
         'lastname' => 'required',
         'address' => 'required',
@@ -93,8 +94,6 @@ class StaffAccountsController extends Controller
         $staff->save();
         // return Response::json($staff);
         }
-        
-
     }
 
     public function destroy(Request $request)

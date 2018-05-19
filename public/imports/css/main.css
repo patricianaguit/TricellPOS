@@ -11,31 +11,26 @@
 
 .pos_buttons_col1{
   height: 700px;
-
-    background-color: powderblue;
-
+  background-color: powderblue;
 }
 
 .pos_transactions_col2{
   height: 700px;
-
-    background-color: pink;
+  background-color: pink;
 
 }
+
 .white{
-height: 550px;
-    margin-left: 21px;
-    background-color: white;
+  height: 550px;
+  margin-left: 21px;
+  background-color: white;
 
 }
 /****LOGIN PAGE CSS***/
 .logo_hp{
-font-size: 98px;
-padding-top: 120px;
-font-weight: bold;
-
-
-
+  font-size: 98px;
+  padding-top: 120px;
+  font-weight: bold;
 }
 
 .login_bg{
@@ -44,21 +39,20 @@ background-color: #ECF0F1;
 }
 
 #log_user_form{
-
-border-top: 0;
-border-left: 0;
-border-right: 0;
--webkit-box-shadow: none;
-box-shadow: none;
-background-color: #ECF0F1;
-border-color: #4c4c4c;
-border-style: solid;
-width: 270px;
-border-radius: 0;
-border-bottom-width: 4px;
-margin-left: 90px;
-margin-bottom: 20px;
-margin-top: 20px;
+  border-top: 0;
+  border-left: 0;
+  border-right: 0;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+  background-color: #ECF0F1;
+  border-color: #4c4c4c;
+  border-style: solid;
+  width: 270px;
+  border-radius: 0;
+  border-bottom-width: 4px;
+  margin-left: 90px;
+  margin-bottom: 20px;
+  margin-top: 20px;
 }
 
 .glyphicon-user{
@@ -70,21 +64,20 @@ margin-top: 20px;
 }
 
 #log_pass_form{
-
-border-top: 0;
-border-left: 0;
-border-right: 0;
--webkit-box-shadow: none;
-box-shadow: none;
-background-color: #ECF0F1;
-border-color: #4c4c4c;
-border-style: solid;
-width: 270px;
-border-radius: 0;
-border-bottom-width: 4px;
-margin-left: 90px;
-margin-bottom: 30px;
-margin-top: 20px;
+  border-top: 0;
+  border-left: 0;
+  border-right: 0;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+  background-color: #ECF0F1;
+  border-color: #4c4c4c;
+  border-style: solid;
+  width: 270px;
+  border-radius: 0;
+  border-bottom-width: 4px;
+  margin-left: 90px;
+  margin-bottom: 30px;
+  margin-top: 20px;
 }
 
 .glyphicon-lock{
@@ -138,6 +131,7 @@ input:focus{
 .btn-hover:focus {
     outline: none;
 }
+
 .btn-hover.color-8 {
   -webkit-box-sizing: border-box;
    -moz-box-sizing: border-box;
@@ -147,10 +141,10 @@ input:focus{
 
 }
 
-
 .error{
 position:relative;
 color: #fff;
 
 }
 /***END OF LOGIN CSS***/
+

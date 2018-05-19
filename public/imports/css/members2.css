@@ -89,6 +89,16 @@ padding: .375rem 2rem !important;
 #search-btn.btn-group-sm > .btn, .btn-sm {
     padding: .35rem .7rem !important;
 }
+
+.error-edit {
+  color: red !important;
+  font-size: 13px;
+}
+
+.error-add {
+  color: red !important;
+  font-size: 13px;
+}
 /****NAV CSS***/
 /**.nav_custom{
 

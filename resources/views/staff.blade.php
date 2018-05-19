@@ -34,7 +34,7 @@ ACCOUNTS
   <div class="col-md-4">
     <form class="form ml-auto" action="/accounts/search_staff" method="GET">
       <div class="input-group">
-          <input class="form-control"  type="text" name ="staff_search" value="{{ old('username') }}" placeholder="Search by Username" aria-label="Search" style="padding-left: 20px; border-radius: 40px;" id="staff-search">
+          <input class="form-control"  type="text" name ="staff_search" value="{{ old('staff_search') }}" placeholder="Search by Username" aria-label="Search" style="padding-left: 20px; border-radius: 40px;" id="staff-search">
           <div class="input-group-addon" style="margin-left: -50px; z-index: 3; border-radius: 40px; background-color: transparent; border:none;">
             <button class="btn btn-outline-info btn-sm" type="submit" style="border-radius: 100px;" id="staff-search-submit"><i class="material-icons">search</i></button>
           </div>
@@ -43,7 +43,7 @@ ACCOUNTS
   </div>
   </div>
   @if(!empty($search))
-  <center><p> Showing {{$count }} results for <b> {{ $search }} </b> </p>
+  <center><p> Showing {{$count }} result<?php if($count > 1){ echo 's'; }else{ echo ''; } ?> for <b> {{ $search }} </b> </p></center>
   @endif
   <table class="table table-hover" id="table">
     @csrf
@@ -83,53 +83,51 @@ ACCOUNTS
           </button>
         </div>
 
-        <form id="add-form">
+        <form id="add-form" class="nosubmitform">
         <div class="form-group">
           <div class="containter-fluid">
           <div class="row">  
           <div class="col-md-11 mx-auto">
           <label for="username" class="col-form-label modal-user">Username:</label>
           <input type="text" name="username" class="form-control modal-card" id="username-add">
-          <p class="error-username-add" id="error-add" hidden="hidden"></p></div>
+          <p id="error-username-add" class="error-add" hidden="hidden"></p></div>
           <div class="col-md-11 mx-auto">
           <label for="password" class="col-form-label modal-password">Password:</label>
           <input type="password" name="password" class="form-control" id="password-add">
-          <p class="error-password-add" id="error-add" hidden="hidden"></p></div>
+          <p id="error-password-add" class="error-add" hidden="hidden"></p></div>
           <div class="col-md-11 mx-auto">
           <label for="password_confirmation" class="col-form-label modal-password">Confirm Password:</label>
           <input type="password" name="password_confirmation" class="form-control" id="confirm-password-add">
-          <p class="error-confirm-password-add" id="error-add" hidden="hidden"></div>
-
+          <p id="error-confirm-password-add" class="error-add" hidden="hidden"></div>
         </div>
 
         <div class="row">
           <div class="col-md-11 mx-auto">
           <label for="first-name" class="col-form-label modal-fname">First Name:</label>
           <input type="text" name="firstname" class="form-control modal-fname" id="firstname-add">  
-          <p class="error-firstname-add" id="error-add" hidden="hidden"></p></div>
+          <p id="error-firstname-add" class="error-add" hidden="hidden"></p></div>
           <div class="col-md-11 mx-auto">
           <label for="last-name" class="col-form-label modal-lname">Last Name:</label>
           <input type="text" name="lastname" class="form-control" id="lastname-add">  
-          <p class="error-lastname-add" id="error-add" hidden="hidden"></p></div>
+          <p id="error-lastname-add" class="error-add" hidden="hidden"></p></div>
         </div>
 
         <div class="row">
           <div class="col-md-11 mx-auto">
           <label for="address" class="col-form-label modal-address">Address:</label>
           <input type="text" name="address" class="form-control modal-add" id="address-add">  
-          <p class="error-address-add" id="error-add" hidden="hidden"></p></div>
+          <p id="error-address-add" class="error-add" hidden="hidden"></p></div>
         </div>
 
         <div class="row">
           <div class="col-md-11 mx-auto">
           <label for="contact" class="col-form-label modal-contact">Contact #:</label>
           <input type="text" name="contact_number" class="form-control" id="contact-add"> 
-          <p class="error-contact-add" id="error-add" hidden="hidden"></p></div>
+          <p id="error-contact-add" class="error-add" hidden="hidden"></p></div>
           <div class="col-md-11 mx-auto">
           <label for="email" class="col-form-label modal-mobile">E-mail Address:</label>
-          <input type="email" name="email" class="form-control" id="email-add"> 
-          <p class="error-email-add" id="error-add" hidden="hidden"></p></div>
-
+          <input type="text" name="email" class="form-control" id="email-add"> 
+          <p id="error-email-add" class="error-add" hidden="hidden"></p></div>
         </div>
 
         </div>
@@ -156,50 +154,52 @@ ACCOUNTS
         </button>
       </div>
       
-      <form id="edit-form">
+      <form id="edit-form" class="nosubmitform">
       <input type="hidden" name="staff_id" id="staff-id-edit">
       <div class="form-group">
         <div class="containter-fluid">
         <div class="row">
-        <div class="col-md-5 mx-auto">
+        <div class="col-md-11 mx-auto">
         <label for="username" class="col-form-label modal-user">Username:</label>
         <input type="text" name="username" class="form-control modal-card" id="username-edit">
-        <p class="error-username-edit" id="error-edit" hidden="hidden"></p></div>
-        <div class="col-md-5 mx-auto">
+        <p id="error-username-edit" class="error-edit" hidden="hidden"></p></div>
+        <div class="col-md-11 mx-auto">
         <label for="password" class="col-form-label modal-password">Password:</label>
         <input type="password" name="password" class="form-control" id="password-edit">
-        <p class="error-password-edit" id="error-edit" hidden="hidden"></p></div>
-
+        <p id="error-password-edit" class="error-edit" hidden="hidden"></p></div>
+        <div class="col-md-11 mx-auto">
+        <label for="password_confirmation" class="col-form-label modal-password">Confirm Password:</label>
+        <input type="password" name="password_confirmation" class="form-control" id="confirm-password-edit">
+        <p id="error-confirm-password-edit" class="error-edit" hidden="hidden"></div>
       </div>
 
       <div class="row">
-        <div class="col-md-5 mx-auto">
+        <div class="col-md-11 mx-auto">
         <label for="first-name" class="col-form-label modal-fname">First Name:</label>
         <input type="text" name="firstname" class="form-control modal-fname" id="firstname-edit">
-        <p class="error-firstname-edit" id="error-edit" hidden="hidden"></p></div>
-        <div class="col-md-5 mx-auto">
+        <p id="error-firstname-edit" class="error-edit" hidden="hidden"></p></div>
+        <div class="col-md-11 mx-auto">
         <label for="last-name"  class="col-form-label modal-lname">Last Name:</label>
         <input type="text" name="lastname" class="form-control" id="lastname-edit">
-        <p class="error-lastname-edit" id="error-edit" hidden="hidden"></p></div>
+        <p id="error-lastname-edit" class="error-edit" hidden="hidden"></p></div>
       </div>
 
       <div class="row">
         <div class="col-md-11 mx-auto">
         <label for="address" class="col-form-label modal-address">Address:</label>
         <input type="text" name="address" class="form-control modal-add" id="address-edit">
-        <p class="error-address-edit" id="error-edit" hidden="hidden"></p></div>
+        <p id="error-address-edit" class="error-edit" hidden="hidden"></p></div>
       </div>
 
       <div class="row">
-        <div class="col-md-5 mx-auto">
+        <div class="col-md-11 mx-auto">
         <label for="contact" class="col-form-label modal-contact">Contact #:</label>
         <input type="text" name="contact_number" class="form-control" id="contact-edit">
-        <p class="error-contact-edit" id="error-edit" hidden="hidden"></p></div>
-        <div class="col-md-5 mx-auto">
+        <p id="error-contact-edit" class="error-edit" hidden="hidden"></p></div>
+        <div class="col-md-11 mx-auto">
         <label for="email" class="col-form-label modal-mobile">E-mail Address:</label>
-        <input type="email" name="email" class="form-control" id="email-edit">
-        <p class="error-email-edit" id="error-edit" hidden="hidden"></p></div>
-
+        <input type="text" name="email" class="form-control" id="email-edit">
+        <p id="error-email-edit" class="error-edit" hidden="hidden"></p></div>
       </div>
 
       </div>
@@ -244,34 +244,55 @@ ACCOUNTS
   </div>
     
   <script type="text/javascript">
-    $('form').submit(function(event){
-
-  event.preventDefault();
-
-});
+    $('.nosubmitform').submit(function(event){
+      event.preventDefault();
+  });
   
   $('.edit_staff').on('hide.bs.modal', function(){
-    $('.error-username-edit').attr("hidden", true);
-    $('.error-password-edit').attr("hidden", true);
-    $('.error-firstname-edit').attr("hidden", true);
-    $('.error-lastname-edit').attr("hidden", true);
-    $('.error-address-edit').attr("hidden", true);
-    $('.error-contact-edit').attr("hidden", true);
-    $('.error-email-edit').attr("hidden", true);
+    //hide error messages in modal
+    $('#error-username-edit').attr("hidden", true);
+    $('#error-password-edit').attr("hidden", true);
+    $('#error-confirm-password-edit').attr("hidden", true);
+    $('#error-firstname-edit').attr("hidden", true);
+    $('#error-lastname-edit').attr("hidden", true);
+    $('#error-address-edit').attr("hidden", true);
+    $('#error-contact-edit').attr("hidden", true);
+    $('#error-email-edit').attr("hidden", true);
+
+    //remove css style in modal
+    $('#username-edit').removeAttr('style');
+    $('#password-edit').removeAttr('style');
+    $('#confirm-password-edit').removeAttr('style');
+    $('#firstname-edit').removeAttr('style');
+    $('#lastname-edit').removeAttr('style');
+    $('#address-edit').removeAttr('style');
+    $('#contact-edit').removeAttr('style');
+    $('#email-edit').removeAttr('style');
   });
 
   $('.add_staff').on('hide.bs.modal', function(){
-    $('.error-username-add').attr("hidden", true);
-    $('.error-password-add').attr("hidden", true);
-    $('.error-confirm-password-add').attr("hidden", true);
-    $('.error-firstname-add').attr("hidden", true);
-    $('.error-lastname-add').attr("hidden", true);
-    $('.error-address-add').attr("hidden", true);
-    $('.error-contact-add').attr("hidden", true);
-    $('.error-email-add').attr("hidden", true);
+    //hide error messages in modal
+    $('#error-username-add').attr("hidden", true);
+    $('#error-password-add').attr("hidden", true);
+    $('#error-confirm-password-add').attr("hidden", true);
+    $('#error-firstname-add').attr("hidden", true);
+    $('#error-lastname-add').attr("hidden", true);
+    $('#error-address-add').attr("hidden", true);
+    $('#error-contact-add').attr("hidden", true);
+    $('#error-email-add').attr("hidden", true);
+
+    //remove css style in modal
+    $('#username-add').removeAttr('style');
+    $('#password-add').removeAttr('style');
+    $('#confirm-password-add').removeAttr('style');
+    $('#firstname-add').removeAttr('style');
+    $('#lastname-add').removeAttr('style');
+    $('#address-add').removeAttr('style');
+    $('#contact-add').removeAttr('style');
+    $('#email-add').removeAttr('style');
   });
 
-
+  //success alerts - add, update, delete
   $(document).ready(function(){
   if(localStorage.getItem("update"))
   {
@@ -326,82 +347,98 @@ ACCOUNTS
       if ((data.errors)) {
           if(data.errors.username)
           {
-            $('.error-username-add').removeAttr("hidden");
-            $('.error-username-add').text(data.errors.username);
+            $('#error-username-add').removeAttr("hidden");
+            $('#error-username-add').text(data.errors.username);
+            $('#username-add').css("border", "1px solid #cc0000");
           }
           else
           {
-            $('.error-username-add').attr("hidden", true);
+            $('#error-username-add').attr("hidden", true);
+            $('#username-add').removeAttr('style');
           }
 
           if(data.errors.password)
           {
-            $('.error-password-add').removeAttr("hidden");
-            $('.error-password-add').text(data.errors.password);
+            $('#error-password-add').removeAttr("hidden");
+            $('#error-password-add').text(data.errors.password);
+            $('#password-add').css("border", "1px solid #cc0000");
           }
           else
           {
-            $('.error-password-add').attr("hidden", true);
+            $('#error-password-add').attr("hidden", true);
+            $('#password-add').removeAttr('style');
           }
 
           if(data.errors.password_confirmation)
           {
-            $('.error-confirm-password-add').removeAttr("hidden");
-            $('.error-confirm-password-add').text(data.errors.password_confirmation);
+            $('#error-confirm-password-add').removeAttr("hidden");
+            $('#error-confirm-password-add').text(data.errors.password_confirmation);
+            $('#confirm-password-add').css("border", "1px solid #cc0000");
           }
           else
           {
-            $('.error-password-add').attr("hidden", true);
+            $('#error-confirm-password-add').attr("hidden", true);
+            $('#confirm-password-add').removeAttr('style');
           }
 
           if(data.errors.firstname)
           {
-            $('.error-firstname-add').removeAttr("hidden");
-            $('.error-firstname-add').text(data.errors.firstname);
+            $('#error-firstname-add').removeAttr("hidden");
+            $('#error-firstname-add').text(data.errors.firstname);
+            $('#firstname-add').css("border", "1px solid #cc0000");
           }
           else
           {
-            $('.error-firstname-add').attr("hidden", true);
+            $('#error-firstname-add').attr("hidden", true);
+            $('#firstname-add').removeAttr('style');
           }
 
           if(data.errors.lastname)
           {
-            $('.error-lastname-add').removeAttr("hidden");
-            $('.error-lastname-add').text(data.errors.lastname);
+            $('#error-lastname-add').removeAttr("hidden");
+            $('#error-lastname-add').text(data.errors.lastname);
+            $('#lastname-add').css("border", "1px solid #cc0000");
           }
           else
           {
-            $('.error-lastname-add').attr("hidden", true);
+            $('#error-lastname-add').attr("hidden", true);
+            $('#lastname-add').removeAttr('style');
           }
 
           if(data.errors.address)
           {
-            $('.error-address-add').removeAttr("hidden");
-            $('.error-address-add').text(data.errors.address);
+            $('#error-address-add').removeAttr("hidden");
+            $('#error-address-add').text(data.errors.address);
+            $('#address-add').css("border", "1px solid #cc0000");
           }
           else
           {
-            $('.error-address-add').attr("hidden", true);
+            $('#error-address-add').attr("hidden", true);
+            $('#address-add').removeAttr('style');
           }
 
           if(data.errors.contact)
           {
-            $('.error-contact-add').removeAttr("hidden");
-            $('.error-contact-add').text(data.errors.contact);
+            $('#error-contact-add').removeAttr("hidden");
+            $('#error-contact-add').text(data.errors.contact);
+            $('#contact-add').css("border", "1px solid #cc0000");
           }
           else
           {
-            $('.error-contact-add').attr("hidden", true);
+            $('#error-contact-add').attr("hidden", true);
+            $('#contact-add').removeAttr('style');
           }
 
           if(data.errors.email)
           {
-            $('.error-email-add').removeAttr("hidden");
-            $('.error-email-add').text(data.errors.email);
+            $('#error-email-add').removeAttr("hidden");
+            $('#error-email-add').text(data.errors.email);
+            $('#email-add').css("border", "1px solid #cc0000");
           }
           else
           {
-            $('.error-email-add').attr("hidden", true);
+            $('#error-email-add').attr("hidden", true);
+            $('#email-add').removeAttr('style');
           }
       }
       else
@@ -424,6 +461,7 @@ ACCOUNTS
     $('#staff-id-edit').val($(this).data('id'));
     $('#username-edit').val($(this).data('username'));
     $('#password-edit').val("");
+    $('#confirm-password-edit').val("");
     $("#firstname-edit").val($(this).data('firstname'));
     $("#lastname-edit").val($(this).data('lastname'));
     $("#address-edit").val($(this).data('address'));
@@ -440,6 +478,7 @@ ACCOUNTS
             'staff_id': $("#staff-id-edit").val(),
             'username': $("#username-edit").val(),
             'password': $("#password-edit").val(),
+            'password_confirmation': $("#confirm-password-edit").val(),
             'firstname': $("#firstname-edit").val(),
             'lastname': $("#lastname-edit").val(),
             'address': $("#address-edit").val(),
@@ -451,72 +490,98 @@ ACCOUNTS
       if ((data.errors)) {
           if(data.errors.username)
           {
-            $('.error-username-edit').removeAttr("hidden");
-            $('.error-username-edit').text(data.errors.username);
+            $('#error-username-edit').removeAttr("hidden");
+            $('#error-username-edit').text(data.errors.username);
+            $('#username-edit').css("border", "1px solid #cc0000");
           }
           else
           {
-            $('.error-username-edit').attr("hidden", true);
+            $('#error-username-edit').attr("hidden", true);
+            $('#username-edit').removeAttr('style');
           }
 
           if(data.errors.password)
           {
-            $('.error-password-edit').removeAttr("hidden");
-            $('.error-password-edit').text(data.errors.password);
+            $('#error-password-edit').removeAttr("hidden");
+            $('#error-password-edit').text(data.errors.password);
+            $('#password-edit').css("border", "1px solid #cc0000");
           }
           else
           {
-            $('.error-password-edit').attr("hidden", true);
+            $('#error-password-edit').attr("hidden", true);
+            $('#password-edit').removeAttr('style');
+          }
+
+          if(data.errors.password_confirmation)
+          {
+            $('#error-confirm-password-edit').removeAttr("hidden");
+            $('#error-confirm-password-edit').text(data.errors.password_confirmation);
+            $('#confirm-password-edit').css("border", "1px solid #cc0000");
+          }
+          else
+          {
+            $('#error-confirm-password-edit').attr("hidden", true);
+            $('#confirm-password-edit').removeAttr('style');
           }
 
           if(data.errors.firstname)
           {
-            $('.error-firstname-edit').removeAttr("hidden");
-            $('.error-firstname-edit').text(data.errors.firstname);
+            $('#error-firstname-edit').removeAttr("hidden");
+            $('#error-firstname-edit').text(data.errors.firstname);
+            $('#firstname-edit').css("border", "1px solid #cc0000");
           }
           else
           {
-            $('.error-firstname-edit').attr("hidden", true);
+            $('#error-firstname-edit').attr("hidden", true);
+            $('#firstname-edit').removeAttr('style');
           }
 
           if(data.errors.lastname)
           {
-            $('.error-lastname-edit').removeAttr("hidden");
-            $('.error-lastname-edit').text(data.errors.lastname);
+            $('#error-lastname-edit').removeAttr("hidden");
+            $('#error-lastname-edit').text(data.errors.lastname);
+            $('#lastname-edit').css("border", "1px solid #cc0000");
           }
           else
           {
-            $('.error-lastname-edit').attr("hidden", true);
+            $('#error-lastname-edit').attr("hidden", true);
+            $('#lastname-edit').removeAttr('style');
           }
 
           if(data.errors.address)
           {
-            $('.error-address-edit').removeAttr("hidden");
-            $('.error-address-edit').text(data.errors.address);
+            $('#error-address-edit').removeAttr("hidden");
+            $('#error-address-edit').text(data.errors.address);
+            $('#address-edit').css("border", "1px solid #cc0000");
           }
           else
           {
-            $('.error-address-edit').attr("hidden", true);
+            $('#error-address-edit').attr("hidden", true);
+            $('#address-edit').removeAttr('style');
           }
 
           if(data.errors.contact)
           {
-            $('.error-contact-edit').removeAttr("hidden");
-            $('.error-contact-edit').text(data.errors.contact);
+            $('#error-contact-edit').removeAttr("hidden");
+            $('#error-contact-edit').text(data.errors.contact);
+            $('#contact-edit').css("border", "1px solid #cc0000");
           }
           else
           {
-            $('.error-contact-edit').attr("hidden", true);
+            $('#error-contact-edit').attr("hidden", true);
+            $('#contact-edit').removeAttr('style');
           }
 
           if(data.errors.email)
           {
-            $('.error-email-edit').removeAttr("hidden");
-            $('.error-email-edit').text(data.errors.email);
+            $('#error-email-edit').removeAttr("hidden");
+            $('#error-email-edit').text(data.errors.email);
+            $('#email-edit').css("border", "1px solid #cc0000");
           }
           else
           {
-            $('.error-email-edit').attr("hidden", true);
+            $('#error-email-edit').attr("hidden", true);
+            $('#email-edit').removeAttr('style');
           }
       }
       else

@@ -136,7 +136,7 @@ ACCOUNTS
         </div>
 
         <div class="modal-footer" id="modal-footer-staff-add">
-          <button type="button" id="add-staff" class="btn btn-info btn-savemem-modal">Save New Staff</button>
+          <button type="submit" id="add-staff" class="btn btn-info btn-savemem-modal">Save New Staff</button>
           <button type="button" class="btn btn-secondary btn-close-modal" data-dismiss="modal">Close</button>
         </div>
       </form>
@@ -206,7 +206,7 @@ ACCOUNTS
       </div>
 
       <div class="modal-footer" id="modal-footer-staff-edit">
-        <button type="button" id="update-staff" class="btn btn-info btn-savemem-modal">Save Changes</button></a>
+        <button type="submit" id="update-staff" class="btn btn-info btn-savemem-modal">Save Changes</button></a>
         <button type="button" class="btn btn-secondary btn-close-modal" data-dismiss="modal">Close</button>
       </div>
     </form>
@@ -244,6 +244,11 @@ ACCOUNTS
   </div>
     
   <script type="text/javascript">
+    $('form').submit(function(event){
+
+  event.preventDefault();
+
+});
   
   $('.edit_staff').on('hide.bs.modal', function(){
     $('.error-username-edit').attr("hidden", true);

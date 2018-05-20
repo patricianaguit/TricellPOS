@@ -96,7 +96,7 @@ class AdminAccountsController extends Controller
         else
         {
             $admins = User::where('username', 'LIKE', '%' . $search . '%')->where('role', 'staff')->paginate(7);
-            $admins->appends($request->only('staff_search'));
+            $admins->appends($request->only('admin_search'));
             $count = User::where('username', 'LIKE', '%' . $search . '%')->where('role', 'staff')->count();
             return view('admin')->with(['admins' => $admins, 'search' => $search, 'count' => $count]);  
         }

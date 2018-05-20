@@ -2,108 +2,103 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\User;
+use Hash;
+use Response;
+use Validator;
+use Illuminate\Http\Request;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Redirect;
 
 class AdminAccountsController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
-        //
-        $admins = User::where('role', 'admin')->paginate(7);
+        $admins = User::where('role', 'admin')->orderBy('id', 'desc')->paginate(7);
         return view('admin')->with('admins', $admins);  
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
+    public function create(Request $request)
     {
-    //     //
-    //     $rules = array(
-    //         'username' => 'required',
-    //         'password' => 'required',
-    //         'firstname' => 'required',
-    //         'lastname' => 'required',
-    //         'email' => 'required'
-    //     );
+        $rules = array(
+        'username' => 'required|unique:users,username',
+        'password' => 'required|confirmed',
+        'password_confirmation' => 'required',
+        'firstname' => 'required',
+        'lastname' => 'required',
+        'address' => 'required',
+        'contact' => 'required|digits_between:7,11',
+        'email' => 'required|email',
+        );
 
-    //     $validator = Validator::make (input::all(), $rules);
-
-    //     if($validator->fails())
-    //         return response::json(array('errors' => $validator->getMessageBag()->toarray()));
-    //     else
-    //         $admin = new user;
-    //         $admin->username = $req->username;
-    //         $admin->password = $req->password;
-    //         $admin->firstname = $req->firstname;
-    //         $admin->lastname = $req->lastname;
-    //         $admin->email = $req->lastname;
-
-    //         $admin->save();
-    //         return response()->json($admin);
-     }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Request $request)
-    {
-        if($request->ajax()){
-            $id = $request->id;
-            $info = User::find($id);
-            //echo json_decode($info);
-            return response()->json($info);
+        $validator = Validator::make($request->all(), $rules);
+        if ($validator->fails())
+        {
+            return Response::json(array('errors' => $validator->getMessageBag()->toArray()));
         }
-
+        else
+        {
+            $admin = new User;
+            $admin->username = $request->username;
+            $admin->password = Hash::make($request->password);
+            $admin->firstname = $request->firstname;
+            $admin->lastname = $request->lastname;
+            $admin->address = $request->address;
+            $admin->contact_number = $request->contact;
+            $admin->email = $request->email;
+            $admin->role = 'admin';
+            $admin->save();
+        }
     }
 
-    public function edit($id)
+    public function edit(Request $request)
     {
-        //
+        $admin = User::find($request->admin_id);
+
+        $rules = array(
+        'username' => "required|unique:users,username,$admin->id",
+        'password' => 'required|confirmed',
+        'password_confirmation' => 'required',
+        'firstname' => 'required',
+        'lastname' => 'required',
+        'address' => 'required',
+        'contact' => 'required',
+        'email' => "required|email|unique:users,email,$admin->id",
+        );
+
+        $validator = Validator::make($request->all(), $rules);
+        if ($validator->fails())
+        {
+            return Response::json(array('errors' => $validator->getMessageBag()->toArray()));
+        }
+        else
+        {
+            $admin = User::find($request->admin_id);
+            $admin->username = $request->username;
+            $admin->password = Hash::make($request->password);
+            $admin->firstname = $request->firstname;
+            $admin->lastname = $request->lastname;
+            $admin->address = $request->address;
+            $admin->contact_number = $request->contact;
+            $admin->email = $request->email;
+            $admin->save();
+        }
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
+    public function search(Request $request)
     {
-        //
-    }
+        $search = $request->admin_search;
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
+        if($search == "")
+        {
+            return Redirect::to('accounts/admin');
+        }
+        else
+        {
+            $admins = User::where('username', 'LIKE', '%' . $search . '%')->where('role', 'staff')->paginate(7);
+            $admins->appends($request->only('staff_search'));
+            $count = User::where('username', 'LIKE', '%' . $search . '%')->where('role', 'staff')->count();
+            return view('admin')->with(['admins' => $admins, 'search' => $search, 'count' => $count]);  
+        }
     }
 }

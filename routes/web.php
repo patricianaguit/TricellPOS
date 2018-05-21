@@ -29,4 +29,6 @@ Route::group(['middleware' => ['admin']], function () {
 	Route::post('accounts/add_admin', 'Admin\AdminAccountsController@create');
 	Route::post('accounts/update_admin', 'Admin\AdminAccountsController@edit');
 	Route::get('accounts/search_admin', 'Admin\AdminAccountsController@search');
+	Route::post('accounts/update_member', 'Admin\MemberAccountsController@edit');
+	Route::post('accounts/delete_member', 'Admin\MemberAccountsController@destroy');
 });

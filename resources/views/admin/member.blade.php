@@ -47,13 +47,13 @@ ACCOUNTS
   </div>
 
     <table class="table table-hover">
+    @csrf
       <thead class ="th_css">
         <tr>
           <th scope="col">Card No.</th>
           <th scope="col">Name</th>
           <th scope="col">Contact No.</th>
-          <th scope="col">Email</th>
-          <th scope="col">Card Load</th>
+          <th scope="col">E-mail Address</th>
           <th scope="col" colspan="2">Actions</th>
         </tr>
       </thead>
@@ -64,9 +64,9 @@ ACCOUNTS
           <td>{{$member->firstname . " " . $member->lastname}}</td>
           <td>{{$member->contact_number}}</td>
           <td>{{$member->email}}</td>
-          <td>{{$member->balance->load_balance}}</td>
-          <td><button type="button" class="btn btn-danger del-btn" data-toggle="modal" data-target=".delete"><i class="material-icons md-18">delete</i></button>
-            <button type="button" class="btn btn-primary edit-btn" data-toggle="modal" data-target=".edit"><i class="material-icons md-18">mode_edit</i></button>
+          <td>
+          	<button type="button" id="edit-member" class="btn btn-primary edit-btn" data-toggle="modal" data-target=".edit_member" data-id="{{ $member->id }}" data-cardnumber ="{{ $member->card_number }}" data-firstname="{{$member->firstname}}" data-lastname="{{$member->lastname}}" data-address="{{$member->address}}" data-contact="{{$member->contact_number}}" data-email="{{$member->email}}"><i class="material-icons md-18">mode_edit</i></button>
+          	<button type="button" id="delete-member" class="btn btn-danger del-btn" data-id="{{$member->id}}" data-toggle="modal" data-target=".delete_member"><i class="material-icons md-18">delete</i></button>
           </td>
         </tr>
         @endforeach
@@ -88,7 +88,7 @@ ACCOUNTS
 
         <form>
         <div class="form-group">
-          <div class="containter-fluid">
+          <div class="container-fluid">
           <div class="row">
 
           <div class="col-md-5 mx-auto">
@@ -140,7 +140,7 @@ ACCOUNTS
 
     <!----end of modal---->
     <!----start of modal for EDIT---->
-    <div class="modal fade edit" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal fade edit_member" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
     <div class="modal-content">
       <div class="modal-header">
@@ -149,61 +149,64 @@ ACCOUNTS
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-      <form>
+      <form class="nosubmitform">
       <div class="form-group">
-        <div class="containter-fluid">
-        <div class="row">
-
-        <div class="col-md-5 mx-auto">
+      <input type="hidden" name="member_id" id="member-id-edit">
+      <div class="container-fluid">
+      
+      <div class="row">
+		<div class="col-md-11 mx-auto">
         <label for="card-no" class="col-form-label modal-card">Card #:</label>
-        <input type="text" class="form-control modal-card" id="card-no"></div>
-        <div class="col-md-5 mx-auto">
-        <label for="initial-load" class="col-form-label modal-load">Initial Load:</label>
-        <input type="text" class="form-control" id="initial-load"></div>
-
+        <input type="text" name="card_number" class="form-control modal-card" id="cardnumber-edit">
+        <p id="error-cardnumber-edit" class="error-edit" hidden="hidden"></p></div>
       </div>
 
       <div class="row">
         <div class="col-md-5 mx-auto">
         <label for="first-name" class="col-form-label modal-fname">First Name:</label>
-        <input type="text" class="form-control modal-fname" id="first-name"></div>
+        <input type="text" name="firstname" class="form-control modal-fname" id="firstname-edit">
+    	<p id="error-firstname-edit" class="error-edit" hidden="hidden"></p></div>
         <div class="col-md-5 mx-auto">
         <label for="last-name" class="col-form-label modal-lname">Last Name:</label>
-        <input type="text" class="form-control" id="last-name"></div>
+        <input type="text" name="lastname" class="form-control" id="lastname-edit">
+    	<p id="error-lastname-edit" class="error-edit" hidden="hidden"></p></div>
       </div>
 
       <div class="row">
         <div class="col-md-11 mx-auto">
         <label for="address" class="col-form-label modal-address">Address:</label>
-        <input type="text" class="form-control modal-add" id="address"></div>
+        <input type="text" name="address" class="form-control modal-add" id="address-edit">
+    	<p id="error-address-edit" class="error-edit" hidden="hidden"></div>
       </div>
 
       <div class="row">
 
         <div class="col-md-5 mx-auto">
         <label for="contact" class="col-form-label modal-contact">Contact #:</label>
-        <input type="text" class="form-control" id="contact"></div>
+        <input type="text" name="contact_number" class="form-control" id="contact-edit">
+    	<p id="error-contact-edit" class="error-edit" hidden="hidden"></div>
         <div class="col-md-5 mx-auto">
         <label for="email" class="col-form-label modal-mobile">Email:</label>
-        <input type="text" class="form-control" id="email"></div>
+        <input type="text" name="email" class="form-control" id="email-edit">
+    	<p id="error-email-edit" class="error-edit" hidden="hidden"></div>
 
       </div>
-
+	
       </div>
+      </div>
+
+      <div class="modal-footer" id="modal-footer-member-edit">
+        <button type="submit" class="btn btn-info btn-savemem-modal" id="update-member">Save changes</button>
+        <button type="button" class="btn btn-secondary btn-close-modal" data-dismiss="modal">Close</button>
       </div>
 
     </form>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-info btn-savemem-modal" data-dismiss="modal">Save changes</button>
-        <button type="button" class="btn btn-secondary btn-close-modal" data-dismiss="modal">Close</button>
-
-      </div>
     </div>
     </div>
     </div>
     <!----end of modal---->
     <!----start of modal for DELETE---->
-    <div class="modal fade delete" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal fade delete_member" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
     <div class="modal-content">
     <div class="modal-header">
@@ -214,10 +217,11 @@ ACCOUNTS
     </div>
     <div class="modal-body">
         <center>  <p> Are you sure you want to delete this <b>member?</b></p> </center>
-        </div>
+        <span class="member-id-delete" hidden="hidden"></span>
+    </div>
 
-    <div class="modal-footer">
-      <button type="button" class="btn btn-info btn-savemem-modal" data-dismiss="modal">Yes</button>
+    <div class="modal-footer" id="modal-footer-member-delete">
+      <button type="button" id="destroy-member" class="btn btn-info btn-savemem-modal">Yes</button>
       <button type="button" class="btn btn-secondary btn-close-modal" data-dismiss="modal">No</button>
 
     </div>
@@ -229,4 +233,203 @@ ACCOUNTS
     <!----end of modal---->
 
   </div>
+
+  <script type="text/javascript">
+
+  $('.nosubmitform').submit(function(event){
+    event.preventDefault();
+  });
+
+  $('.edit_member').on('hide.bs.modal', function(){
+    //hide error messages in modal
+    $('#error-cardnumber-edit').attr("hidden", true);
+    $('#error-firstname-edit').attr("hidden", true);
+    $('#error-lastname-edit').attr("hidden", true);
+    $('#error-address-edit').attr("hidden", true);
+    $('#error-contact-edit').attr("hidden", true);
+    $('#error-email-edit').attr("hidden", true);
+
+    //remove css style in modal
+    $('#cardnumber-edit').removeAttr('style');
+    $('#firstname-edit').removeAttr('style');
+    $('#lastname-edit').removeAttr('style');
+    $('#address-edit').removeAttr('style');
+    $('#contact-edit').removeAttr('style');
+    $('#email-edit').removeAttr('style');
+  });
+
+  //success alerts - add, update, delete
+  $(document).ready(function(){
+  if(localStorage.getItem("update"))
+  {
+    swal({
+            title: "Success!",
+            text: "You have successfully updated the member!",
+            icon: "success",
+            button: "Close",
+          });
+    localStorage.clear();
+  }
+  else if(localStorage.getItem("delete"))
+  {
+    swal({
+            title: "Success!",
+            text: "You have successfully deleted the member!",
+            icon: "success",
+            button: "Close",
+          });
+    localStorage.clear(); 
+  }
+  else if(localStorage.getItem("add"))
+  {
+    swal({
+            title: "Success!",
+            text: "You have successfully added a member!",
+            icon: "success",
+            button: "Close",
+          });
+    localStorage.clear(); 
+  }
+  });
+  
+  $(document).on('click', '#edit-member', function() {
+  	$('#member-id-edit').val($(this).data('id'));
+    $('#cardnumber-edit').val($(this).data('cardnumber'));
+    $("#firstname-edit").val($(this).data('firstname'));
+    $("#lastname-edit").val($(this).data('lastname'));
+    $("#address-edit").val($(this).data('address'));
+    $("#contact-edit").val($(this).data('contact'));
+    $("#email-edit").val($(this).data('email'));
+  });	
+
+  $('#modal-footer-member-edit').on('click', '#update-member', function(event) {
+  $.ajax({
+    type: 'POST',
+    url: '/accounts/update_member',
+    data: {
+            '_token': $('input[name=_token]').val(),
+            'member_id': $("#member-id-edit").val(),
+            'card_number': $("#cardnumber-edit").val(),
+            'firstname': $("#firstname-edit").val(),
+            'lastname': $("#lastname-edit").val(),
+            'address': $("#address-edit").val(),
+            'contact': $("#contact-edit").val(),
+            'email': $("#email-edit").val()
+          },
+    success: function(data) {
+      console.log(data);
+      if ((data.errors)) {
+          if(data.errors.card_number)
+          {
+            $('#error-cardnumber-edit').removeAttr("hidden");
+            $('#error-cardnumber-edit').text(data.errors.card_number);
+            $('#cardnumber-edit').css("border", "1px solid #cc0000");
+          }
+          else
+          {
+            $('#error-username-edit').attr("hidden", true);
+            $('#username-edit').removeAttr('style');
+          }
+
+          if(data.errors.firstname)
+          {
+            $('#error-firstname-edit').removeAttr("hidden");
+            $('#error-firstname-edit').text(data.errors.firstname);
+            $('#firstname-edit').css("border", "1px solid #cc0000");
+          }
+          else
+          {
+            $('#error-firstname-edit').attr("hidden", true);
+            $('#firstname-edit').removeAttr('style');
+          }
+
+          if(data.errors.lastname)
+          {
+            $('#error-lastname-edit').removeAttr("hidden");
+            $('#error-lastname-edit').text(data.errors.lastname);
+            $('#lastname-edit').css("border", "1px solid #cc0000");
+          }
+          else
+          {
+            $('#error-lastname-edit').attr("hidden", true);
+            $('#lastname-edit').removeAttr('style');
+          }
+
+          if(data.errors.address)
+          {
+            $('#error-address-edit').removeAttr("hidden");
+            $('#error-address-edit').text(data.errors.address);
+            $('#address-edit').css("border", "1px solid #cc0000");
+          }
+          else
+          {
+            $('#error-address-edit').attr("hidden", true);
+            $('#address-edit').removeAttr('style');
+          }
+
+          if(data.errors.contact)
+          {
+            $('#error-contact-edit').removeAttr("hidden");
+            $('#error-contact-edit').text(data.errors.contact);
+            $('#contact-edit').css("border", "1px solid #cc0000");
+          }
+          else
+          {
+            $('#error-contact-edit').attr("hidden", true);
+            $('#contact-edit').removeAttr('style');
+          }
+
+          if(data.errors.email)
+          {
+            $('#error-email-edit').removeAttr("hidden");
+            $('#error-email-edit').text(data.errors.email);
+            $('#email-edit').css("border", "1px solid #cc0000");
+          }
+          else
+          {
+            $('#error-email-edit').attr("hidden", true);
+            $('#email-edit').removeAttr('style');
+          }
+      }
+      else
+      {
+        localStorage.setItem("update","success");
+        window.location.reload();   
+      }
+      },
+
+        error: function(jqXHR, textStatus, errorThrown) { // What to do if we fail
+        console.log(JSON.stringify(jqXHR));
+        console.log("AJAX error: " + textStatus + ' : ' + errorThrown);
+        }
+    });
+  });
+
+  //delete member
+  $(document).on('click', '#delete-member', function() {
+    $('.member-id-delete').text($(this).data('id'));
+  });
+
+  $('#modal-footer-member-delete').on('click', '#destroy-member', function(){
+  $.ajax({
+    type: 'POST',
+    url: '/accounts/delete_member',
+    data: {
+      '_token': $('input[name=_token]').val(),
+      'member_id': $('.member-id-delete').text()
+    },
+    success: function(data){
+      localStorage.setItem("delete","success");
+      window.location.reload();
+    },
+       error: function(jqXHR, textStatus, errorThrown) { // What to do if we fail
+        console.log(JSON.stringify(jqXHR));
+        console.log("AJAX error: " + textStatus + ' : ' + errorThrown);
+      }
+    });
+  });
+
+
+
+  </script>
 @endsection

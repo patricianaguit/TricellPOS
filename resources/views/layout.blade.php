@@ -39,7 +39,7 @@
             <a class="dropdown-item" href="#">Reload</a>
         </li>
      <li class="nav-item">
-       <a class="nav-link {{ Request::segment(1)=='accounts' ? 'active' : '' }}" href="/accounts/admin">ACCOUNTS</a>
+       <a class="nav-link {{ Request::segment(1)=='accounts' ? 'active' : '' }}" href="/accounts/members">ACCOUNTS</a>
      </li>
 	 <li class="nav-item">
        <a class="nav-link" href="inventory.html">INVENTORY</a>

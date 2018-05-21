@@ -35,7 +35,7 @@ ACCOUNTS
   <div class="col-md-4">
     <form class="form ml-auto" action="/accounts/search_admin" method="GET">
       <div class="input-group">
-          <input class="form-control" type="text" name="admin_search" placeholder="Search by Username" aria-label="Search" style="padding-left: 20px; border-radius: 40px;" id="admin-search">
+          <input class="form-control" type="text" name="admin_search" placeholder="Search" aria-label="Search" style="padding-left: 20px; border-radius: 40px;" id="admin-search">
           <div class="input-group-addon" style="margin-left: -50px; z-index: 3; border-radius: 40px; background-color: transparent; border:none;">
             <button class="btn btn-outline-info btn-sm" type="submit" style="border-radius: 100px;" id="search-btn"><i class="material-icons">search</i></button>
           </div>
@@ -54,7 +54,8 @@ ACCOUNTS
         <tr>
           <th scope="col">Username</th>
           <th scope="col">Name</th>
-          <th scope="col">Email</th>
+          <th scope="col">Contact No.</th>
+          <th scope="col">E-mail Address</th>
           <th scope="col">Action</th>
         </tr>
       </thead>
@@ -63,6 +64,7 @@ ACCOUNTS
         <tr>
           <td>{{ $admin->username }}</td>
           <td>{{ $admin->firstname . " " . $admin->lastname }}</td>
+          <td>{{ $admin->contact_number }}</td>
           <td>{{ $admin->email }}</td>
           <td>
             <button type="button" id="view-admin" class="btn btn-secondary view-btn" data-toggle="modal" data-target=".view_admin" data-id="{{ $admin->id}}" data-username ="{{ $admin->username }}" data-firstname="{{$admin->firstname}}" data-lastname="{{$admin->lastname}}" data-address="{{$admin->address}}" data-contact="{{$admin->contact_number}}" data-email="{{$admin->email}}"><i class="material-icons md-18">info_outline</i></button>
@@ -87,7 +89,7 @@ ACCOUNTS
 
         <form id="add-form" class="nosubmitform">
         <div class="form-group">
-          <div class="containter-fluid">
+          <div class="container-fluid">
           <div class="row">
 
           <div class="col-md-11 mx-auto">
@@ -159,12 +161,12 @@ ACCOUNTS
       <fieldset id="admin-edit-fieldset" disabled>
         <input type="hidden" name="admin_id" id="admin-id-view">
         <div class="form-group">
-          <div class="containter-fluid">
+          <div class="container-fluid">
 
           <div class="col-md-11 mx-auto">
           <label for="username" class="col-form-label modal-user">Username:</label>
           <input type="text" name="username" class="form-control modal-card" id="username-view">
-          <p id="error-username-view" class="error-add" hidden="hidden"></p></div> </div>
+          <p id="error-username-view" class="error-add" hidden="hidden"></p></div> 
 
           <div class="col-md-11 mx-auto">
           <label for="password" class="col-form-label modal-password">Password:</label>

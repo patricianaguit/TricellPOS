@@ -34,7 +34,7 @@ ACCOUNTS
   <div class="col-md-4">
     <form class="form ml-auto" action="/accounts/search_staff" method="GET">
       <div class="input-group">
-          <input class="form-control" type="text" name ="staff_search" placeholder="Search by Username" aria-label="Search" style="padding-left: 20px; border-radius: 40px;" id="staff-search">
+          <input class="form-control" type="text" name ="staff_search" placeholder="Search" aria-label="Search" style="padding-left: 20px; border-radius: 40px;" id="staff-search">
           <div class="input-group-addon" style="margin-left: -50px; z-index: 3; border-radius: 40px; background-color: transparent; border:none;">
             <button class="btn btn-outline-info btn-sm" type="submit" style="border-radius: 100px;" id="staff-search-submit"><i class="material-icons">search</i></button>
           </div>
@@ -45,12 +45,13 @@ ACCOUNTS
   @if(!empty($search))
   <center><p> Showing {{$count }} result<?php if($count > 1){ echo 's'; }else{ echo ''; } ?> for <b> {{ $search }} </b> </p></center>
   @endif
-  <table class="table table-hover" id="table">
+  <table class="table table-hover">
     @csrf
       <thead class ="th_css">
         <tr>
           <th scope="col">Username</th>
           <th scope="col">Name</th>
+          <th scope="col">Contact Number</th>
           <th scope="col">E-mail Address</th>
           <th scope="col">Actions</th>
         </tr>
@@ -60,6 +61,7 @@ ACCOUNTS
         <tr class="staff{{$staff->id}}">
           <td>{{ $staff->username }}</td>
           <td>{{ $staff->firstname . " " . $staff->lastname }}</td>
+          <td>{{ $staff->contact_number }}</td>
           <td>{{ $staff->email }}</td>
           <td>
             <button type="button" id="edit-staff" class="btn btn-primary edit-btn" data-toggle="modal" data-target=".edit_staff" data-id="{{ $staff->id }}" data-username ="{{ $staff->username }}" data-firstname="{{$staff->firstname}}" data-lastname="{{$staff->lastname}}" data-address="{{$staff->address}}" data-contact="{{$staff->contact_number}}" data-email="{{$staff->email}}"><i class="material-icons md-18">mode_edit</i></button>
@@ -85,7 +87,7 @@ ACCOUNTS
 
         <form id="add-form" class="nosubmitform">
         <div class="form-group">
-          <div class="containter-fluid">
+          <div class="container-fluid">
           <div class="row">  
           <div class="col-md-11 mx-auto">
           <label for="username" class="col-form-label modal-user">Username:</label>
@@ -157,7 +159,7 @@ ACCOUNTS
       <form id="edit-form" class="nosubmitform">
       <input type="hidden" name="staff_id" id="staff-id-edit">
       <div class="form-group">
-        <div class="containter-fluid">
+        <div class="container-fluid">
         <div class="row">
         <div class="col-md-11 mx-auto">
         <label for="username" class="col-form-label modal-user">Username:</label>
@@ -598,7 +600,7 @@ ACCOUNTS
   });
 
 
-  //delete staff'
+  //delete staff
   $(document).on('click', '#delete-staff', function() {
     $('.staff-id-delete').text($(this).data('id'));
   });

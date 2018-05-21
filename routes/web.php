@@ -15,17 +15,18 @@ Route::get('/', 'LoginController@index');
 Route::post('verify', 'LoginController@verify'); 
 Route::get('logout', 'LoginController@logout');
 
-// Route::group(['middleware' => ['admin']], function () {
-	Route::get('accounts/admin', 'AdminAccountsController@index');
-	Route::get('accounts/staff', 'StaffAccountsController@index');
-	Route::post('accounts/create_admin', 'AdminAccountsController@create');
-	Route::get('accounts/view_admindetails', 'AdminAccountsController@show');
-	Route::post('accounts/add_staff', 'StaffAccountsController@create');
-	Route::get('accounts/edit_staff', 'StaffAccountsController@show');
-	Route::post('accounts/update_staff', 'StaffAccountsController@edit');
-	Route::post('accounts/delete_staff', 'StaffAccountsController@destroy');
-	Route::get('accounts/search_staff', 'StaffAccountsController@search');
-	Route::post('accounts/add_admin', 'AdminAccountsController@create');
-	Route::post('accounts/update_admin', 'AdminAccountsController@edit');
-	Route::get('accounts/search_admin', 'AdminAccountsController@search');
-// });
+Route::group(['middleware' => ['admin']], function () {
+	Route::get('accounts/members', 'Admin\MemberAccountsController@index');
+	Route::get('accounts/admin', 'Admin\AdminAccountsController@index');
+	Route::get('accounts/staff', 'Admin\StaffAccountsController@index');
+	Route::post('accounts/create_admin', 'Admin\AdminAccountsController@create');
+	Route::get('accounts/view_admindetails', 'Admin\AdminAccountsController@show');
+	Route::post('accounts/add_staff', 'Admin\StaffAccountsController@create');
+	Route::get('accounts/edit_staff', 'Admin\StaffAccountsController@show');
+	Route::post('accounts/update_staff', 'Admin\StaffAccountsController@edit');
+	Route::post('accounts/delete_staff', 'Admin\StaffAccountsController@destroy');
+	Route::get('accounts/search_staff', 'Admin\StaffAccountsController@search');
+	Route::post('accounts/add_admin', 'Admin\AdminAccountsController@create');
+	Route::post('accounts/update_admin', 'Admin\AdminAccountsController@edit');
+	Route::get('accounts/search_admin', 'Admin\AdminAccountsController@search');
+});

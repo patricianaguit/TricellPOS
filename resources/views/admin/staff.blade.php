@@ -16,9 +16,9 @@ ACCOUNTS
   <nav>
     <h3 class="title">Staff</h3>
     <div class="nav nav-tabs justify-content-end memberstab" id="nav-tab" role="tablist">
-      <a class="nav-item nav-link " id="nav-admin-tab"  href="/accounts/admin" role="tab" aria-controls="nav-admin" aria-selected="true">Admin</a>
+      <a class="nav-item nav-link" id="nav-members-tab" href="/accounts/members" role="tab" aria-controls="nav-members" aria-selected="false">Members</a>
       <a class="nav-item nav-link active " id="nav-staff-tab"  href="/accounts/staff" role="tab" aria-controls="nav-staff" aria-selected="false">Staff</a>
-
+      <a class="nav-item nav-link " id="nav-admin-tab"  href="/accounts/admin" role="tab" aria-controls="nav-admin" aria-selected="true">Admin</a>
     </div>
   </nav>
   <!--end of members nav---->

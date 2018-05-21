@@ -57,7 +57,7 @@
             <a class="dropdown-item" href="#">Backup</a>
             <a class="dropdown-item" href="#">Profile</a>
             <a class="dropdown-item" href="#">Shutdown</a>
-            <a class="dropdown-item" href="#">Logout</a>
+            <a class="dropdown-item" href="/logout">Logout</a>
 
         </li>
         </ul>

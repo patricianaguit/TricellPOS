@@ -39,4 +39,8 @@ class User extends Model implements
         'password', 'remember_token',
     ];
 
+    public function balance()
+    {
+        return $this->hasOne('App\Balance', 'id');
+    }
 }

@@ -1,7 +1,8 @@
 <?php
+    
+namespace App\Http\Controllers\Admin;
 
-namespace App\Http\Controllers;
-
+use App\Http\Controllers\Controller;
 use App\User;
 use Hash;
 use Response;
@@ -10,12 +11,12 @@ use Illuminate\Http\Request;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Redirect;
 
-class StaffAccountsController extends Controller
+class MemberAccountsController extends Controller
 {
     public function index()
     {
-        $staffs = User::where('role', 'staff')->orderBy('id', 'desc')->paginate(7);
-        return view('staff')->with('staffs', $staffs);  
+        $members = User::with('Balance')->where('role', 'member')->orderBy('id', 'desc')->paginate(7);
+        return view('admin.member')->with('members', $members);  
     }
 
     public function create(Request $request)
@@ -103,7 +104,7 @@ class StaffAccountsController extends Controller
             $staffs = User::where('username', 'LIKE', '%' . $search . '%')->where('role', 'staff')->paginate(7);
             $staffs->appends($request->only('staff_search'));
             $count = User::where('username', 'LIKE', '%' . $search . '%')->where('role', 'staff')->count();
-            return view('staff')->with(['staffs' => $staffs, 'search' => $search, 'count' => $count]);  
+            return view('admin.staff')->with(['staffs' => $staffs, 'search' => $search, 'count' => $count]);  
         }
     }
 }

@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\Controller;
 use App\User;
 use Hash;
 use Response;
@@ -15,7 +16,7 @@ class AdminAccountsController extends Controller
     public function index()
     {
         $admins = User::where('role', 'admin')->orderBy('id', 'desc')->paginate(7);
-        return view('admin')->with('admins', $admins);  
+        return view('admin.admin')->with('admins', $admins);  
     }
 
     public function create(Request $request)
@@ -98,7 +99,7 @@ class AdminAccountsController extends Controller
             $admins = User::where('username', 'LIKE', '%' . $search . '%')->where('role', 'staff')->paginate(7);
             $admins->appends($request->only('admin_search'));
             $count = User::where('username', 'LIKE', '%' . $search . '%')->where('role', 'staff')->count();
-            return view('admin')->with(['admins' => $admins, 'search' => $search, 'count' => $count]);  
+            return view('admin.admin')->with(['admins' => $admins, 'search' => $search, 'count' => $count]);  
         }
     }
 }

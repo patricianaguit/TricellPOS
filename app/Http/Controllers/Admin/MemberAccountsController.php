@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\User;
+use DB;
+use App\Balance;
 use Hash;
 use Response;
 use Validator;
@@ -22,9 +24,8 @@ class MemberAccountsController extends Controller
     public function create(Request $request)
     {
         $rules = array(
-        'username' => 'required|unique:users,username',
-        'password' => 'required|confirmed',
-        'password_confirmation' => 'required',
+        'card_number' => 'required|unique:users,card_number',
+        'load_balance' => 'required',
         'firstname' => 'required',
         'lastname' => 'required',
         'address' => 'required',
@@ -39,16 +40,18 @@ class MemberAccountsController extends Controller
         }
         else
         {
-            $staff = new User;
-            $staff->username = $request->username;
-            $staff->password = Hash::make($request->password);
-            $staff->firstname = $request->firstname;
-            $staff->lastname = $request->lastname;
-            $staff->address = $request->address;
-            $staff->contact_number = $request->contact;
-            $staff->email = $request->email;
-            $staff->role = 'staff';
-            $staff->save();
+            $member = new User;
+            $member->card_number = $request->card_number;
+            $member->firstname = $request->firstname;
+            $member->lastname = $request->lastname;
+            $member->address = $request->address;
+            $member->contact_number = $request->contact;
+            $member->email = $request->email;
+            $member->role = 'member';
+            $member->save();
+
+            $member_load = new Balance(['load_balance' => $request->load_balance]);
+            $member->balance()->save($member_load);
         }
     }
 
@@ -90,18 +93,26 @@ class MemberAccountsController extends Controller
 
     public function search(Request $request)
     {
-        $search = $request->staff_search;
+        $search = $request->member_search;
 
         if($search == "")
         {
-            return Redirect::to('accounts/staff');
+            return Redirect::to('accounts/members');
         }
         else
         {
-            $staffs = User::where('username', 'LIKE', '%' . $search . '%')->orWhere('firstname', 'LIKE', '%' . $search . '%')->orwhere('lastname', 'LIKE', '%' . $search . '%')->orWhere(DB::raw('concat(firstname," ",lastname)'), 'LIKE', '%' . $search . '%')->where('role', 'staff')->paginate(7);
-            $staffs->appends($request->only('staff_search'));
-            $count = $staffs->count();
-            return view('admin.staff')->with(['staffs' => $staffs, 'search' => $search, 'count' => $count]);  
+            $members = User::where('role', 'member')->where(function($query) use ($request, $search)
+                {
+                    $query->where('card_number', 'LIKE', '%' . $search . '%')->orWhere('firstname', 'LIKE', '%' . $search . '%')->orwhere('lastname', 'LIKE', '%' . $search . '%')->orWhere(DB::raw('concat(firstname," ",lastname)'), 'LIKE', '%' . $search . '%');
+                })->paginate(7);
+
+            $members->appends($request->only('member_search'));
+            $count = $members->count();
+            $totalcount = User::where('role', 'member')->where(function($query) use ($request, $search)
+                {
+                    $query->where('card_number', 'LIKE', '%' . $search . '%')->orWhere('firstname', 'LIKE', '%' . $search . '%')->orwhere('lastname', 'LIKE', '%' . $search . '%')->orWhere(DB::raw('concat(firstname," ",lastname)'), 'LIKE', '%' . $search . '%');
+                })->count();
+            return view('admin.member')->with(['members' => $members, 'search' => $search, 'count' => $count, 'totalcount' => $totalcount]);  
         }
     }
 }

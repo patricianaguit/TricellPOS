@@ -35,16 +35,24 @@ ACCOUNTS
     </button>
   </div>
   <div class="col-md-4">
-    <form class="form ml-auto" >
+    <form class="form ml-auto" action="/accounts/search_member" method="GET">
 			<div class="input-group">
-    			<input class="form-control" type="text" placeholder="Search" aria-label="Search" style="padding-left: 20px; border-radius: 40px;" id="mysearch">
+    			<input class="form-control" type="text" name ="member_search" placeholder="Search" aria-label="Search" style="padding-left: 20px; border-radius: 40px;" id="member-search">
     			<div class="input-group-addon" style="margin-left: -50px; z-index: 3; border-radius: 40px; background-color: transparent; border:none;">
     				<button class="btn btn-outline-info btn-sm" type="submit" style="border-radius: 100px;" id="search-btn"><i class="material-icons">search</i></button>
     			</div>
 			</div>
 		</form>
-  </div>
-  </div>
+  	</div>
+  	</div>
+
+	@if(!empty($search))
+    	@if($totalcount > 7)
+    		<center><p> Showing {{$count}} out of {{$totalcount}} result<?php if($count > 1){ echo 's'; }else{ echo ''; } ?> for <b> {{ $search }} </b> </p></center>
+    	@else
+    		<center><p> Showing {{$count}} result<?php if($count > 1){ echo 's'; }else{ echo ''; } ?> for <b> {{ $search }} </b> </p></center>
+    	@endif
+  	@endif
 
     <table class="table table-hover">
     @csrf
@@ -53,7 +61,7 @@ ACCOUNTS
           <th scope="col">Card No.</th>
           <th scope="col">Name</th>
           <th scope="col">Contact No.</th>
-          <th scope="col">E-mail Address</th>
+          <th scope="col">Load</th>
           <th scope="col" colspan="2">Actions</th>
         </tr>
       </thead>
@@ -63,7 +71,7 @@ ACCOUNTS
           <th scope="row">{{$member->card_number}}</th>
           <td>{{$member->firstname . " " . $member->lastname}}</td>
           <td>{{$member->contact_number}}</td>
-          <td>{{$member->email}}</td>
+          <td>{{$member->balance->load_balance}}</td>
           <td>
           	<button type="button" id="edit-member" class="btn btn-primary edit-btn" data-toggle="modal" data-target=".edit_member" data-id="{{ $member->id }}" data-cardnumber ="{{ $member->card_number }}" data-firstname="{{$member->firstname}}" data-lastname="{{$member->lastname}}" data-address="{{$member->address}}" data-contact="{{$member->contact_number}}" data-email="{{$member->email}}"><i class="material-icons md-18">mode_edit</i></button>
           	<button type="button" id="delete-member" class="btn btn-danger del-btn" data-id="{{$member->id}}" data-toggle="modal" data-target=".delete_member"><i class="material-icons md-18">delete</i></button>
@@ -76,7 +84,7 @@ ACCOUNTS
     <div>{{$members->links()}}</div>
 
     <!----start of modal for add members---->
-    <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal fade bd-example-modal-lg add_member" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
      <div class="modal-dialog modal-lg">
       <div class="modal-content">
         <div class="modal-header">
@@ -92,37 +100,44 @@ ACCOUNTS
           <div class="row">
 
           <div class="col-md-5 mx-auto">
-          <label for="card-no" class="col-form-label modal-card">Card #:</label>
-          <input type="text" class="form-control modal-card" id="card-no"></div>
+          <label for="card-no" class="col-form-label modal-card">Card Number:</label>
+          <input type="text" name="card_number" class="form-control modal-card" id="cardnumber-add">
+      	  <p id="error-cardnumber-add" class="error-add" hidden="hidden"></p></div>
           <div class="col-md-5 mx-auto">
           <label for="initial-load" class="col-form-label modal-load">Initial Load:</label>
-          <input type="text" class="form-control" id="initial-load"></div>
+          <input type="text" name="load_balance" class="form-control" id="load-add">
+      	  <p id="error-load-add" class="error-add" hidden="hidden"></p></div>
 
         </div>
 
         <div class="row">
           <div class="col-md-5 mx-auto">
           <label for="first-name" class="col-form-label modal-fname">First Name:</label>
-          <input type="text" class="form-control modal-fname" id="first-name"></div>
+          <input type="text" name="firstname" class="form-control modal-fname" id="firstname-add">
+      	  <p id="error-firstname-add" class="error-add" hidden="hidden"></p></div>
           <div class="col-md-5 mx-auto">
           <label for="last-name" class="col-form-label modal-lname">Last Name:</label>
-          <input type="text" class="form-control" id="last-name"></div>
+          <input type="text" name="lastname" class="form-control" id="lastname-add">
+          <p id="error-lastname-add" class="error-add" hidden="hidden"></p></div>
         </div>
 
         <div class="row">
           <div class="col-md-11 mx-auto">
           <label for="address" class="col-form-label modal-address">Address:</label>
-          <input type="text" class="form-control modal-add" id="address"></div>
+          <input type="text" name="address" class="form-control modal-add" id="address-add">
+      	  <p id="error-address-add" class="error-add" hidden="hidden"></p></div>
         </div>
 
         <div class="row">
 
           <div class="col-md-5 mx-auto">
           <label for="contact" class="col-form-label modal-contact">Contact #:</label>
-          <input type="text" class="form-control" id="contact"></div>
+          <input type="text" name="contact_number" class="form-control" id="contact-add">
+          <p id="error-contact-add" class="error-add" hidden="hidden"></p></div>
           <div class="col-md-5 mx-auto">
           <label for="email" class="col-form-label modal-mobile">Email:</label>
-          <input type="text" class="form-control" id="email"></div>
+          <input type="text" name="email" class="form-control" id="email-add">
+      	  <p id="error-email-add" class="error-add" hidden="hidden"></p></div>
 
         </div>
 
@@ -130,8 +145,8 @@ ACCOUNTS
         </div>
 
       </form>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-info btn-savemem-modal" data-dismiss="modal">Save New Member</button>
+        <div class="modal-footer" id="modal-footer-member-add">
+          <button type="button" id="add-member" class="btn btn-info btn-savemem-modal">Save New Member</button>
           <button type="button" class="btn btn-secondary btn-close-modal" data-dismiss="modal">Close</button>
         </div>
       </div>
@@ -156,7 +171,7 @@ ACCOUNTS
       
       <div class="row">
 		<div class="col-md-11 mx-auto">
-        <label for="card-no" class="col-form-label modal-card">Card #:</label>
+        <label for="card-no" class="col-form-label modal-card">Card Number:</label>
         <input type="text" name="card_number" class="form-control modal-card" id="cardnumber-edit">
         <p id="error-cardnumber-edit" class="error-edit" hidden="hidden"></p></div>
       </div>
@@ -240,6 +255,33 @@ ACCOUNTS
     event.preventDefault();
   });
 
+  $('.add_member').on('hide.bs.modal', function(){
+    //hide error messages in modal
+    $("#cardnumber-add").val(""),
+    $("#load-add").val(""),
+    $("#firstname-add").val(""),
+    $("#lastname-add").val(""),
+    $("#address-add").val(""),
+    $("#contact-add").val(""),
+    $("#email-add").val("")
+    $('#error-cardnumber-add').attr("hidden", true);
+    $('#error-load-add').attr("hidden", true);
+    $('#error-firstname-add').attr("hidden", true);
+    $('#error-lastname-add').attr("hidden", true);
+    $('#error-address-add').attr("hidden", true);
+    $('#error-contact-add').attr("hidden", true);
+    $('#error-email-add').attr("hidden", true);
+
+    //remove css style in modal
+    $('#cardnumber-add').removeAttr('style');
+    $('#load-add').removeAttr('style');
+    $('#firstname-add').removeAttr('style');
+    $('#lastname-add').removeAttr('style');
+    $('#address-add').removeAttr('style');
+    $('#contact-add').removeAttr('style');
+    $('#email-add').removeAttr('style');
+  });
+
   $('.edit_member').on('hide.bs.modal', function(){
     //hide error messages in modal
     $('#error-cardnumber-edit').attr("hidden", true);
@@ -292,6 +334,122 @@ ACCOUNTS
   }
   });
   
+  //add staff
+  $('#modal-footer-member-add').on('click', '#add-member', function(event) {
+  $.ajax({
+    type: 'POST',
+    url: '/accounts/add_member',
+    data: {
+            '_token': $('input[name=_token]').val(),  
+            'card_number': $("#cardnumber-add").val(),
+            'load_balance': $("#load-add").val(),
+            'firstname': $("#firstname-add").val(),
+            'lastname': $("#lastname-add").val(),
+            'address': $("#address-add").val(),
+            'contact': $("#contact-add").val(),
+            'email': $("#email-add").val()
+          },
+    success: function(data) {
+      console.log(data);
+      if ((data.errors)) {
+          if(data.errors.card_number)
+          {
+            $('#error-cardnumber-add').removeAttr("hidden");
+            $('#error-cardnumber-add').text(data.errors.card_number);
+            $('#cardnumber-add').css("border", "1px solid #cc0000");
+          }
+          else
+          {
+            $('#error-cardnumber-add').attr("hidden", true);
+            $('#cardnumber-add').removeAttr('style');
+          }
+
+          if(data.errors.load_balance)
+          {
+            $('#error-load-add').removeAttr("hidden");
+            $('#error-load-add').text(data.errors.load_balance);
+            $('#load-add').css("border", "1px solid #cc0000");
+          }
+          else
+          {
+            $('#error-load-add').attr("hidden", true);
+            $('#load-add').removeAttr('style');
+          }
+
+          if(data.errors.firstname)
+          {
+            $('#error-firstname-add').removeAttr("hidden");
+            $('#error-firstname-add').text(data.errors.firstname);
+            $('#firstname-add').css("border", "1px solid #cc0000");
+          }
+          else
+          {
+            $('#error-firstname-add').attr("hidden", true);
+            $('#firstname-add').removeAttr('style');
+          }
+
+          if(data.errors.lastname)
+          {
+            $('#error-lastname-add').removeAttr("hidden");
+            $('#error-lastname-add').text(data.errors.lastname);
+            $('#lastname-add').css("border", "1px solid #cc0000");
+          }
+          else
+          {
+            $('#error-lastname-add').attr("hidden", true);
+            $('#lastname-add').removeAttr('style');
+          }
+
+          if(data.errors.address)
+          {
+            $('#error-address-add').removeAttr("hidden");
+            $('#error-address-add').text(data.errors.address);
+            $('#address-add').css("border", "1px solid #cc0000");
+          }
+          else
+          {
+            $('#error-address-add').attr("hidden", true);
+            $('#address-add').removeAttr('style');
+          }
+
+          if(data.errors.contact)
+          {
+            $('#error-contact-add').removeAttr("hidden");
+            $('#error-contact-add').text(data.errors.contact);
+            $('#contact-add').css("border", "1px solid #cc0000");
+          }
+          else
+          {
+            $('#error-contact-add').attr("hidden", true);
+            $('#contact-add').removeAttr('style');
+          }
+
+          if(data.errors.email)
+          {
+            $('#error-email-add').removeAttr("hidden");
+            $('#error-email-add').text(data.errors.email);
+            $('#email-add').css("border", "1px solid #cc0000");
+          }
+          else
+          {
+            $('#error-email-add').attr("hidden", true);
+            $('#email-add').removeAttr('style');
+          }
+      }
+      else
+      {
+        localStorage.setItem("add","success");
+        window.location.reload();
+      }
+    },
+    error: function(jqXHR, textStatus, errorThrown) { // What to do if we fail
+      console.log(JSON.stringify(jqXHR));
+      console.log("AJAX error: " + textStatus + ' : ' + errorThrown);
+    }
+  });
+  });
+
+  //edit member
   $(document).on('click', '#edit-member', function() {
   	$('#member-id-edit').val($(this).data('id'));
     $('#cardnumber-edit').val($(this).data('cardnumber'));

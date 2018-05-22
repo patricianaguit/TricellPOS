@@ -97,10 +97,18 @@ class AdminAccountsController extends Controller
         }
         else
         {
-            $admins = User::where('username', 'LIKE', '%' . $search . '%')->orWhere('firstname', 'LIKE', '%' . $search . '%')->orwhere('lastname', 'LIKE', '%' . $search . '%')->orWhere(DB::raw('concat(firstname," ",lastname)'), 'LIKE', '%' . $search . '%')->where('role', 'admin')->paginate(7);
+            $admins = User::where('role', 'admin')->where(function($query) use ($request, $search)
+                {
+                    $query->where('username', 'LIKE', '%' . $search . '%')->orWhere('firstname', 'LIKE', '%' . $search . '%')->orwhere('lastname', 'LIKE', '%' . $search . '%')->orWhere(DB::raw('concat(firstname," ",lastname)'), 'LIKE', '%' . $search . '%');
+                })->paginate(7);
+
             $admins->appends($request->only('admin_search'));
-            $count = User::where('username', 'LIKE', '%' . $search . '%')->orWhere('firstname', 'LIKE', '%' . $search . '%')->orwhere('lastname', 'LIKE', '%' . $search . '%')->orWhere(DB::raw('concat(firstname," ",lastname)'), 'LIKE', '%' . $search . '%')->where('role', 'admin')->count();
-            return view('admin.admin')->with(['admins' => $admins, 'search' => $search, 'count' => $count]);  
+            $count = $admins->count();
+            $totalcount = User::where('role', 'admin')->where(function($query) use ($request, $search)
+                {
+                    $query->where('username', 'LIKE', '%' . $search . '%')->orWhere('firstname', 'LIKE', '%' . $search . '%')->orwhere('lastname', 'LIKE', '%' . $search . '%')->orWhere(DB::raw('concat(firstname," ",lastname)'), 'LIKE', '%' . $search . '%');
+                })->count();
+            return view('admin.admin')->with(['admins' => $admins, 'search' => $search, 'count' => $count, 'totalcount' => $totalcount]);  
         }
     }
 }

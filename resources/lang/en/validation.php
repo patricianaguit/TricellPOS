@@ -119,6 +119,8 @@ return [
 
        
     'attributes' => [
+        'card_number' => 'Card Number',
+        'load_balance' => 'Load',
         'username' => 'Username',
         'password' => 'Password',
         'password_confirmation' => 'Confirm Password',

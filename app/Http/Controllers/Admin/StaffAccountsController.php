@@ -102,10 +102,19 @@ class StaffAccountsController extends Controller
         }
         else
         {
-            $staffs = User::where('username', 'LIKE', '%' . $search . '%')->orWhere('firstname', 'LIKE', '%' . $search . '%')->orwhere('lastname', 'LIKE', '%' . $search . '%')->orWhere(DB::raw('concat(firstname," ",lastname)'), 'LIKE', '%' . $search . '%')->where('role', 'staff')->paginate(7);
+            $staffs = User::where('role', 'staff')->where(function($query) use ($request, $search)
+                {
+                    $query->where('username', 'LIKE', '%' . $search . '%')->orWhere('firstname', 'LIKE', '%' . $search . '%')->orwhere('lastname', 'LIKE', '%' . $search . '%')->orWhere(DB::raw('concat(firstname," ",lastname)'), 'LIKE', '%' . $search . '%');
+                })->paginate(7);
+
             $staffs->appends($request->only('staff_search'));
-            $count = User::where('username', 'LIKE', '%' . $search . '%')->orWhere('firstname', 'LIKE', '%' . $search . '%')->orwhere('lastname', 'LIKE', '%' . $search . '%')->orWhere(DB::raw('concat(firstname," ",lastname)'), 'LIKE', '%' . $search . '%')->where('role', 'staff')->count();
-            return view('admin.staff')->with(['staffs' => $staffs, 'search' => $search, 'count' => $count]);  
+            $count = $staffs->count();
+            $totalcount = User::where('role', 'staff')->where(function($query) use ($request, $search)
+                {
+                    $query->where('username', 'LIKE', '%' . $search . '%')->orWhere('firstname', 'LIKE', '%' . $search . '%')->orwhere('lastname', 'LIKE', '%' . $search . '%')->orWhere(DB::raw('concat(firstname," ",lastname)'), 'LIKE', '%' . $search . '%');
+                })->count();
+
+            return view('admin.staff')->with(['staffs' => $staffs, 'search' => $search, 'count' => $count, 'totalcount' => $totalcount]);  
         }
     }
 }

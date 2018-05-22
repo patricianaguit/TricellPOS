@@ -45,7 +45,11 @@ ACCOUNTS
   </div>
 
   @if(!empty($search))
-  <center><p> Showing {{$count }} result<?php if($count > 1){ echo 's'; }else{ echo ''; } ?> for <b> {{ $search }} </b> </p></center>
+    @if($totalcount > 7)
+      <center><p> Showing {{$count}} out of {{$totalcount}} result<?php if($count > 1){ echo 's'; }else{ echo ''; } ?> for <b> {{ $search }} </b> </p></center>
+    @else
+      <center><p> Showing {{$count}} result<?php if($count > 1){ echo 's'; }else{ echo ''; } ?> for <b> {{ $search }} </b> </p></center>
+    @endif
   @endif
 
   <table class="table table-hover">

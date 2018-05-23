@@ -38,14 +38,12 @@
             <a class="dropdown-item" href="#">Sales</a>
             <a class="dropdown-item" href="#">Reload</a>
         </li>
+      
+     <li class="nav-item">
+       <a class="nav-link {{ Request::segment(1)=='inventory' ? 'active' : '' }}" href="/inventory">INVENTORY</a>
+     </li>
      <li class="nav-item">
        <a class="nav-link {{ Request::segment(1)=='accounts' ? 'active' : '' }}" href="/accounts/members">ACCOUNTS</a>
-     </li>
-	 <li class="nav-item">
-       <a class="nav-link" href="inventory.html">INVENTORY</a>
-     </li>
-     <li class="nav-item">
-       <a class="nav-link" href="#">SERVICES</a>
      </li>
         </ul>
         <ul class="navbar-nav ml-auto"> <!--right links-->

@@ -33,4 +33,6 @@ Route::group(['middleware' => ['admin']], function () {
 	Route::post('accounts/delete_member', 'Admin\MemberAccountsController@destroy');
 	Route::post('accounts/add_member', 'Admin\MemberAccountsController@create');
 	Route::get('accounts/search_member', 'Admin\MemberAccountsController@search');
+	Route::get('inventory', 'Admin\InventoryController@index');
+	Route::get('inventory/search', 'Admin\InventoryController@search');
 });

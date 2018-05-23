@@ -62,6 +62,7 @@ ACCOUNTS
           <th scope="col">Name</th>
           <th scope="col">Contact No.</th>
           <th scope="col">Load</th>
+          <th scope="col">Points</th>
           <th scope="col" colspan="2">Actions</th>
         </tr>
       </thead>
@@ -71,7 +72,8 @@ ACCOUNTS
           <th scope="row">{{$member->card_number}}</th>
           <td>{{$member->firstname . " " . $member->lastname}}</td>
           <td>{{$member->contact_number}}</td>
-          <td>{{$member->balance->load_balance}}</td>
+          <td>₱ {{$member->balance->load_balance}}</td>
+          <td>{{$member->balance->points}}</td>
           <td>
           	<button type="button" id="edit-member" class="btn btn-primary edit-btn" data-toggle="modal" data-target=".edit_member" data-id="{{ $member->id }}" data-cardnumber ="{{ $member->card_number }}" data-firstname="{{$member->firstname}}" data-lastname="{{$member->lastname}}" data-address="{{$member->address}}" data-contact="{{$member->contact_number}}" data-email="{{$member->email}}"><i class="material-icons md-18">mode_edit</i></button>
           	<button type="button" id="delete-member" class="btn btn-danger del-btn" data-id="{{$member->id}}" data-toggle="modal" data-target=".delete_member"><i class="material-icons md-18">delete</i></button>

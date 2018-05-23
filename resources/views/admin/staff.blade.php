@@ -65,7 +65,7 @@ ACCOUNTS
       <tbody class="td_class">
         @foreach($staffs as $staff)
         <tr class="staff{{$staff->id}}">
-          <td>{{ $staff->username }}</td>
+          <td><b>{{ $staff->username }}</b></td>
           <td>{{ $staff->firstname . " " . $staff->lastname }}</td>
           <td>{{ $staff->contact_number }}</td>
           <td>{{ $staff->email }}</td>

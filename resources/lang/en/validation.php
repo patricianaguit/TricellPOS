@@ -101,8 +101,11 @@ return [
     */
 
     'custom' => [
-        'attribute-name' => [
-            'rule-name' => 'custom-message',
+        'price' => [
+            'numeric' => 'The :attribute field should contain numbers and periods only.',
+        ],
+        'product_qty' => [
+            'integer' => 'The :attribute field should contain whole numbers only.',
         ],
     ],
 
@@ -128,7 +131,11 @@ return [
         'lastname' => 'Last Name',
         'address' => 'Address',
         'contact' => 'Contact Number',
-        'email' => 'E-mail Address'
+        'email' => 'E-mail Address',
+        'product_name' => 'Item Name',
+        'product_desc' => 'Item Description',
+        'price' => 'Price',
+        'product_qty' => 'Stock on Hand'
     ],
 
 ];

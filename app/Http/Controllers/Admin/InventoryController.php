@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Product;
+use Response;
+use Validator;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\RedirectResponse;
@@ -15,6 +17,40 @@ class InventoryController extends Controller
     {
     	$products = Product::orderBy('product_name', 'asc')->paginate(7);
     	return view('admin.inventory')->with('products', $products);
+    }
+
+    public function edit(Request $request)
+    {
+    	$product = Product::find($request->product_id);
+
+    	//$decimal = "regex:/^\d*(\.\d{1,2})?$/";
+
+        $rules = array(
+        'product_name' => "required|unique:products,product_name," . $product->product_id .",product_id",
+        'product_desc' => 'required',
+        'price' => 'required|numeric',
+        'product_qty' => 'required|integer'	
+        );
+
+        $validator = Validator::make($request->all(), $rules);
+        if ($validator->fails())
+        {
+            return Response::json(array('errors' => $validator->getMessageBag()->toArray()));
+        }
+        else
+        {
+            $product = Product::find($request->product_id);
+            $product->product_name = $request->product_name;
+            $product->product_desc = $request->product_desc;
+            $product->price = $request->price;
+            $product->product_qty = $request->product_qty;
+            $product->save();
+        }	
+    }
+
+    public function destroy(Request $request)
+    {
+        $product = Product::find($request->product_id)->delete();
     }
 
     public function search(Request $request)

@@ -108,7 +108,7 @@ ACCOUNTS
           </button>
         </div>
 
-        <form>
+        <form class="nosubmitform">
         <div class="form-group">
           <div class="container-fluid">
           <div class="row">
@@ -594,10 +594,10 @@ ACCOUNTS
       localStorage.setItem("delete","success");
       window.location.reload();
     },
-       error: function(jqXHR, textStatus, errorThrown) { // What to do if we fail
-        console.log(JSON.stringify(jqXHR));
-        console.log("AJAX error: " + textStatus + ' : ' + errorThrown);
-      }
+    error: function(jqXHR, textStatus, errorThrown) { // What to do if we fail
+      console.log(JSON.stringify(jqXHR));
+      console.log("AJAX error: " + textStatus + ' : ' + errorThrown);
+    }
     });
   });
 

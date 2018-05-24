@@ -3,7 +3,7 @@
 	<title>@yield('title')</title>
 	<meta name="viewport" content="width=device-width", initial-scale="1.0">
   <link rel="stylesheet" type="text/css" href="@yield('css')"/>
-    <link rel="stylesheet" type="text/css" href="{{ asset('imports/css/nav.css') }}"/>
+  <link rel="stylesheet" type="text/css" href="{{ asset('imports/css/nav.css') }}"/>
   <!-- bootstrap -->
    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
    <script src="//netdna.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>

@@ -20,7 +20,7 @@ INVENTORY
 <!--second row add item button and search bar--->
 <div class="row">
     <div class="col-md-8">
-    <button type="button" class="btn btn-outline-info add-item-btn" data-toggle="modal" data-target=".add-item">
+    <button type="button" class="btn btn-outline-info add-item-btn" data-toggle="modal" data-target=".add_product">
       Add Item
     </button>
   </div>
@@ -88,7 +88,7 @@ INVENTORY
     {{$products->links()}}
 
  <!----start of modal for add item---->
-    <div class="modal fade add-item" tabindex="-1" role="dialog">
+    <div class="modal fade add_product" tabindex="-1" role="dialog">
      <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
@@ -98,34 +98,37 @@ INVENTORY
           </button>
         </div>
 
-        <form>
-        <div class="form-group">
-        <div class="containter-fluid">
-		  <div class="col-md-11 mx-auto">
+      <form class="nosubmitform">
+      <div class="form-group">
+      <div class="container-fluid">
+		  
+      <div class="col-md-11 mx-auto">
           <label for="address" class="col-form-label modal-address">Item Name:</label>
-          <input type="text" class="form-control modal-add" id="address">
+          <input type="text" name="product_name" class="form-control modal-add" id="product-name-add">
+          <p id="error-product-name-add" class="error-add" hidden="hidden"></p>
 		  </div>
   		  <div class="col-md-11 mx-auto">
           <label for="address" class="col-form-label modal-address">Description:</label>
-          <input type="text" class="form-control modal-add" id="address">
+          <input type="text" name="product_desc" class="form-control modal-add" id="product-desc-add">
+          <p id="error-product-desc-add" class="error-add" hidden="hidden"></p>
 		  </div>
 		  <div class="col-md-11 mx-auto">
           <label for="address" class="col-form-label modal-address">Price:</label>
-          <input type="text" class="form-control modal-add" id="address">
+          <input type="text" name="price" class="form-control modal-add" id="product-price-add">
+          <p id="error-price-add" class="error-add" hidden="hidden"></p>
 		  </div>
 		  <div class="col-md-11 mx-auto">
           <label for="address" class="col-form-label modal-address">Stock:</label>
-          <input type="text" class="form-control modal-add" id="address">
+          <input type="text" name="product_qty" class="form-control modal-add" id="product-qty-add">
+          <p id="error-product-qty-add" class="error-add" hidden="hidden"></p>
 		  </div>
 
-
-
-        </div>
-        </div>
+      </div>
+      </div>
 
       </form>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-info btn-save-modal" data-dismiss="modal">Save New Member</button>
+        <div class="modal-footer" id="modal-footer-product-add">
+          <button type="submit" class="btn btn-info btn-save-modal" id="add-product">Save New Item</button>
           <button type="button" class="btn btn-secondary btn-close-modal" data-dismiss="modal">Cancel</button>
         </div>
       </div>
@@ -147,7 +150,7 @@ INVENTORY
     <form class="nosubmitform">
     <input type="hidden" name="product_id" id="product-id-edit">
     <div class="form-group">
-    <div class="containter-fluid">
+    <div class="container-fluid">
 		  <div class="col-md-11 mx-auto">
           <label for="prodname" class="col-form-label modal-address">Item Name:</label>
           <input type="text" name="product_name" class="form-control modal-add" id="product-name-edit">
@@ -188,7 +191,7 @@ INVENTORY
     <div class="modal-dialog">
     <div class="modal-content">
     <div class="modal-header">
-      <h5 class="modal-title" id="exampleModalLabel">Message</h5>
+      <h5 class="modal-title" id="exampleModalLabel">Delete Item</h5>
       <button type="button" class="close" data-dismiss="modal" aria-label="Close">
         <span aria-hidden="true">&times;</span>
       </button>
@@ -223,7 +226,7 @@ if(localStorage.getItem("update"))
 {
   swal({
           title: "Success!",
-          text: "You have successfully updated the product!",
+          text: "You have successfully updated the item!",
           icon: "success",
           button: "Close",
         });
@@ -233,7 +236,7 @@ else if(localStorage.getItem("delete"))
 {
   swal({
           title: "Success!",
-          text: "You have successfully deleted the product!",
+          text: "You have successfully deleted the item!",
           icon: "success",
           button: "Close",
         });
@@ -243,7 +246,7 @@ else if(localStorage.getItem("add"))
 {
   swal({
           title: "Success!",
-          text: "You have successfully added a product!",
+          text: "You have successfully added an item!",
           icon: "success",
           button: "Close",
         });
@@ -265,6 +268,96 @@ $('.edit_product').on('hide.bs.modal', function(){
     $('#product-qty-edit').removeAttr('style');
 });
 
+$('.add_product').on('hide.bs.modal', function(){
+    //hide error messages in modal
+    $('#error-product-name-add').attr("hidden", true);
+    $('#error-product-desc-add').attr("hidden", true);
+    $('#error-price-add').attr("hidden", true);
+    $('#error-product-qty-add').attr("hidden", true);
+
+    //remove css style in modal
+    $('#product-name-add').removeAttr('style');
+    $('#product-desc-add').removeAttr('style');
+    $('#product-price-add').removeAttr('style');
+    $('#product-qty-add').removeAttr('style');
+});
+
+//add product
+$('#modal-footer-product-add').on('click', '#add-product', function(event) {
+$.ajax({
+  type: 'POST',
+  url: '/inventory/add_product',
+  data: {
+          '_token': $('input[name=_token]').val(),
+          'product_name': $("#product-name-add").val(),
+          'product_desc': $("#product-desc-add").val(),
+          'price': $("#product-price-add").val(),
+          'product_qty': $("#product-qty-add").val()
+        },
+  success: function(data) {
+    console.log(data);
+    if ((data.errors)) {
+        if(data.errors.product_name)
+        {
+          $('#error-product-name-add').removeAttr("hidden");
+          $('#error-product-name-add').text(data.errors.product_name);
+          $('#product-name-add').css("border", "1px solid #cc0000");
+        }
+        else
+        {
+          $('#error-product-name-add').attr("hidden", true);
+          $('#product-name-add').removeAttr('style');
+        }
+
+        if(data.errors.product_desc)
+        {
+          $('#error-product-desc-add').removeAttr("hidden");
+          $('#error-product-desc-add').text(data.errors.product_desc);
+          $('#product-desc-add').css("border", "1px solid #cc0000");
+        }
+        else
+        {
+          $('#error-product-desc-add').attr("hidden", true);
+          $('#product-desc-add').removeAttr('style');
+        }
+
+        if(data.errors.price)
+        {
+          $('#error-price-add').removeAttr("hidden");
+          $('#error-price-add').text(data.errors.price);
+          $('#product-price-add').css("border", "1px solid #cc0000");
+        }
+        else
+        {
+          $('#error-price-add').attr("hidden", true);
+          $('#product-price-add').removeAttr('style');
+        }
+
+        if(data.errors.product_qty)
+        {
+          $('#error-product-qty-add').removeAttr("hidden");
+          $('#error-product-qty-add').text(data.errors.product_qty);
+          $('#product-qty-add').css("border", "1px solid #cc0000");
+        }
+        else
+        {
+          $('#error-product-qty-add').attr("hidden", true);
+          $('#product-qty-add').removeAttr('style');
+        }
+    }
+    else
+    {
+      localStorage.setItem("add","success");
+      window.location.reload();   
+    }
+    },
+
+      error: function(jqXHR, textStatus, errorThrown) { // What to do if we fail
+      console.log(JSON.stringify(jqXHR));
+      console.log("AJAX error: " + textStatus + ' : ' + errorThrown);
+      }
+  });
+});
 
 //edit product
 $(document).on('click', '#edit-product', function() {

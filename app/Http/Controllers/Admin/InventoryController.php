@@ -19,6 +19,31 @@ class InventoryController extends Controller
     	return view('admin.inventory')->with('products', $products);
     }
 
+    public function create(Request $request)
+    {
+        $rules = array(
+        'product_name' => 'required|unique:products,product_name',
+        'product_desc' => 'required',
+        'price' => 'required|numeric',
+        'product_qty' => 'required|integer'	
+        );
+
+        $validator = Validator::make($request->all(), $rules);
+        if ($validator->fails())
+        {
+            return Response::json(array('errors' => $validator->getMessageBag()->toArray()));
+        }
+        else
+        {
+            $product = new Product;
+            $product->product_name = $request->product_name;
+            $product->product_desc = $request->product_desc;
+            $product->price = $request->price;
+            $product->product_qty = $request->product_qty;
+            $product->save();
+        }	
+    }
+
     public function edit(Request $request)
     {
     	$product = Product::find($request->product_id);

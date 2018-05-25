@@ -37,4 +37,5 @@ Route::group(['middleware' => ['admin']], function () {
 	Route::get('inventory/search', 'Admin\InventoryController@search');
 	Route::post('inventory/update_product', 'Admin\InventoryController@edit');
 	Route::post('inventory/delete_product', 'Admin\InventoryController@destroy');
+	Route::post('inventory/add_product', 'Admin\InventoryController@create');
 });

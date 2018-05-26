@@ -80,7 +80,7 @@ class InventoryController extends Controller
 
     public function search(Request $request)
     {
-    	$search = $request->product_search;
+    	$search = $request->search;
 
         if($search == "")
         {
@@ -93,7 +93,7 @@ class InventoryController extends Controller
                     $query->where('product_name', 'LIKE', '%' . $search . '%')->orWhere('product_desc', 'LIKE', '%' . $search . '%');
                 })->paginate(7);
 
-            $products->appends($request->only('product_search'));
+            $products->appends($request->only('search'));
             $count = $products->count();
             $totalcount = Product::where(function($query) use ($request, $search)
                 {

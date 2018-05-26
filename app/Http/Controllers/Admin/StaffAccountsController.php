@@ -94,7 +94,7 @@ class StaffAccountsController extends Controller
 
     public function search(Request $request)
     {
-        $search = $request->staff_search;
+        $search = $request->search;
 
         if($search == "")
         {
@@ -107,7 +107,7 @@ class StaffAccountsController extends Controller
                     $query->where('username', 'LIKE', '%' . $search . '%')->orWhere('firstname', 'LIKE', '%' . $search . '%')->orwhere('lastname', 'LIKE', '%' . $search . '%')->orWhere(DB::raw('concat(firstname," ",lastname)'), 'LIKE', '%' . $search . '%');
                 })->paginate(7);
 
-            $staffs->appends($request->only('staff_search'));
+            $staffs->appends($request->only('search'));
             $count = $staffs->count();
             $totalcount = User::where('role', 'staff')->where(function($query) use ($request, $search)
                 {

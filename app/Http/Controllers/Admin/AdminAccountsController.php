@@ -89,7 +89,7 @@ class AdminAccountsController extends Controller
 
     public function search(Request $request)
     {
-        $search = $request->admin_search;
+        $search = $request->search;
 
         if($search == "")
         {
@@ -102,7 +102,7 @@ class AdminAccountsController extends Controller
                     $query->where('username', 'LIKE', '%' . $search . '%')->orWhere('firstname', 'LIKE', '%' . $search . '%')->orwhere('lastname', 'LIKE', '%' . $search . '%')->orWhere(DB::raw('concat(firstname," ",lastname)'), 'LIKE', '%' . $search . '%');
                 })->paginate(7);
 
-            $admins->appends($request->only('admin_search'));
+            $admins->appends($request->only('search'));
             $count = $admins->count();
             $totalcount = User::where('role', 'admin')->where(function($query) use ($request, $search)
                 {

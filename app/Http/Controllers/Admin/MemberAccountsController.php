@@ -116,7 +116,7 @@ class MemberAccountsController extends Controller
 
     public function search(Request $request)
     {
-        $search = $request->member_search;
+        $search = $request->search;
 
         if($search == "")
         {
@@ -129,7 +129,7 @@ class MemberAccountsController extends Controller
                     $query->where('card_number', 'LIKE', '%' . $search . '%')->orWhere('firstname', 'LIKE', '%' . $search . '%')->orwhere('lastname', 'LIKE', '%' . $search . '%')->orWhere(DB::raw('concat(firstname," ",lastname)'), 'LIKE', '%' . $search . '%');
                 })->paginate(7);
 
-            $members->appends($request->only('member_search'));
+            $members->appends($request->only('search'));
             $count = $members->count();
             $totalcount = User::where('role', 'member')->where(function($query) use ($request, $search)
                 {

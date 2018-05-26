@@ -117,7 +117,7 @@ ACCOUNTS
         <label for="load" class="col-form-label modal-load">Load:</label>
         <div class="input-group">
             <div class="input-group-prepend">
-                <span class="input-group-text" id="basic-addon1">₱</span>
+                <span class="input-group-text" id="basic-addon-load">₱</span>
             </div>
             <input type="text" name="load" class="form-control modal-add" id="load-reload">
         </div>
@@ -128,7 +128,7 @@ ACCOUNTS
         <label for="points" class="col-form-label modal-points">Points:</label>
         <div class="input-group">
             <div class="input-group-prepend">
-                <span class="input-group-text" id="basic-addon1">₱</span>
+                <span class="input-group-text" id="basic-addon-points">₱</span>
             </div>
             <input type="text" name="points" class="form-control modal-add" id="points-reload">
         </div>
@@ -372,6 +372,8 @@ ACCOUNTS
     //remove css style in modal
     $('#load-reload').removeAttr('style');
     $('#points-reload').removeAttr('style');
+    $('#basic-addon-load').removeAttr('style');
+    $('#basic-addon-points').removeAttr('style');
   });
 
   //success alerts - add, update, delete
@@ -558,11 +560,13 @@ ACCOUNTS
             $('#error-load-reload').removeAttr("hidden");
             $('#error-load-reload').text(data.errors.load);
             $('#load-reload').css("border", "1px solid #cc0000");
+            $('#basic-addon-load').css("border", "1px solid #cc0000");
           }
           else
           {
             $('#error-load-reload').attr("hidden", true);
             $('#load-reload').removeAttr('style');
+            $('#basic-addon-load').removeAttr('style');
           }
 
           if(data.errors.points)
@@ -570,11 +574,13 @@ ACCOUNTS
             $('#error-points-reload').removeAttr("hidden");
             $('#error-points-reload').text(data.errors.points);
             $('#points-reload').css("border", "1px solid #cc0000");
+            $('#basic-addon-points').css("border", "1px solid #cc0000");
           }
           else
           {
             $('#error-points-reload').attr("hidden", true);
             $('#points-reload').removeAttr('style');
+            $('#basic-addon-points').removeAttr('style');
           }
       }
       else

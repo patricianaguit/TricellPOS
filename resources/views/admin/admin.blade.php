@@ -21,13 +21,7 @@ ACCOUNTS
       <a class="nav-item nav-link active " id="nav-admin-tab"  href="/accounts/admin" role="tab" aria-controls="nav-admin" aria-selected="true">Admin</a>
     </div>
   </nav>
-<!----body of admin start-->
-<div class="tab-content" id="nav-tabContent">
-
-
-  <!-------admin------>
-  <div class="tab-pane fade show active" id="nav-admin" role="tabpanel" aria-labelledby="nav-admin-tab">
-  </br>
+  
   <div class="row">
     <div class="col-md-8">
       <button type="button" class="btn btn-outline-info add-admin-btn" data-toggle="modal" data-target=".add_admin">Add Admin</button>

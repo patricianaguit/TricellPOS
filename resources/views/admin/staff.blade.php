@@ -23,10 +23,6 @@ ACCOUNTS
   </nav>
   <!--end of members nav---->
 <!---content of tabs start-->
-<div class="tab-content" id="nav-tabContent">
-  <!-------staff------>
-  <div class="tab-pane fade show active" id="nav-staff" role="tabpanel" aria-labelledby="nav-staff-tab">
-  </br>
   <div class="row">
     <div class="col-md-8">
         <button type="button" class="btn btn-outline-info add-staff-btn" data-toggle="modal" data-target=".add_staff">Add Staff</button>

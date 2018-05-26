@@ -13,8 +13,9 @@ ACCOUNTS
 </br>
 <div class="container">
   <!--members nav-->
+  <h3 class="title">Members</h3>
+
   <nav>
-    <h3 class="title">Members</h3>
     <div class="nav nav-tabs justify-content-end memberstab" id="nav-tab" role="tablist">
       <a class="nav-item nav-link active" id="nav-members-tab" href="/accounts/members" role="tab" aria-controls="nav-members" aria-selected="false">Members</a>
       <a class="nav-item nav-link" id="nav-staff-tab"  href="/accounts/staff" role="tab" aria-controls="nav-staff" aria-selected="false">Staff</a>
@@ -23,10 +24,6 @@ ACCOUNTS
   </nav>
   <!--end of members nav---->
 <!---content of tabs start-->
-<div class="tab-content" id="nav-tabContent">
-  <!-------members------>
-  <div class="tab-pane fade  show active" id="nav-members" role="tabpanel" aria-labelledby="nav-members">
-  </br>
 
   <div class="row">
     <div class="col-md-8">

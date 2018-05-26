@@ -40,11 +40,19 @@ body{
     font-weight: bold !important;
 }
 
+.nav {
+  padding-top: 2px;
+}
+
 .nav-tabs .nav-link:hover {
     background-color: #fcfcfc !important;
     border-color: #dee2e6 #dee2e6 ##fcfcfc !important;
     color:#3A539B!important;
     font-weight: bold !important;
+}
+
+#nav-tab {
+  margin-bottom: 16.2px !important;
 }
 
 .nav-tabs .nav-link {

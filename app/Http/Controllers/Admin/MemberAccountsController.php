@@ -86,6 +86,29 @@ class MemberAccountsController extends Controller
         }
     }
 
+    public function reload(Request $request)
+    {
+        $member = User::find($request->member_id);
+
+        $rules = array(
+        'load' => 'required|numeric',
+        'points' => 'required|numeric',
+        );
+
+        $validator = Validator::make($request->all(), $rules);
+        if ($validator->fails())
+        {
+            return Response::json(array('errors' => $validator->getMessageBag()->toArray()));
+        }
+        else
+        {
+            $member = User::find($request->member_id);
+            $member->balance->load_balance = $request->load;
+            $member->balance->points = $request->points;
+            $member->balance->save();
+        }
+    }
+
     public function destroy(Request $request)
     {
         $member = User::find($request->member_id)->delete();

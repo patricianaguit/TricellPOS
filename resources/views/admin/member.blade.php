@@ -85,10 +85,11 @@ ACCOUNTS
           <td>{{$member->firstname . " " . $member->lastname}}</td>
           <td>{{$member->contact_number}}</td>
           <td>₱ {{$member->balance->load_balance}}</td>
-          <td>{{$member->balance->points}}</td>
+          <td>₱ {{$member->balance->points}}</td>
           <td>
           	<button type="button" id="edit-member" class="btn btn-primary edit-btn" data-toggle="modal" data-target=".edit_member" data-id="{{ $member->id }}" data-cardnumber ="{{ $member->card_number }}" data-firstname="{{$member->firstname}}" data-lastname="{{$member->lastname}}" data-address="{{$member->address}}" data-contact="{{$member->contact_number}}" data-email="{{$member->email}}"><i class="material-icons md-18">mode_edit</i></button>
-          	<button type="button" id="delete-member" class="btn btn-danger del-btn" data-id="{{$member->id}}" data-toggle="modal" data-target=".delete_member"><i class="material-icons md-18">delete</i></button>
+            <button type="button" id="reload-member" class="btn btn-success edit-btn" data-toggle="modal" data-target=".reload_member" data-id="{{$member->id}}" data-load="{{$member->balance->load_balance}}" data-points="{{$member->balance->points}}"><i class="material-icons md-18">money</i></button>
+          	<button type="button" id="delete-member" class="btn btn-danger del-btn" data-id="{{$member->id}}" data-firstname="{{$member->firstname}}" data-lastname="{{$member->lastname}}" data-toggle="modal" data-target=".delete_member"><i class="material-icons md-18">delete</i></button>
           </td>
         </tr>
         @endforeach
@@ -96,6 +97,56 @@ ACCOUNTS
     </table>
 
     <div>{{$members->links()}}</div>
+
+     <div class="modal fade reload_member" tabindex="-1" role="dialog">
+     <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Reload Member</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+
+      <form class="nosubmitform">
+      <div class="form-group">
+      <input type="hidden" name="member_id" id="member-id-reload">
+      <div class="container-fluid">
+      
+      <div class="col-md-11 mx-auto">
+        <label for="load" class="col-form-label modal-load">Load:</label>
+        <div class="input-group">
+            <div class="input-group-prepend">
+                <span class="input-group-text" id="basic-addon1">₱</span>
+            </div>
+            <input type="text" name="load" class="form-control modal-add" id="load-reload">
+        </div>
+        <p id="error-load-reload" class="error-reload" hidden="hidden"></p>
+      </div>
+
+      <div class="col-md-11 mx-auto">
+        <label for="points" class="col-form-label modal-points">Points:</label>
+        <div class="input-group">
+            <div class="input-group-prepend">
+                <span class="input-group-text" id="basic-addon1">₱</span>
+            </div>
+            <input type="text" name="points" class="form-control modal-add" id="points-reload">
+        </div>
+        <p id="error-points-reload" class="error-reload" hidden="hidden"></p>
+      </div>
+
+      </div>
+      </div>
+
+      <div class="modal-footer" id="modal-footer-member-reload">
+        <button type="submit" class="btn btn-info btn-savemem-modal" id="update-reload-member">Save Changes</button>
+        <button type="button" class="btn btn-secondary btn-close-modal" data-dismiss="modal">Cancel</button>
+      </div>
+      </form>
+      </div>
+    </div>
+    </div>
+    <!----end of modal---->
 
     <!----start of modal for add members---->
     <div class="modal fade bd-example-modal-lg add_member" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
@@ -157,12 +208,11 @@ ACCOUNTS
 
         </div>
         </div>
-
-      </form>
         <div class="modal-footer" id="modal-footer-member-add">
-          <button type="button" id="add-member" class="btn btn-info btn-savemem-modal">Save New Member</button>
+          <button type="submit" id="add-member" class="btn btn-info btn-savemem-modal">Save New Member</button>
           <button type="button" class="btn btn-secondary btn-close-modal" data-dismiss="modal">Close</button>
         </div>
+      </form>
       </div>
     </div>
     </div>
@@ -184,7 +234,7 @@ ACCOUNTS
       <div class="container-fluid">
       
       <div class="row">
-		<div class="col-md-11 mx-auto">
+		  <div class="col-md-11 mx-auto">
         <label for="card-no" class="col-form-label modal-card">Card Number:</label>
         <input type="text" name="card_number" class="form-control modal-card" id="cardnumber-edit">
         <p id="error-cardnumber-edit" class="error-edit" hidden="hidden"></p></div>
@@ -225,7 +275,7 @@ ACCOUNTS
       </div>
 
       <div class="modal-footer" id="modal-footer-member-edit">
-        <button type="submit" class="btn btn-info btn-savemem-modal" id="update-member">Save changes</button>
+        <button type="submit" class="btn btn-info btn-savemem-modal" id="update-member">Save Changes</button>
         <button type="button" class="btn btn-secondary btn-close-modal" data-dismiss="modal">Close</button>
       </div>
 
@@ -236,21 +286,21 @@ ACCOUNTS
     <!----end of modal---->
     <!----start of modal for DELETE---->
     <div class="modal fade delete_member" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
+    <div class="modal-dialog">
     <div class="modal-content">
     <div class="modal-header">
-      <h5 class="modal-title" id="exampleModalLabel">Message</h5>
+      <h5 class="modal-title" id="exampleModalLabel">Delete Member</h5>
       <button type="button" class="close" data-dismiss="modal" aria-label="Close">
         <span aria-hidden="true">&times;</span>
       </button>
     </div>
     <div class="modal-body">
-        <center>  <p> Are you sure you want to delete this <b>member?</b></p> </center>
+        <center>  <p> Are you sure you want to permanently delete the account of <b><span id="delete-name"></span></b>?</p> 
         <span class="member-id-delete" hidden="hidden"></span>
     </div>
 
     <div class="modal-footer" id="modal-footer-member-delete">
-      <button type="button" id="destroy-member" class="btn btn-info btn-savemem-modal">Yes</button>
+      <button type="button" id="destroy-member" class="btn btn-danger btn-savemem-modal">Yes</button>
       <button type="button" class="btn btn-secondary btn-close-modal" data-dismiss="modal">No</button>
 
     </div>
@@ -314,13 +364,23 @@ ACCOUNTS
     $('#email-edit').removeAttr('style');
   });
 
+  $('.reload_member').on('hide.bs.modal', function(){
+    //hide error messages in modal
+    $('#error-load-reload').attr("hidden", true);
+    $('#error-points-reload').attr("hidden", true);
+
+    //remove css style in modal
+    $('#load-reload').removeAttr('style');
+    $('#points-reload').removeAttr('style');
+  });
+
   //success alerts - add, update, delete
   $(document).ready(function(){
   if(localStorage.getItem("update"))
   {
     swal({
             title: "Success!",
-            text: "You have successfully updated the member!",
+            text: "You have successfully updated the member's information!",
             icon: "success",
             button: "Close",
           });
@@ -346,9 +406,19 @@ ACCOUNTS
           });
     localStorage.clear(); 
   }
+  else if(localStorage.getItem("reload"))
+  {
+    swal({
+            title: "Success!",
+            text: "You have successfully updated the member's balance!",
+            icon: "success",
+            button: "Close",
+          });
+    localStorage.clear(); 
+  }
   });
   
-  //add staff
+  //add member
   $('#modal-footer-member-add').on('click', '#add-member', function(event) {
   $.ajax({
     type: 'POST',
@@ -463,6 +533,64 @@ ACCOUNTS
   });
   });
 
+  //reload member
+  $(document).on('click', '#reload-member', function() {
+    $('#member-id-reload').val($(this).data('id'));
+    $('#load-reload').val($(this).data('load'));
+    $("#points-reload").val($(this).data('points'));
+  }); 
+
+  $('#modal-footer-member-reload').on('click', '#update-reload-member', function(event) {
+  $.ajax({
+    type: 'POST',
+    url: '/accounts/reload_member',
+    data: {
+            '_token': $('input[name=_token]').val(),
+            'member_id': $("#member-id-reload").val(),
+            'load': $("#load-reload").val(),
+            'points': $("#points-reload").val()
+          },
+    success: function(data) {
+      console.log(data);
+      if ((data.errors)) {
+          if(data.errors.load)
+          {
+            $('#error-load-reload').removeAttr("hidden");
+            $('#error-load-reload').text(data.errors.load);
+            $('#load-reload').css("border", "1px solid #cc0000");
+          }
+          else
+          {
+            $('#error-load-reload').attr("hidden", true);
+            $('#load-reload').removeAttr('style');
+          }
+
+          if(data.errors.points)
+          {
+            $('#error-points-reload').removeAttr("hidden");
+            $('#error-points-reload').text(data.errors.points);
+            $('#points-reload').css("border", "1px solid #cc0000");
+          }
+          else
+          {
+            $('#error-points-reload').attr("hidden", true);
+            $('#points-reload').removeAttr('style');
+          }
+      }
+      else
+      {
+        localStorage.setItem("reload","success");
+        window.location.reload();   
+      }
+      },
+
+        error: function(jqXHR, textStatus, errorThrown) { // What to do if we fail
+        console.log(JSON.stringify(jqXHR));
+        console.log("AJAX error: " + textStatus + ' : ' + errorThrown);
+        }
+    });
+  });
+
   //edit member
   $(document).on('click', '#edit-member', function() {
   	$('#member-id-edit').val($(this).data('id'));
@@ -499,8 +627,8 @@ ACCOUNTS
           }
           else
           {
-            $('#error-username-edit').attr("hidden", true);
-            $('#username-edit').removeAttr('style');
+            $('#error-cardnumber-edit').attr("hidden", true);
+            $('#cardnumber-edit').removeAttr('style');
           }
 
           if(data.errors.firstname)
@@ -580,6 +708,7 @@ ACCOUNTS
   //delete member
   $(document).on('click', '#delete-member', function() {
     $('.member-id-delete').text($(this).data('id'));
+    $('#delete-name').text($(this).data('firstname') + " " + $(this).data('lastname'));
   });
 
   $('#modal-footer-member-delete').on('click', '#destroy-member', function(){

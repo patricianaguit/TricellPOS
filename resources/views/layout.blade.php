@@ -31,13 +31,13 @@
        <a class="nav-link" href="#"> POS </a>
      </li>
      <li class="nav-item dropdown" id="logsdrop">
-          <a class="nav-link dropdown-toggle" href="http://example.com" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <a class="nav-link dropdown-toggle {{ Request::segment(1)=='logs' ? 'active' : '' }}" href="http://example.com" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             LOGS
           </a>
           <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-            <a class="dropdown-item" href="#">Sales</a>
+            <a class="dropdown-item" href="/logs/sales">Sales</a>
             <a class="dropdown-item" href="#">Reload</a>
-        </li>
+      </li>
       
      <li class="nav-item">
        <a class="nav-link {{ Request::segment(1)=='inventory' ? 'active' : '' }}" href="/inventory">INVENTORY</a>

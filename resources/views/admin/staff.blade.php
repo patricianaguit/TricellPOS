@@ -25,22 +25,22 @@ ACCOUNTS
 <!---content of tabs start-->
 <div class="tab-content" id="nav-tabContent">
   <!-------staff------>
-   <div class="tab-pane fade show active" id="nav-staff" role="tabpanel" aria-labelledby="nav-staff-tab">
+  <div class="tab-pane fade show active" id="nav-staff" role="tabpanel" aria-labelledby="nav-staff-tab">
   </br>
   <div class="row">
     <div class="col-md-8">
         <button type="button" class="btn btn-outline-info add-staff-btn" data-toggle="modal" data-target=".add_staff">Add Staff</button>
-  </div>
-  <div class="col-md-4">
-    <form class="form ml-auto" action="/accounts/search_staff" method="GET">
+    </div>
+    <div class="col-md-4">
+      <form class="form ml-auto" action="/accounts/search_staff" method="GET">
       <div class="input-group">
           <input class="form-control" type="text" name ="staff_search" placeholder="Search" aria-label="Search" style="padding-left: 20px; border-radius: 40px;" id="staff-search">
           <div class="input-group-addon" style="margin-left: -50px; z-index: 3; border-radius: 40px; background-color: transparent; border:none;">
             <button class="btn btn-outline-info btn-sm" type="submit" style="border-radius: 100px;" id="staff-search-submit"><i class="material-icons">search</i></button>
           </div>
       </div>
-    </form>
-  </div>
+      </form>
+    </div>
   </div>
 
   @if(!empty($search))
@@ -83,7 +83,7 @@ ACCOUNTS
           <td>{{ $staff->email }}</td>
           <td>
             <button type="button" id="edit-staff" class="btn btn-primary edit-btn" data-toggle="modal" data-target=".edit_staff" data-id="{{ $staff->id }}" data-username ="{{ $staff->username }}" data-firstname="{{$staff->firstname}}" data-lastname="{{$staff->lastname}}" data-address="{{$staff->address}}" data-contact="{{$staff->contact_number}}" data-email="{{$staff->email}}"><i class="material-icons md-18">mode_edit</i></button>
-            <button type="button" id="delete-staff" class="btn btn-danger del-btn" data-id="{{ $staff->id }}" data-toggle="modal" data-target=".delete_staff"><i class="material-icons md-18">delete</i></button>
+            <button type="button" id="delete-staff" class="btn btn-danger del-btn" data-id="{{ $staff->id }}" data-firstname="{{$staff->firstname}}" data-lastname="{{$staff->lastname}}" data-toggle="modal" data-target=".delete_staff"><i class="material-icons md-18">delete</i></button>
           </td>
         </tr>
         @endforeach
@@ -237,7 +237,7 @@ ACCOUNTS
     <!----start of modal for DELETE---->
     <form>
     <div class="modal fade delete_staff" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
+    <div class="modal-dialog">
     <div class="modal-content">
     <div class="modal-header">
       <h5 class="modal-title" id="exampleModalLabel">Delete Staff</h5>
@@ -246,12 +246,12 @@ ACCOUNTS
       </button>
     </div>
     <div class="modal-body">
-        <center>  <p> Are you sure you want to delete this <b>staff?</b></p> </center>
+        <center>  <p> Are you sure you want to permanently delete the account of <b><span id="delete-name"></span></b>?</p> </center>
         <span class="staff-id-delete" hidden="hidden"></span>
         </div>
 
     <div class="modal-footer" id="modal-footer-staff-delete">
-      <button type="button" id="destroy-staff" class="btn btn-info btn-savemem-modal">Yes</button>
+      <button type="button" id="destroy-staff" class="btn btn-danger btn-savemem-modal">Yes</button>
       <button type="button" class="btn btn-secondary btn-close-modal" data-dismiss="modal">No</button>
     </div>
     </div>
@@ -318,7 +318,7 @@ ACCOUNTS
   {
     swal({
             title: "Success!",
-            text: "You have successfully updated the staff!",
+            text: "You have successfully updated the staff's information!",
             icon: "success",
             button: "Close",
           });
@@ -621,6 +621,7 @@ ACCOUNTS
   //delete staff
   $(document).on('click', '#delete-staff', function() {
     $('.staff-id-delete').text($(this).data('id'));
+    $('#delete-name').text($(this).data('firstname') + " " + $(this).data('lastname'));
   });
 
   $('#modal-footer-staff-delete').on('click', '#destroy-staff', function(){

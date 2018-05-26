@@ -99,6 +99,11 @@ padding: .375rem 2rem !important;
   color: red !important;
   font-size: 13px;
 }
+
+.error-reload {
+  color: red !important;
+  font-size: 13px;
+}
 /****NAV CSS***/
 /**.nav_custom{
 

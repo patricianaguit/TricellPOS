@@ -301,7 +301,7 @@ ACCOUNTS
   {
     swal({
             title: "Success!",
-            text: "You have successfully updated the admin!",
+            text: "You have successfully updated the admin's information!",
             icon: "success",
             button: "Close",
           });

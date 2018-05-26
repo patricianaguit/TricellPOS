@@ -101,12 +101,20 @@ return [
     */
 
     'custom' => [
+        'load' => [
+            'numeric' => 'The :attribute field should contain numbers and periods only.',
+        ],
+        'points' => [
+            'numeric' => 'The :attribute field should contain numbers and periods only.',
+        ],
         'price' => [
             'numeric' => 'The :attribute field should contain numbers and periods only.',
         ],
         'product_qty' => [
             'integer' => 'The :attribute field should contain whole numbers only.',
         ],
+
+
     ],
 
     /*
@@ -129,6 +137,8 @@ return [
         'password_confirmation' => 'Confirm Password',
         'firstname' => 'First Name',
         'lastname' => 'Last Name',
+        'load' => 'Load',
+        'points' => 'Points',
         'address' => 'Address',
         'contact' => 'Contact Number',
         'email' => 'E-mail Address',

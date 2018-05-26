@@ -5,7 +5,7 @@ ACCOUNTS
 @endsection
 
 @section('css')
-{{ asset('imports/css/members2.css') }}
+{{ asset('imports/css/members.css') }}
 @endsection
 
 @section('content')
@@ -88,7 +88,7 @@ ACCOUNTS
           <td>₱ {{$member->balance->points}}</td>
           <td>
           	<button type="button" id="edit-member" class="btn btn-primary edit-btn" data-toggle="modal" data-target=".edit_member" data-id="{{ $member->id }}" data-cardnumber ="{{ $member->card_number }}" data-firstname="{{$member->firstname}}" data-lastname="{{$member->lastname}}" data-address="{{$member->address}}" data-contact="{{$member->contact_number}}" data-email="{{$member->email}}"><i class="material-icons md-18">mode_edit</i></button>
-            <button type="button" id="reload-member" class="btn btn-success edit-btn" data-toggle="modal" data-target=".reload_member" data-id="{{$member->id}}" data-load="{{$member->balance->load_balance}}" data-points="{{$member->balance->points}}"><i class="material-icons md-18">money</i></button>
+            <button type="button" id="reload-member" class="btn btn-success edit-btn" data-toggle="modal" data-target=".reload_member" data-id="{{$member->id}}" data-load="{{$member->balance->load_balance}}" data-points="{{$member->balance->points}}"><i class="pp-reload"></i></button>
           	<button type="button" id="delete-member" class="btn btn-danger del-btn" data-id="{{$member->id}}" data-firstname="{{$member->firstname}}" data-lastname="{{$member->lastname}}" data-toggle="modal" data-target=".delete_member"><i class="material-icons md-18">delete</i></button>
           </td>
         </tr>

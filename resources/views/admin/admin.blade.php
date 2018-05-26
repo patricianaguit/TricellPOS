@@ -5,7 +5,7 @@ ACCOUNTS
 @endsection
 
 @section('css')
-{{ asset('imports/css/members2.css') }}
+{{ asset('imports/css/members.css') }}
 @endsection
 
 @section('content')

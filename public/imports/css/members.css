@@ -1,3 +1,5 @@
+
+
 body{
   background-color: white !important;
 }
@@ -21,7 +23,10 @@ body{
 .td_class{
   background-color: #fcfcfc !important;
 }
+.table td, .table th {
 
+    text-align: center;
+}
 .modal_css{
   margin-top:15px !important;
   align: right !important;
@@ -84,6 +89,53 @@ padding: .375rem 2rem !important;
 #search-btn.btn-group-sm > .btn, .btn-sm {
     padding: .35rem .7rem !important;
 }
+
+.error-edit {
+  color: red !important;
+  font-size: 13px;
+}
+
+.error-add {
+  color: red !important;
+  font-size: 13px;
+}
+
+.error-reload {
+  color: red !important;
+  font-size: 13px;
+}
+
+@font-face {
+  font-family: 'reload';
+  src:  url('fonts/reload.eot?ulukch');
+  src:  url('fonts/reload.eot?ulukch#iefix') format('embedded-opentype'),
+    url('fonts/reload.ttf?ulukch') format('truetype'),
+    url('fonts/reload.woff?ulukch') format('woff'),
+    url('fonts/reload.svg?ulukch#reload') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+
+[class^="pp-"], [class*=" pp-"] {
+  /* use !important to prevent issues with browser extensions that change fonts */
+  font-family: 'reload' !important;
+  speak: none;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+
+  /* Better Font Rendering =========== */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.pp-reload:before {
+  content: "\e900";
+}
+
+
 /****NAV CSS***/
 /**.nav_custom{
 

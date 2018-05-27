@@ -98,56 +98,75 @@ ACCOUNTS
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
+        </br>
 
         <form id="add-form" class="nosubmitform">
-        <div class="form-group">
-          <div class="container-fluid">
-          <div class="row">
-          <div class="col-md-11 mx-auto">
-          <label for="username" class="col-form-label modal-user">Username:</label>
-          <input type="text" name="username" class="form-control modal-card" id="username-add">
-          <p id="error-username-add" class="error-add" hidden="hidden"></p></div>
-          <div class="col-md-11 mx-auto">
-          <label for="password" class="col-form-label modal-password">Password:</label>
-          <input type="password" name="password" class="form-control" id="password-add">
-          <p id="error-password-add" class="error-add" hidden="hidden"></p></div>
-          <div class="col-md-11 mx-auto">
-          <label for="password_confirmation" class="col-form-label modal-password">Confirm Password:</label>
-          <input type="password" name="password_confirmation" class="form-control" id="confirm-password-add">
-          <p id="error-confirm-password-add" class="error-add" hidden="hidden"></div>
+
+        <div class="form-group row mx-auto">
+          <label for="username" class="col-form-label col-md-2 modal-user">Username:</label>
+          <div class="col-md-10">
+              <input type="text" name="username" class="form-control modal-card" id="username-add">
+              <p id="error-username-add" class="error-add" hidden="hidden"></p>
+          </div>
         </div>
 
-        <div class="row">
-          <div class="col-md-11 mx-auto">
-          <label for="first-name" class="col-form-label modal-fname">First Name:</label>
-          <input type="text" name="firstname" class="form-control modal-fname" id="firstname-add">
-          <p id="error-firstname-add" class="error-add" hidden="hidden"></p></div>
-          <div class="col-md-11 mx-auto">
-          <label for="last-name" class="col-form-label modal-lname">Last Name:</label>
-          <input type="text" name="lastname" class="form-control" id="lastname-add">
-          <p id="error-lastname-add" class="error-add" hidden="hidden"></p></div>
+        <div class="form-group row mx-auto">
+          <label for="password" class="col-form-label col-md-2 modal-password">Password:</label>
+          <div class="col-md-10">
+              <input type="password" name="password" class="form-control" id="password-add">
+              <p id="error-password-add" class="error-add" hidden="hidden"></p>
+          </div>
+        </div>
+          
+        <div class="form-group row mx-auto">
+          <label for="password_confirmation" class="col-form-label col-md-3 modal-password">Confirm Password:</label>
+          <div class="col-md-9"> 
+              <input type="password" name="password_confirmation" class="form-control" id="confirm-password-add">
+              <p id="error-confirm-password-add" class="error-add" hidden="hidden"></p>
+          </div>
+        </div>
+     
+
+        <div class="form-group row mx-auto">
+          <label for="first-name" class="col-form-label col-md-2 modal-fname">First Name:</label>
+          <div class="col-md-10"> 
+              <input type="text" name="firstname" class="form-control modal-fname" id="firstname-add">
+              <p id="error-firstname-add" class="error-add" hidden="hidden"></p>
+          </div>
         </div>
 
-        <div class="row">
-          <div class="col-md-11 mx-auto">
-          <label for="address" class="col-form-label modal-address">Address:</label>
-          <input type="text" name="address" class="form-control modal-add" id="address-add">
-          <p id="error-address-add" class="error-add" hidden="hidden"></p></div>
+        <div class="form-group row mx-auto">
+          <label for="last-name" class="col-form-label col-md-2 modal-lname">Last Name:</label>
+          <div class="col-md-10"> 
+              <input type="text" name="lastname" class="form-control" id="lastname-add">
+              <p id="error-lastname-add" class="error-add" hidden="hidden"></p>
+          </div>
         </div>
 
-        <div class="row">
-          <div class="col-md-11 mx-auto">
-          <label for="contact" class="col-form-label modal-contact">Contact #:</label>
-          <input type="text" name="contact_number" class="form-control" id="contact-add">
-          <p id="error-contact-add" class="error-add" hidden="hidden"></p></div>
-          <div class="col-md-11 mx-auto">
-          <label for="email" class="col-form-label modal-mobile">E-mail Address:</label>
-          <input type="text" name="email" class="form-control" id="email-add">
-          <p id="error-email-add" class="error-add" hidden="hidden"></p></div>
+        <div class="form-group row mx-auto">
+          <label for="address" class="col-form-label col-md-2 modal-address">Address:</label>
+          <div class="col-md-10">
+              <input type="text" name="address" class="form-control modal-add" id="address-add">
+              <p id="error-address-add" class="error-add" hidden="hidden"></p>
+          </div>
         </div>
 
+        <div class="form-group row mx-auto">
+          <label for="contact" class="col-form-label col-md-2 modal-contact">Contact #:</label>
+          <div class="col-md-10">
+              <input type="text" name="contact_number" class="form-control" id="contact-add">
+              <p id="error-contact-add" class="error-add" hidden="hidden"></p>
+          </div>
         </div>
+
+        <div class="form-group row mx-auto">
+          <label for="email" class="col-form-label col-md-3 modal-mobile">E-mail Address:</label>
+          <div class="col-md-9">
+              <input type="text" name="email" class="form-control" id="email-add">
+              <p id="error-email-add" class="error-add" hidden="hidden"></p>
+          </div>
         </div>
+
 
         <div class="modal-footer" id="modal-footer-staff-add">
           <button type="submit" id="add-staff" class="btn btn-info btn-savemem-modal">Save New Staff</button>
@@ -169,56 +188,73 @@ ACCOUNTS
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
+      </br>
 
       <form id="edit-form" class="nosubmitform">
       <input type="hidden" name="staff_id" id="staff-id-edit">
-      <div class="form-group">
-        <div class="container-fluid">
-        <div class="row">
-        <div class="col-md-11 mx-auto">
-        <label for="username" class="col-form-label modal-user">Username:</label>
-        <input type="text" name="username" class="form-control modal-card" id="username-edit">
-        <p id="error-username-edit" class="error-edit" hidden="hidden"></p></div>
-        <div class="col-md-11 mx-auto">
-        <label for="password" class="col-form-label modal-password">Password:</label>
-        <input type="password" name="password" class="form-control" id="password-edit">
-        <p id="error-password-edit" class="error-edit" hidden="hidden"></p></div>
-        <div class="col-md-11 mx-auto">
-        <label for="password_confirmation" class="col-form-label modal-password">Confirm Password:</label>
-        <input type="password" name="password_confirmation" class="form-control" id="confirm-password-edit">
-        <p id="error-confirm-password-edit" class="error-edit" hidden="hidden"></div>
+      
+      <div class="form-group row mx-auto">
+        <label for="username" class="col-form-label col-md-2 modal-user">Username:</label>
+        <div class="col-md-10">
+            <input type="text" name="username" class="form-control modal-card" id="username-edit">
+            <p id="error-username-edit" class="error-edit" hidden="hidden"></p>
+        </div>
       </div>
 
-      <div class="row">
-        <div class="col-md-11 mx-auto">
-        <label for="first-name" class="col-form-label modal-fname">First Name:</label>
-        <input type="text" name="firstname" class="form-control modal-fname" id="firstname-edit">
-        <p id="error-firstname-edit" class="error-edit" hidden="hidden"></p></div>
-        <div class="col-md-11 mx-auto">
-        <label for="last-name"  class="col-form-label modal-lname">Last Name:</label>
-        <input type="text" name="lastname" class="form-control" id="lastname-edit">
-        <p id="error-lastname-edit" class="error-edit" hidden="hidden"></p></div>
+      <div class="form-group row mx-auto">
+        <label for="password" class="col-form-label col-md-2 modal-password">Password:</label>
+        <div class="col-md-10">
+            <input type="password" name="password" class="form-control" id="password-edit">
+            <p id="error-password-edit" class="error-edit" hidden="hidden"></p>
+        </div>
       </div>
 
-      <div class="row">
-        <div class="col-md-11 mx-auto">
-        <label for="address" class="col-form-label modal-address">Address:</label>
-        <input type="text" name="address" class="form-control modal-add" id="address-edit">
-        <p id="error-address-edit" class="error-edit" hidden="hidden"></p></div>
+      <div class="form-group row mx-auto">
+        <label for="password_confirmation" class="col-form-label col-md-3 modal-password">Confirm Password:</label>
+        <div class="col-md-9">
+            <input type="password" name="password_confirmation" class="form-control" id="confirm-password-edit">
+            <p id="error-confirm-password-edit" class="error-edit" hidden="hidden"></p>
+        </div>
+      </div>
+    
+      <div class="form-group row mx-auto">
+        <label for="first-name" class="col-form-label col-md-2 modal-fname">First Name:</label>
+        <div class="col-md-10">
+            <input type="text" name="firstname" class="form-control modal-fname" id="firstname-edit">
+            <p id="error-firstname-edit" class="error-edit" hidden="hidden"></p>
+        </div>
       </div>
 
-      <div class="row">
-        <div class="col-md-11 mx-auto">
-        <label for="contact" class="col-form-label modal-contact">Contact #:</label>
-        <input type="text" name="contact_number" class="form-control" id="contact-edit">
-        <p id="error-contact-edit" class="error-edit" hidden="hidden"></p></div>
-        <div class="col-md-11 mx-auto">
-        <label for="email" class="col-form-label modal-mobile">E-mail Address:</label>
-        <input type="text" name="email" class="form-control" id="email-edit">
-        <p id="error-email-edit" class="error-edit" hidden="hidden"></p></div>
+      <div class="form-group row mx-auto">
+        <label for="last-name"  class="col-form-label col-md-2 modal-lname">Last Name:</label>
+        <div class="col-md-10">
+            <input type="text" name="lastname" class="form-control" id="lastname-edit">
+            <p id="error-lastname-edit" class="error-edit" hidden="hidden"></p>
+        </div>
       </div>
 
+      <div class="form-group row mx-auto">
+        <label for="address" class="col-form-label col-md-2 modal-address">Address:</label>
+        <div class="col-md-10">
+            <input type="text" name="address" class="form-control modal-add" id="address-edit">
+            <p id="error-address-edit" class="error-edit" hidden="hidden"></p>
+        </div>
       </div>
+
+      <div class="form-group row mx-auto">
+        <label for="contact" class="col-form-label col-md-2 modal-contact">Contact #:</label>
+        <div class="col-md-10">
+            <input type="text" name="contact_number" class="form-control" id="contact-edit">
+            <p id="error-contact-edit" class="error-edit" hidden="hidden"></p>
+        </div>
+      </div>
+
+      <div class="form-group row mx-auto">
+        <label for="email" class="col-form-label col-md-3 modal-mobile">E-mail Address:</label>
+        <div class="col-md-9">
+            <input type="text" name="email" class="form-control" id="email-edit">
+            <p id="error-email-edit" class="error-edit" hidden="hidden"></p>
+        </div>
       </div>
 
       <div class="modal-footer" id="modal-footer-staff-edit">

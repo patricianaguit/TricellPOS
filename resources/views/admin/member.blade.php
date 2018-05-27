@@ -109,29 +109,32 @@ ACCOUNTS
       <div class="form-group">
       <input type="hidden" name="member_id" id="member-id-reload">
       <div class="container-fluid">
-
-      <div class="col-md-11 mx-auto">
-        <label for="load" class="col-form-label modal-load">Load:</label>
+      </br>
+      <div class="form-group row mx-auto">
+      <label for="points" class="col-form-label col-sm-2 modal-load">Load:</label>
+      <div class="col-sm-10">
         <div class="input-group">
             <div class="input-group-prepend">
                 <span class="input-group-text" id="basic-addon-load">₱</span>
             </div>
-            <input type="text" name="load" class="form-control modal-add" id="load-reload">
-        </div>
+      <input type="text" name="load" class="form-control modal-add" id="load-reload">
+      </div>
         <p id="error-load-reload" class="error-reload" hidden="hidden"></p>
       </div>
+    </div>
 
-      <div class="col-md-11 mx-auto">
-        <label for="points" class="col-form-label modal-points">Points:</label>
-        <div class="input-group">
-            <div class="input-group-prepend">
-                <span class="input-group-text" id="basic-addon-points">₱</span>
-            </div>
-            <input type="text" name="points" class="form-control modal-add" id="points-reload">
-        </div>
-        <p id="error-points-reload" class="error-reload" hidden="hidden"></p>
-      </div>
-
+    <div class="form-group row mx-auto">
+    <label for="points" class="col-form-label col-sm-2 modal-points">Points:</label>
+    <div class="col-sm-10">
+      <div class="input-group">
+          <div class="input-group-prepend">
+              <span class="input-group-text" id="basic-addon-points">₱</span>
+          </div>
+      <input type="text" name="points" class="form-control modal-add" id="points-reload">
+    </div>
+      <p id="error-points-reload" class="error-reload" hidden="hidden"></p>
+    </div>
+  </div>
       </div>
       </div>
 

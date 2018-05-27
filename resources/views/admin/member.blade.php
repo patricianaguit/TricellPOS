@@ -45,15 +45,15 @@ ACCOUNTS
 
 	 @if(!empty($search))
       @if($totalcount > 7)
-        <center><p> Showing {{$count}} out of {{$totalcount}} 
+        <center><p> Showing {{$count}} out of {{$totalcount}}
           @if($count > 1)
-            {{'results'}} 
-          @else 
+            {{'results'}}
+          @else
             {{'result'}}
-          @endif 
+          @endif
         for <b> {{ $search }} </b> </p></center>
       @else
-        <center><p> Showing {{$count}} 
+        <center><p> Showing {{$count}}
         @if($count > 1 || $count == 0)
           {{'results'}}
         @else
@@ -78,11 +78,11 @@ ACCOUNTS
       <tbody class="td_class">
       	@foreach($members as $member)
         <tr>
-          <th scope="row">{{$member->card_number}}</th>
-          <td>{{$member->firstname . " " . $member->lastname}}</td>
-          <td>{{$member->contact_number}}</td>
-          <td>₱ {{$member->balance->load_balance}}</td>
-          <td>₱ {{$member->balance->points}}</td>
+          <th scope="row" class="td-center">{{$member->card_number}}</th>
+          <td class="td-center"> {{$member->firstname . " " . $member->lastname}}</td>
+          <td class="td-center">{{$member->contact_number}}</td>
+          <td class="td-center">₱ {{$member->balance->load_balance}}</td>
+          <td class="td-center">₱ {{$member->balance->points}}</td>
           <td>
           	<button type="button" id="edit-member" class="btn btn-primary edit-btn" data-toggle="modal" data-target=".edit_member" data-id="{{ $member->id }}" data-cardnumber ="{{ $member->card_number }}" data-firstname="{{$member->firstname}}" data-lastname="{{$member->lastname}}" data-address="{{$member->address}}" data-contact="{{$member->contact_number}}" data-email="{{$member->email}}"><i class="material-icons md-18">mode_edit</i></button>
             <button type="button" id="reload-member" class="btn btn-success edit-btn" data-toggle="modal" data-target=".reload_member" data-id="{{$member->id}}" data-load="{{$member->balance->load_balance}}" data-points="{{$member->balance->points}}"><i class="pp-reload"></i></button>
@@ -109,7 +109,7 @@ ACCOUNTS
       <div class="form-group">
       <input type="hidden" name="member_id" id="member-id-reload">
       <div class="container-fluid">
-      
+
       <div class="col-md-11 mx-auto">
         <label for="load" class="col-form-label modal-load">Load:</label>
         <div class="input-group">
@@ -229,7 +229,7 @@ ACCOUNTS
       <div class="form-group">
       <input type="hidden" name="member_id" id="member-id-edit">
       <div class="container-fluid">
-      
+
       <div class="row">
 		  <div class="col-md-11 mx-auto">
         <label for="card-no" class="col-form-label modal-card">Card Number:</label>
@@ -267,7 +267,7 @@ ACCOUNTS
     	<p id="error-email-edit" class="error-edit" hidden="hidden"></div>
 
       </div>
-	
+
       </div>
       </div>
 
@@ -292,7 +292,7 @@ ACCOUNTS
       </button>
     </div>
     <div class="modal-body">
-        <center>  <p> Are you sure you want to permanently delete the account of <b><span id="delete-name"></span></b>?</p> 
+        <center>  <p> Are you sure you want to permanently delete the account of <b><span id="delete-name"></span></b>?</p>
         <span class="member-id-delete" hidden="hidden"></span>
     </div>
 
@@ -393,7 +393,7 @@ ACCOUNTS
             icon: "success",
             button: "Close",
           });
-    localStorage.clear(); 
+    localStorage.clear();
   }
   else if(localStorage.getItem("add"))
   {
@@ -403,7 +403,7 @@ ACCOUNTS
             icon: "success",
             button: "Close",
           });
-    localStorage.clear(); 
+    localStorage.clear();
   }
   else if(localStorage.getItem("reload"))
   {
@@ -413,17 +413,17 @@ ACCOUNTS
             icon: "success",
             button: "Close",
           });
-    localStorage.clear(); 
+    localStorage.clear();
   }
   });
-  
+
   //add member
   $('#modal-footer-member-add').on('click', '#add-member', function(event) {
   $.ajax({
     type: 'POST',
     url: '/accounts/add_member',
     data: {
-            '_token': $('input[name=_token]').val(),  
+            '_token': $('input[name=_token]').val(),
             'card_number': $("#cardnumber-add").val(),
             'load_balance': $("#load-add").val(),
             'firstname': $("#firstname-add").val(),
@@ -537,7 +537,7 @@ ACCOUNTS
     $('#member-id-reload').val($(this).data('id'));
     $('#load-reload').val($(this).data('load'));
     $("#points-reload").val($(this).data('points'));
-  }); 
+  });
 
   $('#modal-footer-member-reload').on('click', '#update-reload-member', function(event) {
   $.ajax({
@@ -583,7 +583,7 @@ ACCOUNTS
       else
       {
         localStorage.setItem("reload","success");
-        window.location.reload();   
+        window.location.reload();
       }
       },
 
@@ -603,7 +603,7 @@ ACCOUNTS
     $("#address-edit").val($(this).data('address'));
     $("#contact-edit").val($(this).data('contact'));
     $("#email-edit").val($(this).data('email'));
-  });	
+  });
 
   $('#modal-footer-member-edit').on('click', '#update-member', function(event) {
   $.ajax({
@@ -697,7 +697,7 @@ ACCOUNTS
       else
       {
         localStorage.setItem("update","success");
-        window.location.reload();   
+        window.location.reload();
       }
       },
 

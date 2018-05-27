@@ -27,6 +27,11 @@ body{
 
     text-align: center;
 }
+
+.td-center{
+  padding:20px !important;
+}
+
 .modal_css{
   margin-top:15px !important;
   align: right !important;

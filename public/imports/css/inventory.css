@@ -11,6 +11,7 @@ body{
 
     font-weight: 200;
 }
+
 .th_css{
   background-color:#29323c !important;
   font-weight: 150 !important;
@@ -20,6 +21,9 @@ body{
 
 .td_class{
   background-color: #fcfcfc !important;
+}
+.td-center{
+  padding:20px !important;
 }
 
 .modal_css{

@@ -41,15 +41,15 @@ ACCOUNTS
 
   @if(!empty($search))
       @if($totalcount > 7)
-        <center><p> Showing {{$count}} out of {{$totalcount}} 
+        <center><p> Showing {{$count}} out of {{$totalcount}}
           @if($count > 1)
-            {{'results'}} 
-          @else 
+            {{'results'}}
+          @else
             {{'result'}}
-          @endif 
+          @endif
         for <b> {{ $search }} </b> </p></center>
       @else
-        <center><p> Showing {{$count}} 
+        <center><p> Showing {{$count}}
         @if($count > 1 || $count == 0)
           {{'results'}}
         @else
@@ -73,10 +73,10 @@ ACCOUNTS
       <tbody class="td_class">
         @foreach($staffs as $staff)
         <tr class="staff{{$staff->id}}">
-          <td><b>{{ $staff->username }}</b></td>
-          <td>{{ $staff->firstname . " " . $staff->lastname }}</td>
-          <td>{{ $staff->contact_number }}</td>
-          <td>{{ $staff->email }}</td>
+          <td class="td-center"><b>{{ $staff->username }}</b></td>
+          <td class="td-center">{{ $staff->firstname . " " . $staff->lastname }}</td>
+          <td class="td-center">{{ $staff->contact_number }}</td>
+          <td class="td-center">{{ $staff->email }}</td>
           <td>
             <button type="button" id="edit-staff" class="btn btn-primary edit-btn" data-toggle="modal" data-target=".edit_staff" data-id="{{ $staff->id }}" data-username ="{{ $staff->username }}" data-firstname="{{$staff->firstname}}" data-lastname="{{$staff->lastname}}" data-address="{{$staff->address}}" data-contact="{{$staff->contact_number}}" data-email="{{$staff->email}}"><i class="material-icons md-18">mode_edit</i></button>
             <button type="button" id="delete-staff" class="btn btn-danger del-btn" data-id="{{ $staff->id }}" data-firstname="{{$staff->firstname}}" data-lastname="{{$staff->lastname}}" data-toggle="modal" data-target=".delete_staff"><i class="material-icons md-18">delete</i></button>
@@ -85,7 +85,7 @@ ACCOUNTS
         @endforeach
       </tbody>
     </table>
-    
+
     {{$staffs->links()}}
 
     <!----start of modal for add staff---->
@@ -102,7 +102,7 @@ ACCOUNTS
         <form id="add-form" class="nosubmitform">
         <div class="form-group">
           <div class="container-fluid">
-          <div class="row">  
+          <div class="row">
           <div class="col-md-11 mx-auto">
           <label for="username" class="col-form-label modal-user">Username:</label>
           <input type="text" name="username" class="form-control modal-card" id="username-add">
@@ -120,29 +120,29 @@ ACCOUNTS
         <div class="row">
           <div class="col-md-11 mx-auto">
           <label for="first-name" class="col-form-label modal-fname">First Name:</label>
-          <input type="text" name="firstname" class="form-control modal-fname" id="firstname-add">  
+          <input type="text" name="firstname" class="form-control modal-fname" id="firstname-add">
           <p id="error-firstname-add" class="error-add" hidden="hidden"></p></div>
           <div class="col-md-11 mx-auto">
           <label for="last-name" class="col-form-label modal-lname">Last Name:</label>
-          <input type="text" name="lastname" class="form-control" id="lastname-add">  
+          <input type="text" name="lastname" class="form-control" id="lastname-add">
           <p id="error-lastname-add" class="error-add" hidden="hidden"></p></div>
         </div>
 
         <div class="row">
           <div class="col-md-11 mx-auto">
           <label for="address" class="col-form-label modal-address">Address:</label>
-          <input type="text" name="address" class="form-control modal-add" id="address-add">  
+          <input type="text" name="address" class="form-control modal-add" id="address-add">
           <p id="error-address-add" class="error-add" hidden="hidden"></p></div>
         </div>
 
         <div class="row">
           <div class="col-md-11 mx-auto">
           <label for="contact" class="col-form-label modal-contact">Contact #:</label>
-          <input type="text" name="contact_number" class="form-control" id="contact-add"> 
+          <input type="text" name="contact_number" class="form-control" id="contact-add">
           <p id="error-contact-add" class="error-add" hidden="hidden"></p></div>
           <div class="col-md-11 mx-auto">
           <label for="email" class="col-form-label modal-mobile">E-mail Address:</label>
-          <input type="text" name="email" class="form-control" id="email-add"> 
+          <input type="text" name="email" class="form-control" id="email-add">
           <p id="error-email-add" class="error-add" hidden="hidden"></p></div>
         </div>
 
@@ -169,7 +169,7 @@ ACCOUNTS
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-      
+
       <form id="edit-form" class="nosubmitform">
       <input type="hidden" name="staff_id" id="staff-id-edit">
       <div class="form-group">
@@ -258,12 +258,12 @@ ACCOUNTS
     <!----end of modal---->
 
   </div>
-    
+
   <script type="text/javascript">
   $('.nosubmitform').submit(function(event){
       event.preventDefault();
   });
-  
+
   $('.edit_staff').on('hide.bs.modal', function(){
     //hide error messages in modal
     $('#error-username-edit').attr("hidden", true);
@@ -328,7 +328,7 @@ ACCOUNTS
             icon: "success",
             button: "Close",
           });
-    localStorage.clear(); 
+    localStorage.clear();
   }
   else if(localStorage.getItem("add"))
   {
@@ -338,7 +338,7 @@ ACCOUNTS
             icon: "success",
             button: "Close",
           });
-    localStorage.clear(); 
+    localStorage.clear();
   }
   });
 
@@ -348,7 +348,7 @@ ACCOUNTS
     type: 'POST',
     url: '/accounts/add_staff',
     data: {
-            '_token': $('input[name=_token]').val(),  
+            '_token': $('input[name=_token]').val(),
             'username': $("#username-add").val(),
             'password': $("#password-add").val(),
             'password_confirmation': $("#confirm-password-add").val(),
@@ -602,7 +602,7 @@ ACCOUNTS
       else
       {
         localStorage.setItem("update","success");
-        window.location.reload();   
+        window.location.reload();
       }
       },
 

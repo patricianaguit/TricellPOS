@@ -17,7 +17,7 @@ ACCOUNTS
     <h3 class="title">Admin</h3>
     <div class="nav nav-tabs justify-content-end memberstab" id="nav-tab" role="tablist">
       <a class="nav-item nav-link" id="nav-members-tab" href="/accounts/members" role="tab" aria-controls="nav-members" aria-selected="false">Members</a>
-      <a class="nav-item nav-link" id="nav-staff-tab"  href="/accounts/staff" role="tab" aria-controls="nav-staff" aria-selected="false">Staff</a>      
+      <a class="nav-item nav-link" id="nav-staff-tab"  href="/accounts/staff" role="tab" aria-controls="nav-staff" aria-selected="false">Staff</a>
       <a class="nav-item nav-link active " id="nav-admin-tab"  href="/accounts/admin" role="tab" aria-controls="nav-admin" aria-selected="true">Admin</a>
     </div>
   </nav>
@@ -40,15 +40,15 @@ ACCOUNTS
 
   @if(!empty($search))
       @if($totalcount > 7)
-        <center><p> Showing {{$count}} out of {{$totalcount}} 
+        <center><p> Showing {{$count}} out of {{$totalcount}}
           @if($count > 1)
-            {{'results'}} 
-          @else 
+            {{'results'}}
+          @else
             {{'result'}}
-          @endif 
+          @endif
         for <b> {{ $search }} </b> </p></center>
       @else
-        <center><p> Showing {{$count}} 
+        <center><p> Showing {{$count}}
         @if($count > 1 || $count == 0)
           {{'results'}}
         @else
@@ -72,10 +72,10 @@ ACCOUNTS
       <tbody class="td_class">
         @foreach($admins as $admin)
         <tr>
-          <td><b>{{ $admin->username }}</b></td>
-          <td>{{ $admin->firstname . " " . $admin->lastname }}</td>
-          <td>{{ $admin->contact_number }}</td>
-          <td>{{ $admin->email }}</td>
+          <td class="td-center"><b>{{ $admin->username }}</b></td>
+          <td class="td-center">{{ $admin->firstname . " " . $admin->lastname }}</td>
+          <td class="td-center">{{ $admin->contact_number }}</td>
+          <td class="td-center">{{ $admin->email }}</td>
           <td>
             <button type="button" id="view-admin" class="btn btn-secondary view-btn" data-toggle="modal" data-target=".view_admin" data-id="{{ $admin->id}}" data-username ="{{ $admin->username }}" data-firstname="{{$admin->firstname}}" data-lastname="{{$admin->lastname}}" data-address="{{$admin->address}}" data-contact="{{$admin->contact_number}}" data-email="{{$admin->email}}"><i class="material-icons md-18">info_outline</i></button>
           </td>
@@ -83,7 +83,7 @@ ACCOUNTS
         @endforeach
       </tbody>
     </table>
-    
+
     <div>{{$admins->links()}}</div>
 
     <!----start of modal for add admin---->
@@ -176,7 +176,7 @@ ACCOUNTS
           <div class="col-md-11 mx-auto">
           <label for="username" class="col-form-label modal-user">Username:</label>
           <input type="text" name="username" class="form-control modal-card" id="username-view">
-          <p id="error-username-view" class="error-add" hidden="hidden"></p></div> 
+          <p id="error-username-view" class="error-add" hidden="hidden"></p></div>
 
           <div class="col-md-11 mx-auto">
           <label for="password" class="col-form-label modal-password">Password:</label>
@@ -235,7 +235,7 @@ ACCOUNTS
   });
 
   $(document).on('click', '#view-admin', function() {
-    $('#admin-id-view').val($(this).data('id')); 
+    $('#admin-id-view').val($(this).data('id'));
     $('#username-view').val($(this).data('username'));
     $("#firstname-view").val($(this).data('firstname'));
     $("#lastname-view").val($(this).data('lastname'));
@@ -309,7 +309,7 @@ ACCOUNTS
             icon: "success",
             button: "Close",
           });
-    localStorage.clear(); 
+    localStorage.clear();
   }
   else if(localStorage.getItem("add"))
   {
@@ -319,7 +319,7 @@ ACCOUNTS
             icon: "success",
             button: "Close",
           });
-    localStorage.clear(); 
+    localStorage.clear();
   }
   });
 
@@ -442,7 +442,7 @@ ACCOUNTS
       else
       {
         localStorage.setItem("add","success");
-        window.location.reload();   
+        window.location.reload();
       }
     },
     error: function(jqXHR, textStatus, errorThrown) { // What to do if we fail
@@ -571,7 +571,7 @@ ACCOUNTS
       else
       {
         localStorage.setItem("update","success");
-        window.location.reload();   
+        window.location.reload();
       }
     },
     error: function(jqXHR, textStatus, errorThrown) { // What to do if we fail
@@ -580,7 +580,7 @@ ACCOUNTS
     }
   });
   });
-    
+
   </script>
-  
+
 @endsection

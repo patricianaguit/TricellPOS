@@ -22,7 +22,7 @@ INVENTORY
     <div class="col-md-8">
       <button type="button" class="btn btn-outline-info add-item-btn" data-toggle="modal" data-target=".add_product"> Add Item</button>
     </div>
-    
+
     <div class="col-md-4">
       <form class="form ml-auto" action="/inventory/search" method="GET">
 			<div class="input-group">
@@ -33,19 +33,19 @@ INVENTORY
 			</div>
 		  </form>
     </div>
-</div> 
+</div>
 
 	@if(!empty($search))
 	    @if($totalcount > 7)
-	    	<center><p> Showing {{$count}} out of {{$totalcount}} 
+	    	<center><p> Showing {{$count}} out of {{$totalcount}}
 		    	@if($count > 1)
-		    		{{'results'}} 
-		    	@else 
+		    		{{'results'}}
+		    	@else
 		    		{{'result'}}
-		    	@endif 
+		    	@endif
 	    	for <b> {{ $search }} </b> </p></center>
 	    @else
-	    	<center><p> Showing {{$count}} 
+	    	<center><p> Showing {{$count}}
 				@if($count > 1 || $count == 0)
 					{{'results'}}
 				@else
@@ -60,7 +60,7 @@ INVENTORY
       <thead class ="th_css">
         <tr>
 		  <th scope="col">Item Name</th>
-          <th scope="col">Description</th>	
+          <th scope="col">Description</th>
 		  <th scope="col">Price</th>
           <th scope="col">Stock on Hand</th>
           <th scope="col">Actions</th>
@@ -70,10 +70,10 @@ INVENTORY
 
       	@foreach($products as $product)
         <tr>
-          <th scope="row">{{str_limit($product->product_name,40)}}</th>
-          <td>{{str_limit($product->product_desc,30)}}</td>
-          <td>₱ {{$product->price}}</td>
-          <td>{{$product->product_qty}}</td>
+          <th scope="row" class="td-center">{{str_limit($product->product_name,40)}}</th>
+          <td class="td-center">{{str_limit($product->product_desc,30)}}</td>
+          <td class="td-center">₱ {{$product->price}}</td>
+          <td class="td-center">{{$product->product_qty}}</td>
           <td>
             <button type="button" id="edit-product" class="btn btn-primary edit-btn" data-toggle="modal" data-target=".edit_product" data-id="{{$product->product_id}}" data-prodname = "{{$product->product_name}}" data-proddesc ="{{$product->product_desc}}" data-prodqty="{{$product->product_qty}}" data-price="{{$product->price}}"><i class="material-icons md-18">mode_edit</i></button>
             <button type="button" id="delete-product" class="btn btn-danger del-btn" data-toggle="modal" data-target=".delete" data-id="{{$product->product_id}}" data-prodname="{{$product->product_name}}"><i class="material-icons md-18">delete</i></button>
@@ -100,7 +100,7 @@ INVENTORY
       <form class="nosubmitform">
       <div class="form-group">
       <div class="container-fluid">
-		  
+
       <div class="col-md-11 mx-auto">
           <label for="address" class="col-form-label modal-address">Item Name:</label>
           <input type="text" name="product_name" class="form-control modal-add" id="product-name-add">
@@ -239,7 +239,7 @@ else if(localStorage.getItem("delete"))
           icon: "success",
           button: "Close",
         });
-  localStorage.clear(); 
+  localStorage.clear();
 }
 else if(localStorage.getItem("add"))
 {
@@ -249,7 +249,7 @@ else if(localStorage.getItem("add"))
           icon: "success",
           button: "Close",
         });
-  localStorage.clear(); 
+  localStorage.clear();
 }
 });
 
@@ -347,7 +347,7 @@ $.ajax({
     else
     {
       localStorage.setItem("add","success");
-      window.location.reload();   
+      window.location.reload();
     }
     },
 
@@ -365,7 +365,7 @@ $(document).on('click', '#edit-product', function() {
   $('#product-desc-edit').val($(this).data('proddesc'));
   $("#product-price-edit").val($(this).data('price'));
   $("#product-qty-edit").val($(this).data('prodqty'));
-}); 
+});
 
 $('#modal-footer-product-edit').on('click', '#update-product', function(event) {
 $.ajax({
@@ -433,7 +433,7 @@ $.ajax({
     else
     {
       localStorage.setItem("update","success");
-      window.location.reload();   
+      window.location.reload();
     }
     },
 

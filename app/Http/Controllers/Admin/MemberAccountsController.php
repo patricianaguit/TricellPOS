@@ -1,5 +1,5 @@
 <?php
-    
+
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
@@ -18,7 +18,7 @@ class MemberAccountsController extends Controller
     public function index()
     {
         $members = User::where('role', 'member')->orderBy('id', 'desc')->paginate(7);
-        return view('admin.member')->with('members', $members);  
+        return view('admin.member')->with('members', $members);
     }
 
     public function create(Request $request)
@@ -135,7 +135,7 @@ class MemberAccountsController extends Controller
                 {
                     $query->where('card_number', 'LIKE', '%' . $search . '%')->orWhere('firstname', 'LIKE', '%' . $search . '%')->orwhere('lastname', 'LIKE', '%' . $search . '%')->orWhere(DB::raw('concat(firstname," ",lastname)'), 'LIKE', '%' . $search . '%');
                 })->count();
-            return view('admin.member')->with(['members' => $members, 'search' => $search, 'count' => $count, 'totalcount' => $totalcount]);  
+            return view('admin.member')->with(['members' => $members, 'search' => $search, 'count' => $count, 'totalcount' => $totalcount]);
         }
     }
 }

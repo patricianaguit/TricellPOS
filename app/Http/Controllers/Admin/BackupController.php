@@ -7,7 +7,6 @@ use Illuminate\Support\Collection;
 
 use Illuminate\Http\Request;
 
-use Alert;
 use Carbon\Carbon;
 use App\Http\Requests;
 use Artisan;
@@ -54,13 +53,12 @@ class BackupController extends Controller
     public function create()
     {
         try {
-            // start the backup process
+
             Artisan::call('backup:run', ['--only-db' => true, '--disable-notifications' => true]);
             $output = Artisan::output();
-            // log the results
+
             Log::info("Backpack\BackupManager -- new backup started from admin interface \r\n" . $output);
-            // return the results as a response to the ajax call
-            // Alert::success('New backup created');
+
             return redirect()->back();
         } catch (Exception $e) {
             Flash::error($e->getMessage());
@@ -68,11 +66,6 @@ class BackupController extends Controller
         }
     }
 
-    /**
-     * Downloads a backup zip file.
-     *
-     * TODO: make it work no matter the flysystem driver (S3 Bucket, etc).
-     */
     public function download($file_name)
     {
         $file = config('backup.backup.name') . '/' . $file_name;
@@ -93,9 +86,6 @@ class BackupController extends Controller
         }
     }
 
-    /**
-     * Deletes a backup file.
-     */
     public function delete($file_name)
     {
         $disk = Storage::disk(config('backup.backup.destination.disks')[0]);
@@ -129,7 +119,7 @@ class BackupController extends Controller
         $createdate = Carbon::createFromTimestamp($date_modify)->toDateTimeString(); 
         $datediff = Carbon::parse($createdate);
 
-        return $datediff->diffForHumans();
+        return $datediff->diffForHumans(null,true);
 
     }
 }

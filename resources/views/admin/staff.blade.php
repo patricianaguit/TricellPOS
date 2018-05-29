@@ -103,16 +103,16 @@ ACCOUNTS
         <form id="add-form" class="nosubmitform">
 
         <div class="form-group row mx-auto">
-          <label for="username" class="col-form-label col-md-2 modal-user">Username:</label>
-          <div class="col-md-10">
+          <label for="username" class="col-form-label col-md-3 modal-user">Username:</label>
+          <div class="col-md-9">
               <input type="text" name="username" class="form-control modal-card" id="username-add">
               <p id="error-username-add" class="error-add" hidden="hidden"></p>
           </div>
         </div>
 
         <div class="form-group row mx-auto">
-          <label for="password" class="col-form-label col-md-2 modal-password">Password:</label>
-          <div class="col-md-10">
+          <label for="password" class="col-form-label col-md-3 modal-password">Password:</label>
+          <div class="col-md-9">
               <input type="password" name="password" class="form-control" id="password-add">
               <p id="error-password-add" class="error-add" hidden="hidden"></p>
           </div>
@@ -128,32 +128,32 @@ ACCOUNTS
      
 
         <div class="form-group row mx-auto">
-          <label for="first-name" class="col-form-label col-md-2 modal-fname">First Name:</label>
-          <div class="col-md-10"> 
+          <label for="first-name" class="col-form-label col-md-3 modal-fname">First Name:</label>
+          <div class="col-md-9"> 
               <input type="text" name="firstname" class="form-control modal-fname" id="firstname-add">
               <p id="error-firstname-add" class="error-add" hidden="hidden"></p>
           </div>
         </div>
 
         <div class="form-group row mx-auto">
-          <label for="last-name" class="col-form-label col-md-2 modal-lname">Last Name:</label>
-          <div class="col-md-10"> 
+          <label for="last-name" class="col-form-label col-md-3 modal-lname">Last Name:</label>
+          <div class="col-md-9"> 
               <input type="text" name="lastname" class="form-control" id="lastname-add">
               <p id="error-lastname-add" class="error-add" hidden="hidden"></p>
           </div>
         </div>
 
         <div class="form-group row mx-auto">
-          <label for="address" class="col-form-label col-md-2 modal-address">Address:</label>
-          <div class="col-md-10">
+          <label for="address" class="col-form-label col-md-3 modal-address">Address:</label>
+          <div class="col-md-9">
               <input type="text" name="address" class="form-control modal-add" id="address-add">
               <p id="error-address-add" class="error-add" hidden="hidden"></p>
           </div>
         </div>
 
         <div class="form-group row mx-auto">
-          <label for="contact" class="col-form-label col-md-2 modal-contact">Contact #:</label>
-          <div class="col-md-10">
+          <label for="contact" class="col-form-label col-md-3 modal-contact">Contact #:</label>
+          <div class="col-md-9">
               <input type="text" name="contact_number" class="form-control" id="contact-add">
               <p id="error-contact-add" class="error-add" hidden="hidden"></p>
           </div>
@@ -194,16 +194,16 @@ ACCOUNTS
       <input type="hidden" name="staff_id" id="staff-id-edit">
       
       <div class="form-group row mx-auto">
-        <label for="username" class="col-form-label col-md-2 modal-user">Username:</label>
-        <div class="col-md-10">
+        <label for="username" class="col-form-label col-md-3 modal-user">Username:</label>
+        <div class="col-md-9">
             <input type="text" name="username" class="form-control modal-card" id="username-edit">
             <p id="error-username-edit" class="error-edit" hidden="hidden"></p>
         </div>
       </div>
 
       <div class="form-group row mx-auto">
-        <label for="password" class="col-form-label col-md-2 modal-password">Password:</label>
-        <div class="col-md-10">
+        <label for="password" class="col-form-label col-md-3 modal-password">Password:</label>
+        <div class="col-md-9">
             <input type="password" name="password" class="form-control" id="password-edit">
             <p id="error-password-edit" class="error-edit" hidden="hidden"></p>
         </div>
@@ -218,32 +218,32 @@ ACCOUNTS
       </div>
     
       <div class="form-group row mx-auto">
-        <label for="first-name" class="col-form-label col-md-2 modal-fname">First Name:</label>
-        <div class="col-md-10">
+        <label for="first-name" class="col-form-label col-md-3 modal-fname">First Name:</label>
+        <div class="col-md-9">
             <input type="text" name="firstname" class="form-control modal-fname" id="firstname-edit">
             <p id="error-firstname-edit" class="error-edit" hidden="hidden"></p>
         </div>
       </div>
 
       <div class="form-group row mx-auto">
-        <label for="last-name"  class="col-form-label col-md-2 modal-lname">Last Name:</label>
-        <div class="col-md-10">
+        <label for="last-name"  class="col-form-label col-md-3 modal-lname">Last Name:</label>
+        <div class="col-md-9">
             <input type="text" name="lastname" class="form-control" id="lastname-edit">
             <p id="error-lastname-edit" class="error-edit" hidden="hidden"></p>
         </div>
       </div>
 
       <div class="form-group row mx-auto">
-        <label for="address" class="col-form-label col-md-2 modal-address">Address:</label>
-        <div class="col-md-10">
+        <label for="address" class="col-form-label col-md-3 modal-address">Address:</label>
+        <div class="col-md-9">
             <input type="text" name="address" class="form-control modal-add" id="address-edit">
             <p id="error-address-edit" class="error-edit" hidden="hidden"></p>
         </div>
       </div>
 
       <div class="form-group row mx-auto">
-        <label for="contact" class="col-form-label col-md-2 modal-contact">Contact #:</label>
-        <div class="col-md-10">
+        <label for="contact" class="col-form-label col-md-3 modal-contact">Contact #:</label>
+        <div class="col-md-9">
             <input type="text" name="contact_number" class="form-control" id="contact-edit">
             <p id="error-contact-edit" class="error-edit" hidden="hidden"></p>
         </div>

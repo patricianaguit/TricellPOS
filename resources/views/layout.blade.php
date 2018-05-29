@@ -55,7 +55,7 @@
             HELLO, {{strtoupper(Auth::user()->firstname)}}
           </a>
           <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-            <a class="dropdown-item" href="#">Backup</a>
+            <a class="dropdown-item" href="/backup">Backup</a>
             <a class="dropdown-item" href="#">Profile</a>
             <a class="dropdown-item" href="#">Shutdown</a>
             <a class="dropdown-item" href="/logout">Logout</a>

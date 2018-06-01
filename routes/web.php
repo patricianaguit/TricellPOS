@@ -44,4 +44,5 @@ Route::group(['middleware' => ['admin']], function () {
 	Route::get('backup/create', 'Admin\BackupController@create');
     Route::get('backup/download/{file_name}', 'Admin\BackupController@download');
    	Route::get('backup/delete/{file_name}', 'Admin\BackupController@delete');
+   	Route::get('backup/search', 'Admin\BackupController@search');
 });

@@ -5,6 +5,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Collection;
 
+use Illuminate\Support\Facades\Redirect;
 use Illuminate\Http\Request;
 
 use Carbon\Carbon;
@@ -18,13 +19,13 @@ class BackupController extends Controller
 {
     public function index(Request $request)
     {
-        $currentPage = LengthAwarePaginator::resolveCurrentPage();
         $disk = Storage::disk(config('backup.backup.destination.disks.name')[0]);
 
         $files = $disk->files(config('backup.backup.name'));
         $backups = [];
 
-        foreach ($files as $k => $f) {
+        foreach ($files as $k => $f) 
+        {
 
             if (substr($f, -4) == '.zip' && $disk->exists($f)) {
                 $backups[] = [
@@ -52,15 +53,17 @@ class BackupController extends Controller
 
     public function create()
     {
-        try {
-
+        try 
+        {
             Artisan::call('backup:run', ['--only-db' => true, '--disable-notifications' => true]);
             $output = Artisan::output();
 
             Log::info("Backpack\BackupManager -- new backup started from admin interface \r\n" . $output);
 
             return redirect()->back();
-        } catch (Exception $e) {
+        } 
+        catch (Exception $e) 
+        {
             Flash::error($e->getMessage());
             return redirect()->back();
         }
@@ -70,11 +73,13 @@ class BackupController extends Controller
     {
         $file = config('backup.backup.name') . '/' . $file_name;
         $disk = Storage::disk(config('backup.backup.destination.disks')[0]);
-        if ($disk->exists($file)) {
+        if ($disk->exists($file)) 
+        {
             $fs = Storage::disk(config('backup.backup.destination.disks')[0])->getDriver();
             $stream = $fs->readStream($file);
 
-            return \Response::stream(function () use ($stream) {
+            return \Response::stream(function () use ($stream) 
+            {
                 fpassthru($stream);
             }, 200, [
                 "Content-Type" => $fs->getMimetype($file),
@@ -94,6 +99,67 @@ class BackupController extends Controller
             return redirect()->back();
         } else {
             abort(404, "The backup file doesn't exist.");
+        }
+    }
+
+    public function search(Request $request)
+    {
+        $search = $request->search;
+
+        if($search == "")
+        {
+            return Redirect::to('backup');
+        }
+        else
+        {
+            $disk = Storage::disk(config('backup.backup.destination.disks.name')[0]);
+
+            $files = $disk->files(config('backup.backup.name'));
+            $backups = [];
+
+            foreach ($files as $k => $f) 
+            {
+
+                if (substr($f, -4) == '.zip' && $disk->exists($f)) {
+                    $backups[] = [
+                        'file_path' => $f,
+                        'file_name' => str_replace(config('backup.backup.name') . '/', '', $f),
+                        'file_size' => $this->human_filesize($disk->size($f)),
+                        'last_modified' => $this->getDate($disk->lastModified($f)),
+                        'age' => $this->getAge($disk->lastModified($f))
+                    ];
+                }
+            }
+
+            foreach ($backups as $backup)
+            {
+                $date = date('F d, Y', strtotime($backup['last_modified']));
+                if($date == $search)
+                {
+                    $backups1[] = [
+                    'file_path' => $backup['file_path'],
+                    'file_name' => $backup['file_name'],
+                    'file_size' => $backup['file_size'],
+                    'last_modified' => $backup['last_modified'],
+                    'age' => $backup['age'],
+                    ];
+                }
+                else
+                {
+                   unset($backup);
+                }
+            }
+            
+            $backupsarray = array_reverse($backups1);
+            $currentPage = LengthAwarePaginator::resolveCurrentPage();
+            $backupcol = collect($backupsarray);
+            $perPage = 7;
+            $currentPageItems = $backupcol->slice(($currentPage * $perPage) - $perPage, $perPage)->all();
+            $backups= new LengthAwarePaginator($currentPageItems , count($backupcol), $perPage);
+
+            $backups->setPath($request->url());
+            $backups->appends($request->only('search'));
+            return view("admin.backup")->with('backups', $backups); 
         }
     }
 

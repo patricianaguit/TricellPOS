@@ -24,7 +24,7 @@ BACKUP
     </div>
 
     <div class="col-md-4">
-      <form class="form ml-auto" action="/inventory/search" method="GET">
+      <form class="form ml-auto" action="/backup/search" method="GET">
             <div class="input-group">
                 <input class="form-control" name="search" type="text" placeholder="Search" aria-label="Search" style="padding-left: 20px; border-radius: 40px;" id="product-search">
                 <div class="input-group-addon" style="margin-left: -50px; z-index: 3; border-radius: 40px; background-color: transparent; border:none;">

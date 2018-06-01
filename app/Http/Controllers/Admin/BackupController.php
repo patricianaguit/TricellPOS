@@ -136,7 +136,7 @@ class BackupController extends Controller
                 $date = date('F d, Y', strtotime($backup['last_modified']));
                 if($date == $search)
                 {
-                    $backups1[] = [
+                    $backupsearch[] = [
                     'file_path' => $backup['file_path'],
                     'file_name' => $backup['file_name'],
                     'file_size' => $backup['file_size'],
@@ -144,22 +144,40 @@ class BackupController extends Controller
                     'age' => $backup['age'],
                     ];
                 }
-                else
-                {
-                   unset($backup);
-                }
             }
-            
-            $backupsarray = array_reverse($backups1);
-            $currentPage = LengthAwarePaginator::resolveCurrentPage();
-            $backupcol = collect($backupsarray);
-            $perPage = 7;
-            $currentPageItems = $backupcol->slice(($currentPage * $perPage) - $perPage, $perPage)->all();
-            $backups= new LengthAwarePaginator($currentPageItems , count($backupcol), $perPage);
 
-            $backups->setPath($request->url());
-            $backups->appends($request->only('search'));
-            return view("admin.backup")->with('backups', $backups); 
+            if(isset($backupsearch))
+            {
+                $backupsarray = array_reverse($backupsearch);
+                $currentPage = LengthAwarePaginator::resolveCurrentPage();
+                $backupcol = collect($backupsarray);
+                $perPage = 7;
+                $currentPageItems = $backupcol->slice(($currentPage * $perPage) - $perPage, $perPage)->all();
+                $backups= new LengthAwarePaginator($currentPageItems , count($backupcol), $perPage);
+
+                $backups->setPath($request->url());
+                $backups->appends($request->only('search'));
+
+                $totalcount = count($backupsarray);
+                $count = count($backups);
+                return view("admin.backup")->with(['backups' => $backups, 'search' => $search, 'count' => $count, 'totalcount' => $totalcount]); 
+            }
+            else
+            {
+                $backupsarray= [];
+
+                $currentPage = LengthAwarePaginator::resolveCurrentPage();
+                $backupcol = collect($backupsarray);
+                $perPage = 7;
+                $currentPageItems = $backupcol->slice(($currentPage * $perPage) - $perPage, $perPage)->all();
+                $backups= new LengthAwarePaginator($currentPageItems , count($backupcol), $perPage);
+
+                $backups->setPath($request->url());
+                
+                $totalcount = count($backupsarray);
+                $count = count($backups);
+                return view("admin.backup")->with(['backups' => $backups, 'search' => $search, 'count' => $count, 'totalcount' => $totalcount]); 
+            }
         }
     }
 

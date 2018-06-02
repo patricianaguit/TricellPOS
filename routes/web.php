@@ -40,6 +40,8 @@ Route::group(['middleware' => ['admin']], function () {
 	Route::post('inventory/delete_product', 'Admin\InventoryController@destroy');
 	Route::post('inventory/add_product', 'Admin\InventoryController@create');
 	Route::get('logs/sales', 'Admin\SalesLogsController@index');
+	Route::post('logs/sales/showdetails', 'Admin\SalesLogsController@showdetails');
+
 	Route::get('backup', 'Admin\BackupController@index');
 	Route::get('backup/create', 'Admin\BackupController@create');
     Route::get('backup/download/{file_name}', 'Admin\BackupController@download');

@@ -43,4 +43,9 @@ class User extends Model implements
     {
         return $this->hasOne('App\Balance', 'id');
     }
+
+    public function sale()
+    {
+        return $this->hasMany('App\Sales','customer_id', 'id');
+    }
 }

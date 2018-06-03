@@ -38,17 +38,17 @@ SALES
   <div class="form-group">
     <b><label for="accounttype">Account Type:</label></b>
     <select class="form-control" name="account_type" id="accounttype">
-      <option selected>Any</option>
-      <option>Member</option>
-      <option>Walk-in</option>
+      <option selected value="Any">Any</option>
+      <option value="Member">Member</option>
+      <option value="Walk-in">Walk-in</option>
     </select>
     <br>
 
     <b><label for="paymentmode">Payment Mode:</label></b>
     <select class="form-control" name="payment_mode" id="paymentmode">
-      <option selected>Any</option>
-      <option>Cash</option>
-      <option>Card</option>
+      <option selected value="Any">Any</option>
+      <option value="Cash">Cash</option>
+      <option value="Card">Card</option>
     </select>
     <br>
 
@@ -340,6 +340,17 @@ SALES
               }
           });
 
+          $('#accounttype').change(function(){
+            if($(this).val()=="Walk-in") {   
+             $('#paymentmode option[value="Cash"]').attr("selected", "selected");
+             $('#paymentmode').attr("disabled", "disabled");
+            }
+            else
+            {
+              $('#paymentmode').removeAttr("disabled", "disabled"); 
+            }
+          });
+
           $('input[name="date_filter"]').on('apply.daterangepicker', function(ev, picker) {
               $(this).val(picker.startDate.format('MM/DD/YYYY') + ' - ' + picker.endDate.format('MM/DD/YYYY'));
           });
@@ -347,6 +358,10 @@ SALES
           $('input[name="date_filter"]').on('cancel.daterangepicker', function(ev, picker) {
               $(this).val('');
           });
+
+          $("#mainForm").submit(function() {
+            $("#paymentmode").removeAttr("disabled");
+          }); 
       });
     });
   });

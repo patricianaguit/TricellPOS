@@ -43,6 +43,7 @@ Route::group(['middleware' => ['admin']], function () {
 	Route::post('logs/sales/showdetails', 'Admin\SalesLogsController@showdetails');
 	Route::post('logs/sales/delete_sales', 'Admin\SalesLogsController@destroy');
 	Route::get('logs/sales/search', 'Admin\SalesLogsController@search');
+	Route::get('logs/reload', 'Admin\ReloadLogsController@index');
 	Route::get('backup', 'Admin\BackupController@index');
 	Route::get('backup/create', 'Admin\BackupController@create');
     Route::get('backup/download/{file_name}', 'Admin\BackupController@download');

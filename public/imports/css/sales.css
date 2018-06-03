@@ -73,6 +73,11 @@ font-size: 18px;
 
 	text-align:left !important;
 }
+
+.popover {
+   width: 270px !important;
+   max-width:500px !important;
+}
 /****NAV CSS***/
 /**.nav_custom{
 

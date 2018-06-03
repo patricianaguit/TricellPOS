@@ -48,4 +48,9 @@ class User extends Model implements
     {
         return $this->hasMany('App\Sales','customer_id', 'id');
     }
+
+    public function reload()
+    {
+        return $this->hasMany('App\Reload_sale','member_id', 'id');
+    }
 }

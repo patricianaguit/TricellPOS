@@ -1,4 +1,5 @@
   <input type="text" id="sales_id" value="{{sprintf('%08d',$sales->id)}}" hidden="hidden">
+  <input type="text" id="sales_date" value="{{date('F d, Y h:i:s A', strtotime($sales->transaction_date))}}" hidden="hidden" >
 	<table class="table table_modal">
   <thead>
     <tr>
@@ -57,7 +58,7 @@
       <td colspan="2">₱ <span class="total"></span></td>
   </tr>
   <tr class="table-light">
-      <td colspan="3"><b>Payment</b></td>
+      <td colspan="3"><b>Amount Paid</b></td>
       <td colspan="2">₱ {{number_format($sales->amount_paid,2, '.', '')}}<span class="payment"></span></td>
   </tr>
   <tr class="table-light">

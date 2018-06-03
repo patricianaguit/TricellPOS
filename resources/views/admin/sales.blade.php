@@ -13,7 +13,14 @@ SALES
 </br>
 <div class="container">
 <!---title inventory-->
-<h3 class="title">Sales Record</h3>
+<h3 class="title">Sales Record </h3>
+  <span class="text-right" style="display:block;float:right;">
+
+  @if((!empty($account_type) && !empty($payment_mode) && !empty($date_start) && !empty($date_end)) && ($date_start != $date_end))
+      <b>{{$account_type}}</b> Account Type using <b>{{$payment_mode}}</b> Payment from <b>{{date('F d, Y', strtotime($date_start))}}</b> until <b>{{date('F d, Y', strtotime($date_end))}}</b>
+  @else
+      <b>{{$account_type}}</b> Account Type using <b>{{$payment_mode}}</b> Payment on <b>{{date('F d, Y', strtotime($date_start))}}</b>
+  @endif</span>
 </br>
 <hr>
 <!---end of title inventory-->
@@ -24,19 +31,40 @@ SALES
   </div>
    
   <div class="col-md-4">
-    <form class="form ml-auto" action="/logs/sales/search" method="GET">
-      <div class="input-group date" id="datetimepicker4" data-target-input="nearest">
-          <input class="form-control datetimepicker-input" name="search" type="text" placeholder="Search by Date" aria-label="Search" style="padding-left: 20px; border-radius: 40px;" id="product-search" data-toggle ="datetimepicker" data-target="#datetimepicker4" autocomplete="off">
-          <div class="input-group-addon" style="margin-left: -50px; z-index: 3; border-radius: 40px; background-color: transparent; border:none;">
-              <button class="btn btn-outline-info btn-sm" type="submit" style="border-radius: 100px;" id="search-btn"><i class="material-icons">search</i></button>
-          </div>
+    <form class="form ml-auto">
+      <div class="col-md-12">
+        <button type="button" class=" form-control btn btn-outline-info add-item-btn" data-toggle="popover"  data-original-title='Filter Results <a href ="/logs/sales/" class="btn btn-info btn-save-modal" id="filter-submit">Clear</a>' data-content='
+<form id="mainForm" action="/logs/sales/search" method="GET">
+  <div class="form-group">
+    <b><label for="accounttype">Account Type:</label></b>
+    <select class="form-control" name="account_type" id="accounttype">
+      <option selected>Any</option>
+      <option>Member</option>
+      <option>Walk-in</option>
+    </select>
+    <br>
+
+    <b><label for="paymentmode">Payment Mode:</label></b>
+    <select class="form-control" name="payment_mode" id="paymentmode">
+      <option selected>Any</option>
+      <option>Cash</option>
+      <option>Card</option>
+    </select>
+    <br>
+
+    <b><label for="daterange">Date Range:</label></b>
+    <input type="text" name="date_filter" value="" class="form-control" autocomplete="off" required>
+    <br>
+    <center><button type="submit" class="btn btn-info btn-save-modal" id="filter-submit">Submit</button></center>
+</form>
+'>Filter</button>
       </div>
     </form>
   </div>
  </div> <!----end of second row--->
  <!---table start---->
 
- @if(!empty($search))
+ @if(!empty($account_type) && !empty($payment_mode) && !empty($date_start) && !empty($date_end))
       @if($totalcount > 7)
         <center><p> Showing {{$count}} out of {{$totalcount}}
           @if($count > 1)
@@ -44,7 +72,6 @@ SALES
           @else
             {{'result'}}
           @endif
-        for <b> {{ $search }} </b> </p></center>
       @else
         <center><p> Showing {{$count}}
         @if($count > 1 || $count == 0)
@@ -52,7 +79,6 @@ SALES
         @else
           {{'result'}}
         @endif
-          for <b> {{ $search }} </b> </p></center>
       @endif
   @endif
     <table class="table table-hover">
@@ -106,13 +132,14 @@ SALES
     <div class="modal-dialog ">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Receipt #<span class="receiptnumber"></span></h5> <br>
+          <h5 class="modal-title" id="exampleModalLabel">Receipt #<span class="receiptnumber"></span> - <span class="receiptdate"></span></h5> <br>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
 
          <div class="modal-body" id="view_body">
+         </div>
       </div>
     </div>
   </div>
@@ -143,6 +170,7 @@ SALES
     </div>
 
 
+
     <!----end of modal---->
 
 </div>
@@ -159,11 +187,11 @@ SALES
       'discount_id': $(this).data('discount_id')
     },
     success: function(data){
-    console.log(data);
 
       $('.view_details').modal('show');
       $('#view_body').html(data);
       $('.receiptnumber').text($('#sales_id').val());
+      $('.receiptdate').text($('#sales_date').val());
       var sum = 0;
 
       $('.totalprice').each(function() {
@@ -265,7 +293,6 @@ SALES
 
   $(document).on('click', '#delete-sales', function() {
     $('.sales-id-delete').text($(this).data('id'));
-    $('#delete-name').text($(this).data('prodname'));
   });
 
   $('#modal-footer-sales-delete').on('click', '#destroy-sales', function(){
@@ -300,12 +327,29 @@ SALES
     }
   });
 
-  $(function () {
-    $('#datetimepicker4').datetimepicker({
-        format: "MMMM DD, YYYY"
+  $(document).ready(function () {
+    $(function () {
+    $('[data-toggle="popover"]').popover({
+      html: true,
+      placement: 'bottom',
+    }).on('shown.bs.popover', function () {
+          $('input[name="date_filter"]').daterangepicker({
+              autoUpdateInput: false,
+              locale: {
+                  cancelLabel: 'Clear'
+              }
+          });
+
+          $('input[name="date_filter"]').on('apply.daterangepicker', function(ev, picker) {
+              $(this).val(picker.startDate.format('MM/DD/YYYY') + ' - ' + picker.endDate.format('MM/DD/YYYY'));
+          });
+
+          $('input[name="date_filter"]').on('cancel.daterangepicker', function(ev, picker) {
+              $(this).val('');
+          });
+      });
     });
   });
-
 
 </script>
 @endsection

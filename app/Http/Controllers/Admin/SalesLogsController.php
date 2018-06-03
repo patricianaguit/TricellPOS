@@ -42,7 +42,7 @@ class SalesLogsController extends Controller
 
     }
 
-    public function search(Request $request)
+    public function filter(Request $request)
     {
         $account_type = $request->account_type;  
         $payment_mode = $request->payment_mode;

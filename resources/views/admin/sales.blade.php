@@ -34,7 +34,8 @@ SALES
     <form class="form ml-auto">
       <div class="col-md-12">
         <button type="button" class=" form-control btn btn-outline-info add-item-btn" data-toggle="popover"  data-original-title='Filter Results <a href ="/logs/sales/" class="btn btn-info btn-save-modal" id="filter-submit">Clear</a>' data-content='
-<form id="mainForm" action="/logs/sales/search" method="GET">
+<form id="mainForm" action="/logs/sales/filter" method="POST">
+  @csrf
   <div class="form-group">
     <b><label for="accounttype">Account Type:</label></b>
     <select class="form-control" name="account_type" id="accounttype">

@@ -42,7 +42,7 @@ Route::group(['middleware' => ['admin']], function () {
 	Route::get('logs/sales', 'Admin\SalesLogsController@index');
 	Route::post('logs/sales/showdetails', 'Admin\SalesLogsController@showdetails');
 	Route::post('logs/sales/delete_sales', 'Admin\SalesLogsController@destroy');
-	Route::get('logs/sales/search', 'Admin\SalesLogsController@search');
+	Route::post('logs/sales/filter', 'Admin\SalesLogsController@filter');
 	Route::get('logs/reload', 'Admin\ReloadLogsController@index');
 	Route::get('backup', 'Admin\BackupController@index');
 	Route::get('backup/create', 'Admin\BackupController@create');

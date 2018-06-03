@@ -1,4 +1,4 @@
-
+  <input type="text" id="sales_id" value="{{sprintf('%08d',$sales->id)}}" hidden="hidden">
 	<table class="table table_modal">
   <thead>
     <tr>
@@ -14,7 +14,7 @@
       <td>{{$details->product->product_name}}</td>
       <td>{{$details->quantity}}</td>
       <td>₱ {{$details->product->price}}</td>
-      <td class="totalprice">₱ {{number_format($details->subtotal,2)}}</td>
+      <td class="totalprice">₱ {{number_format($details->subtotal,2, '.', '')}}</td>
     </tr>
     @endforeach
     
@@ -45,7 +45,7 @@
   @foreach($discounts as $discount)
   <input type="text" id="discount_id" value="{{$discount->id}}" hidden="hidden">
   <input type="text" id="discount_name" value="{{$discount->discount_name}}" hidden="hidden">
-  <input type="text" id="discount_amount" value="{{number_format($discount->amount,2)}}" hidden="hidden">
+  <input type="text" id="discount_amount" value="{{number_format($discount->amount,2, '.', '')}}" hidden="hidden">
   <input type="text" id="discount_percent" value="{{$discount->percent}}" hidden="hidden">
 	<tr class="table-light">
       <td colspan="3"><b>Discount <span class="discount_name"></span></b></td>
@@ -55,6 +55,14 @@
 	<tr class="table-light">
       <td colspan="3"><b>Total</b></td>
       <td colspan="2">₱ <span class="total"></span></td>
+  </tr>
+  <tr class="table-light">
+      <td colspan="3"><b>Payment</b></td>
+      <td colspan="2">₱ {{number_format($sales->amount_paid,2, '.', '')}}<span class="payment"></span></td>
+  </tr>
+  <tr class="table-light">
+      <td colspan="3"><b>Change</b></td>
+      <td colspan="2">₱ {{number_format($sales->change_amount,2, '.', '')}} <span class="change"></span></td>
   </tr>
 
 	</tbody>

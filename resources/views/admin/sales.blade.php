@@ -342,8 +342,9 @@ SALES
 
           $('#accounttype').change(function(){
             if($(this).val()=="Walk-in") {   
-             $('#paymentmode option[value="Cash"]').attr("selected", "selected");
-             $('#paymentmode').attr("disabled", "disabled");
+              $('#paymentmode option').removeAttr("selected", "selected"); 
+              $('#paymentmode option[value="Cash"]').attr("selected", "selected");
+              $('#paymentmode').attr("disabled", "disabled");
             }
             else
             {

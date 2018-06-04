@@ -42,8 +42,10 @@ Route::group(['middleware' => ['admin']], function () {
 	Route::get('logs/sales', 'Admin\SalesLogsController@index');
 	Route::post('logs/sales/showdetails', 'Admin\SalesLogsController@showdetails');
 	Route::post('logs/sales/delete_sales', 'Admin\SalesLogsController@destroy');
-	Route::post('logs/sales/filter', 'Admin\SalesLogsController@filter');
+	Route::get('logs/sales/filter', 'Admin\SalesLogsController@filter');
 	Route::get('logs/reload', 'Admin\ReloadLogsController@index');
+	Route::post('logs/reload/showdetails', 'Admin\ReloadLogsController@showdetails');
+	Route::get('logs/reload/filter', 'Admin\ReloadLogsController@filter');
 	Route::get('backup', 'Admin\BackupController@index');
 	Route::get('backup/create', 'Admin\BackupController@create');
     Route::get('backup/download/{file_name}', 'Admin\BackupController@download');

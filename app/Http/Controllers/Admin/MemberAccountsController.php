@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\User;
 use DB;
 use App\Balance;
+use App\Reload_sale;
 use Hash;
 use Response;
 use Validator;
@@ -90,23 +91,12 @@ class MemberAccountsController extends Controller
     {
         $member = User::find($request->member_id);
 
-        $rules = array(
-        'load' => 'required|numeric',
-        'points' => 'required|numeric',
-        );
+        $total_load = $request->reload_amount + $request->current_load;
+        $member->balance->load_balance = $total_load;
+        $member->balance->save();
 
-        $validator = Validator::make($request->all(), $rules);
-        if ($validator->fails())
-        {
-            return Response::json(array('errors' => $validator->getMessageBag()->toArray()));
-        }
-        else
-        {
-            $member = User::find($request->member_id);
-            $member->balance->load_balance = $request->load;
-            $member->balance->points = $request->points;
-            $member->balance->save();
-        }
+        $member_load = new Reload_sale(['member_id' => $request->member_id, 'amount_due' => $request->reload_amount, 'amount_paid' => $request->payment_amount, 'change_amount' => $request->change_amount]);
+        $member->reload()->save($member_load);
     }
 
     public function destroy(Request $request)

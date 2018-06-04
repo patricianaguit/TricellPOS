@@ -113,14 +113,14 @@ ACCOUNTS
       </br>
 
       <div class="form-group row mx-auto">
-      <label for="points" class="col-form-label col-sm-2 modal-load">Load:</label>
+      <label for="points" class="col-form-label col-sm-4 modal-load">Current Load:</label>
 
-        <div class="col-sm-10">
+        <div class="col-sm-8">
           <div class="input-group">
             <div class="input-group-prepend">
                 <span class="input-group-text" id="basic-addon-load">₱</span>
             </div>
-            <input type="text" name="load" class="form-control modal-add" id="load-reload">
+            <input type="text" name="load" class="form-control modal-add" id="load-reload" disabled="disabled">
           </div>
 
           <p id="error-load-reload" class="error-reload" hidden="hidden"></p>
@@ -128,16 +128,46 @@ ACCOUNTS
       </div>
 
       <div class="form-group row mx-auto">
-      <label for="points" class="col-form-label col-sm-2 modal-points">Points:</label>
-        <div class="col-sm-10">
+      <label for="points" class="col-form-label col-sm-4 modal-points">Reload Amount:</label>
+        <div class="col-sm-8">
           <div class="input-group">
             <div class="input-group-prepend">
-              <span class="input-group-text" id="basic-addon-points">₱</span>
+              <span class="input-group-text" id="basic-addon-reload-amount">₱</span>
             </div>
-            <input type="text" name="points" class="form-control modal-add" id="points-reload">
+            <input type="text" name="reload-amount" class="form-control modal-add" id="reload-amount-reload" autocomplete="off">
           </div>
 
-          <p id="error-points-reload" class="error-reload" hidden="hidden"></p>
+          <p id="error-reload-amount-reload" class="error-reload" hidden="hidden"></p>
+        </div>
+      </div>
+
+      <div class="form-group row mx-auto">
+      <label for="points" class="col-form-label col-sm-4 modal-load">Payment Amount:</label>
+
+        <div class="col-sm-8">
+          <div class="input-group">
+            <div class="input-group-prepend">
+                <span class="input-group-text" id="basic-addon-payment-amount">₱</span>
+            </div>
+            <input type="text" name="payment-amount" class="form-control modal-add" id="payment-amount-reload" autocomplete="off">
+          </div>
+
+          <p id="error-payment-amount-reload" class="error-reload" hidden="hidden"></p>
+        </div>
+      </div>
+
+      <div class="form-group row mx-auto">
+      <label for="points" class="col-form-label col-sm-4 modal-load">Change:</label>
+
+        <div class="col-sm-8">
+          <div class="input-group">
+            <div class="input-group-prepend">
+                <span class="input-group-text" id="basic-addon-change">₱</span>
+            </div>
+            <input type="text" name="change" class="form-control modal-add" id="change-reload" disabled="disabled">
+          </div>
+
+          <p id="error-change-reload" class="error-reload" hidden="hidden"></p>
         </div>
       </div>
 
@@ -390,15 +420,24 @@ ACCOUNTS
   });
 
   $('.reload_member').on('hide.bs.modal', function(){
+    //clear input boxes
+    $('#reload-amount-reload').val("");
+    $('#payment-amount-reload').val("");
+    $('#change-reload').val("");
+
     //hide error messages in modal
-    $('#error-load-reload').attr("hidden", true);
-    $('#error-points-reload').attr("hidden", true);
+    $('#error-reload-amount-reload').attr("hidden", true);
+    $('#error-reload-amount-reload').text(""); 
+    $('#error-reload-amount-reload').attr("hidden", true);
+    $('#error-payment-amount-reload').text("");
 
     //remove css style in modal
-    $('#load-reload').removeAttr('style');
-    $('#points-reload').removeAttr('style');
-    $('#basic-addon-load').removeAttr('style');
-    $('#basic-addon-points').removeAttr('style');
+    $('#reload-amount-reload').removeAttr("style")
+    $('#basic-addon-reload-amount').removeAttr("style");
+    $('#payment-amount-reload').removeAttr("style")
+    $('#basic-addon-payment-amount').removeAttr("style");
+
+    $('#update-reload-member').attr('hidden', true);
   });
 
   //success alerts - add, update, delete
@@ -564,7 +603,104 @@ ACCOUNTS
   $(document).on('click', '#reload-member', function() {
     $('#member-id-reload').val($(this).data('id'));
     $('#load-reload').val($(this).data('load'));
-    $("#points-reload").val($(this).data('points'));
+
+    if($('#change-reload').val() == ' ')
+    {
+      $('#update-reload-member').removeAttr('hidden');
+    }
+    else
+    {
+      $('#update-reload-member').attr('hidden', true);
+    }
+  });
+
+  $('#reload-amount-reload, #payment-amount-reload').on('input',function() {
+      var reload_amount = parseFloat($('#reload-amount-reload').val());
+      var payment = parseFloat($('#payment-amount-reload').val());
+      $('#change-reload').val((payment - reload_amount ? payment - reload_amount : 0).toFixed(2));
+     
+      //required fields
+      // if(($('#reload-amount-reload').val() == '') && ($('#payment-amount-reload').val() == ''))
+      // {
+      //   $('#error-reload-amount-reload').removeAttr("hidden");
+      //   $('#error-reload-amount-reload').text("Reload Amount field is required.");
+      //   $('#reload-amount-reload').css("border", "1px solid #cc0000");
+      //   $('#basic-addon-reload-amount').css("border", "1px solid #cc0000");
+      //   $('#update-reload-member').attr('hidden', true);
+
+      //   $('#error-payment-amount-reload').removeAttr("hidden");
+      //   $('#error-payment-amount-reload').text("Payment Amount field is required.");
+      //   $('#payment-amount-reload').css("border", "1px solid #cc0000");
+      //   $('#basic-addon-payment-amount').css("border", "1px solid #cc0000");
+      //   $('#update-reload-member').attr('hidden', true);
+      // }
+      // else
+      // {
+      //   $('#error-reload-amount-reload').attr("hidden", true);
+      //   $('#error-reload-amount-reload').text("");
+      //   $('#reload-amount-reload').removeAttr("style")
+      //   $('#basic-addon-reload-amount').removeAttr("style");
+
+      //   $('#error-reload-amount-reload').attr("hidden", true);
+      //   $('#error-payment-amount-reload').text("");
+      //   $('#payment-amount-reload').removeAttr("style")
+      //   $('#basic-addon-payment-amount').removeAttr("style");
+      //   $('#update-reload-member').attr('hidden', true);
+      // }
+
+      //isNaN
+      if(isNaN($('#reload-amount-reload').val()))
+      {
+        $('#error-reload-amount-reload').removeAttr("hidden");
+        $('#error-reload-amount-reload').text("Reload Amount field is not a valid amount.");
+        $('#reload-amount-reload').css("border", "1px solid #cc0000");
+        $('#basic-addon-reload-amount').css("border", "1px solid #cc0000");
+        $('#update-reload-member').attr('hidden', true);
+      }
+      else
+      {
+        $('#error-reload-amount-reload').attr("hidden", true);
+        $('#error-reload-amount-reload').text("");
+        $('#reload-amount-reload').removeAttr("style")
+        $('#basic-addon-reload-amount').removeAttr("style");
+      }
+
+      if(isNaN($('#payment-amount-reload').val()))
+      {
+        $('#error-payment-amount-reload').removeAttr("hidden");
+        $('#error-payment-amount-reload').text("Payment Amount field is not a valid amount.");
+        $('#payment-amount-reload').css("border", "1px solid #cc0000");
+        $('#basic-addon-payment-amount').css("border", "1px solid #cc0000");
+        $('#update-reload-member').attr('hidden', true);
+      }
+      else
+      {
+        $('#error-payment-amount-reload').attr("hidden", true);
+        $('#error-payment-amount-reload').text("");
+        $('#payment-amount-reload').removeAttr("style")
+        $('#basic-addon-payment-amount').removeAttr("style");
+      }
+
+      //Reload is greater than payment
+      if((reload_amount > payment) && payment != '')
+      {
+        $('#error-payment-amount-reload').removeAttr("hidden");
+        $('#error-payment-amount-reload').text("Payment cannot be less than Reload Amount");
+        $('#payment-amount-reload').css("border", "1px solid #cc0000");
+        $('#basic-addon-payment-amount').css("border", "1px solid #cc0000");
+        $('#update-reload-member').attr('hidden', true);
+      }
+      else if((payment != '' && reload_amount != '') &&
+        (reload_amount <= payment) && (isNaN($('#payment-amount-reload').val()) == false && isNaN($('#reload-amount-reload').val()) == false))
+      {
+        $('#payment-amount-reload').removeAttr("style")
+        $('#basic-addon-payment-amount').removeAttr("style");
+        $('#update-reload-member').removeAttr('hidden');
+      }
+      else
+      {
+        $('#update-reload-member').attr('hidden', true); 
+      }
   });
 
   $('#modal-footer-member-reload').on('click', '#update-reload-member', function(event) {
@@ -573,49 +709,50 @@ ACCOUNTS
     url: '/accounts/reload_member',
     data: {
             '_token': $('input[name=_token]').val(),
-            'member_id': $("#member-id-reload").val(),
-            'load': $("#load-reload").val(),
-            'points': $("#points-reload").val()
+            'member_id': $('#member-id-reload').val(),
+            'current_load': $('#load-reload').val(),
+            'reload_amount': $('#reload-amount-reload').val(),
+            'payment_amount': $('#payment-amount-reload').val(),
+            'change_amount': $('#change-reload').val()
           },
     success: function(data) {
       console.log(data);
-      if ((data.errors)) {
-          if(data.errors.load)
-          {
-            $('#error-load-reload').removeAttr("hidden");
-            $('#error-load-reload').text(data.errors.load);
-            $('#load-reload').css("border", "1px solid #cc0000");
-            $('#basic-addon-load').css("border", "1px solid #cc0000");
-          }
-          else
-          {
-            $('#error-load-reload').attr("hidden", true);
-            $('#load-reload').removeAttr('style');
-            $('#basic-addon-load').removeAttr('style');
-          }
+      // if ((data.errors)) {
+      //     if(data.errors.reload_amount)
+      //     {
+      //       $('#error-reload-amount-reload').removeAttr("hidden");
+      //       $('#error-reload-amount-reload').text(data.errors.reload_amount);
+      //       $('#reload-amount-reload').css("border", "1px solid #cc0000");
+      //       $('#basic-addon-reload-amount').css("border", "1px solid #cc0000");
+      //     }
+      //     else
+      //     {
+      //       $('#error-reload-amount-reload').attr("hidden", true);
+      //       $('#reload-amount-reload').removeAttr('style');
+      //       $('#basic-addon-reload-amount').removeAttr('style');
+      //     }
 
-          if(data.errors.points)
-          {
-            $('#error-points-reload').removeAttr("hidden");
-            $('#error-points-reload').text(data.errors.points);
-            $('#points-reload').css("border", "1px solid #cc0000");
-            $('#basic-addon-points').css("border", "1px solid #cc0000");
-          }
-          else
-          {
-            $('#error-points-reload').attr("hidden", true);
-            $('#points-reload').removeAttr('style');
-            $('#basic-addon-points').removeAttr('style');
-          }
-      }
-      else
-      {
+      //     if(data.errors.payment_amount)
+      //     {
+      //       $('#error-payment-amount-reload').removeAttr("hidden");
+      //       $('#error-payment-amount-reload').text(data.errors.payment_amount);
+      //       $('#payment-amount-reload').css("border", "1px solid #cc0000");
+      //       $('#basic-addon-payment-amount').css("border", "1px solid #cc0000");
+      //     }
+      //     else
+      //     {
+      //       $('#error-payment-amount-reload').attr("hidden", true);
+      //       $('#payment-amount-reload').removeAttr('style');
+      //       $('#basic-addon-payment-amount').removeAttr('style');
+      //     }
+      // }
+      // else
+      // {
         localStorage.setItem("reload","success");
         window.location.reload();
-      }
+      // }
       },
-
-        error: function(jqXHR, textStatus, errorThrown) { // What to do if we fail
+      error: function(jqXHR, textStatus, errorThrown) { // What to do if we fail
         console.log(JSON.stringify(jqXHR));
         console.log("AJAX error: " + textStatus + ' : ' + errorThrown);
         }

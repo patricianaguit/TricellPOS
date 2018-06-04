@@ -1,5 +1,5 @@
   <input type="text" id="sales_id" value="{{sprintf('%08d',$sales->id)}}" hidden="hidden">
-  <input type="text" id="sales_date" value="{{date('F d, Y h:i:s A', strtotime($sales->transaction_date))}}" hidden="hidden" >
+  <input type="text" id="sales_date" value="{{date('F d, Y h:i:s A', strtotime($sales->transaction_date))}}" hidden="hidden">
 	<table class="table table_modal">
   <thead>
     <tr>

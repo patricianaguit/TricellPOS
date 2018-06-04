@@ -21,46 +21,51 @@ class ReloadLogsController extends Controller
 
     public function showdetails(Request $request)
     {
-    	$sales_id = $request->sales_id;
-        $discount_id = $request->discount_id;
-        $sales = Sale::where('id', $sales_id)->first();
-    	$salesdetails = Sales_details::with('product')->where('sales_id', $sales_id)->get();
-        $discounts = Discount::where('id', $discount_id)->get();
-    	return view('admin.salesmodal')->with('sales', $sales)->with('salesdetails', $salesdetails)->with('discounts', $discounts);  
+        $reload_id = $request->reload_id;
+        $reloads = Reload_sale::where('id', $reload_id)->first();
+    	return view('admin.reloadmodal')->with('reloads', $reloads);
     }
 
     public function destroy(Request $request)
     {
-        $sales = Sale::find($request->sales_id)->delete();
+        $reloads = Reload_sale::find($request->sales_id)->delete();
         $salesdetails = Sales_details::where('sales_id', $request->sales_id)->delete();
 
     }
 
-    public function search(Request $request)
+    public function filter(Request $request)
     {
-        $search = $request->search;
-
-        if($search == "")
+        $daterange = array_map('trim', explode('-', $request->date_filter));
+        //dd(count($daterange));
+        
+        if(count($daterange) <= 1)
         {
-            return Redirect::to('logs/sales/');
+            return Redirect::to('logs/reload');
         }
         else
         {
-            $sales = Sale::where(function($query) use ($request, $search)
+            $date_start = date('m/d/Y',strtotime($daterange[0]));
+            $date_end = date('m/d/Y',strtotime($daterange[1]));
+            $reloads = Reload_sale::where(function($query) use ($request, $date_start, $date_end)
                 {
-                    $query->where(\DB::raw("(DATE_FORMAT(transaction_date,'%M %d, %Y'))"), '=', $search);
+                    $query->where(DB::raw("(DATE_FORMAT(transaction_date,'%m/%d/%Y'))"), '>=', $date_start)->where(DB::raw("(DATE_FORMAT(transaction_date,'%m/%d/%Y'))"), '<=', $date_end);
                 })->paginate(7);
+            $reloads->appends($request->only('date_filter'));
+               
+            $count = $reloads->count();
+            $totalcount = Reload_sale::where(function($query) use ($request, $date_start, $date_end)
+                    {
+                        $query->where(DB::raw("(DATE_FORMAT(transaction_date,'%m/%d/%Y'))"), '>=', $date_start)->where(DB::raw("(DATE_FORMAT(transaction_date,'%m/%d/%Y'))"), '<=', $date_end);
+                    })->count();
 
-            $sales->appends($request->only('search'));
-           
-            $count = $sales->count();
-            $totalcount = Sale::where(function($query) use ($request, $search)
-                {
-                    $query->where(DB::raw("(DATE_FORMAT(transaction_date,'%M %d, %Y'))"), '=', $search);
-                })->count();
-
-            $sumsales = Sale::where(DB::raw("(DATE_FORMAT(transaction_date,'%M %d, %Y'))"), '=', $search)->sum('amount_due');
-            return view('admin.sales')->with(['sales' => $sales, 'search' => $search, 'count' => $count, 'sumsales' => $sumsales, 'totalcount' => $totalcount]);  
+            $sumsales = Reload_sale::where(function($query) use ($request, $date_start, $date_end)
+                    {
+                        $query->where(DB::raw("(DATE_FORMAT(transaction_date,'%m/%d/%Y'))"), '>=', $date_start)->where(DB::raw("(DATE_FORMAT(transaction_date,'%m/%d/%Y'))"), '<=', $date_end);
+                    })->sum('amount_due');
+            return view('admin.reload')->with(['reloads' => $reloads,'count' => $count, 'date_start' => $date_start, 'date_end' => $date_end, 'sumsales' => $sumsales, 'totalcount' => $totalcount]);  
         }
+        
     }
+
+    
 }

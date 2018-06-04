@@ -34,8 +34,7 @@ SALES
     <form class="form ml-auto">
       <div class="col-md-12">
         <button type="button" class=" form-control btn btn-outline-info add-item-btn" data-toggle="popover"  data-original-title='Filter Results <a href ="/logs/sales/" class="btn btn-info btn-save-modal" id="filter-submit">Clear</a>' data-content='
-<form id="mainForm" action="/logs/sales/filter" method="POST">
-  @csrf
+<form id="mainForm" action="/logs/sales/filter" method="GET">
   <div class="form-group">
     <b><label for="accounttype">Account Type:</label></b>
     <select class="form-control" name="account_type" id="accounttype">
@@ -49,7 +48,8 @@ SALES
     <select class="form-control" name="payment_mode" id="paymentmode">
       <option selected value="Any">Any</option>
       <option value="Cash">Cash</option>
-      <option value="Card">Card</option>
+      <option value="Card Load">Card Load</option>
+      <option value="Points">Points</option>
     </select>
     <br>
 
@@ -336,9 +336,18 @@ SALES
     }).on('shown.bs.popover', function () {
           $('input[name="date_filter"]').daterangepicker({
               autoUpdateInput: false,
+              opens: 'center',
               locale: {
                   cancelLabel: 'Clear'
               }
+          });
+
+          $('input[name="date_filter"]').on('apply.daterangepicker', function(ev, picker) {
+              $(this).val(picker.startDate.format('MM/DD/YYYY') + ' - ' + picker.endDate.format('MM/DD/YYYY'));
+          });
+
+          $('input[name="date_filter"]').on('cancel.daterangepicker', function(ev, picker) {
+              $(this).val('');
           });
 
           $('#accounttype').change(function(){
@@ -351,14 +360,6 @@ SALES
             {
               $('#paymentmode').removeAttr("disabled", "disabled"); 
             }
-          });
-
-          $('input[name="date_filter"]').on('apply.daterangepicker', function(ev, picker) {
-              $(this).val(picker.startDate.format('MM/DD/YYYY') + ' - ' + picker.endDate.format('MM/DD/YYYY'));
-          });
-
-          $('input[name="date_filter"]').on('cancel.daterangepicker', function(ev, picker) {
-              $(this).val('');
           });
 
           $("#mainForm").submit(function() {

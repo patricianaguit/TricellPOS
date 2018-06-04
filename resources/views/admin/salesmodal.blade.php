@@ -1,5 +1,13 @@
   <input type="text" id="sales_id" value="{{sprintf('%08d',$sales->id)}}" hidden="hidden">
   <input type="text" id="sales_date" value="{{date('F d, Y h:i:s A', strtotime($sales->transaction_date))}}" hidden="hidden">
+  <table class="table date-header">
+    <thead>
+      <th>Receipt #00000001</td>
+      <th></td>
+      <th> May 30, 2018</td>
+      <th>11:18:50 PM</td>
+    </thead>
+  </table>
 	<table class="table table_modal">
   <thead>
     <tr>
@@ -18,7 +26,7 @@
       <td class="totalprice">₱ {{number_format($details->subtotal,2, '.', '')}}</td>
     </tr>
     @endforeach
-    
+
   <tr class="table-light">
       <td colspan="3"></td>
       <td colspan="2"></td>
@@ -78,6 +86,6 @@
       </div>
     </div>
 <script type="text/javascript">
-  
- 
+
+
 </script>

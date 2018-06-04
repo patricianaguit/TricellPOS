@@ -29,11 +29,11 @@ SALES
   <div class="col-md-8">
     <h3 class="text-info">Total Sales: <span style="color:dimgray">₱ {{number_format($sumsales,2)}}</span></h3>
   </div>
-   
+
   <div class="col-md-4">
     <form class="form ml-auto">
       <div class="col-md-12">
-        <button type="button" class=" form-control btn btn-outline-info add-item-btn" data-toggle="popover"  data-original-title='Filter Results <a href ="/logs/sales/" class="btn btn-info btn-save-modal" id="filter-submit">Clear</a>' data-content='
+        <button type="button" class=" form-control btn btn-outline-info add-item-btn" data-toggle="popover"  data-original-title='Filter Results <a href ="/logs/sales/" class="btn btn-info btn-save-modal clear-btn" id="filter-submit">Clear</a>' data-content='
 <form id="mainForm" action="/logs/sales/filter" method="GET">
   <div class="form-group">
     <b><label for="accounttype">Account Type:</label></b>
@@ -191,19 +191,19 @@ SALES
       var sum = 0;
 
       $('.totalprice').each(function() {
-         sum += parseFloat($(this).text().replace('₱', ''));  
+         sum += parseFloat($(this).text().replace('₱', ''));
       });
       $('.subtotal').text(sum.toFixed(2));
 
 
-      
+
       if($('#discount_id').val() == 1)
       {
         var subtotal = $('.subtotal').text();
         var discount_name = $('#discount_name').val();
         var discount_percent = $('#discount_percent').val() * 100;
         var zero = 0;
-        
+
         $('.vat').text(zero.toFixed(2));
         $('.vatsale').text(zero.toFixed(2));
 
@@ -245,7 +245,7 @@ SALES
           var total = subtotal -  discount;
           if(total > 0)
           {
-            $('.total').text(total.toFixed(2)); 
+            $('.total').text(total.toFixed(2));
           }
           else
           {
@@ -263,12 +263,12 @@ SALES
           var total = subtotal -  discount;
           if(total > 0)
           {
-            $('.total').text(total.toFixed(2)); 
+            $('.total').text(total.toFixed(2));
           }
           else
           {
             $('.total').text(zero.toFixed(2));
-          } 
+          }
 
           $('.discount_name').text('[' + discount_name + ' ' + discount_percent + '%]');
         }
@@ -278,7 +278,7 @@ SALES
           $('.total').text(total);
         }
       }
-      
+
     },
     error: function(jqXHR, textStatus, errorThrown) { // What to do if we fail
       console.log(JSON.stringify(jqXHR));
@@ -319,7 +319,7 @@ SALES
                 icon: "success",
                 button: "Close",
               });
-        localStorage.clear();  
+        localStorage.clear();
     }
   });
 
@@ -346,20 +346,20 @@ SALES
           });
 
           $('#accounttype').change(function(){
-            if($(this).val()=="Walk-in") {   
-              $('#paymentmode option').removeAttr("selected", "selected"); 
+            if($(this).val()=="Walk-in") {
+              $('#paymentmode option').removeAttr("selected", "selected");
               $('#paymentmode option[value="Cash"]').attr("selected", "selected");
               $('#paymentmode').attr("disabled", "disabled");
             }
             else
             {
-              $('#paymentmode').removeAttr("disabled", "disabled"); 
+              $('#paymentmode').removeAttr("disabled", "disabled");
             }
           });
 
           $("#mainForm").submit(function() {
             $("#paymentmode").removeAttr("disabled");
-          }); 
+          });
       });
     });
   });

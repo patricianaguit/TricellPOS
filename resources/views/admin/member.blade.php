@@ -170,7 +170,7 @@ ACCOUNTS
       </div>
 
       <div class="modal-footer" id="modal-footer-member-reload">
-        <button type="submit" class="btn btn-info btn-savemem-modal" id="update-reload-member">Save Changes</button>
+        <button type="submit" class="btn btn-info btn-savemem-modal" id="update-reload-member">Reload</button>
         <button type="button" class="btn btn-secondary btn-close-modal" data-dismiss="modal">Cancel</button>
       </div>
       </form>
@@ -192,7 +192,7 @@ ACCOUNTS
 
         <form class="nosubmitform">
         </br>
-        
+
         <div class="form-group row mx-auto">
           <label for="card-no" class="col-form-label col-md-2 modal-card">Card Number:</label>
           <div class="col-md-10">
@@ -290,7 +290,7 @@ ACCOUNTS
     	      <p id="error-firstname-edit" class="error-edit" hidden="hidden"></p>
         </div>
       </div>
-        
+
       <div class="form-group row mx-auto">
         <label for="last-name" class="col-form-label col-md-2 modal-lname">Last Name:</label>
         <div class="col-md-10">
@@ -314,7 +314,7 @@ ACCOUNTS
     	      <p id="error-contact-edit" class="error-edit" hidden="hidden"></p>
         </div>
       </div>
-        
+
       <div class="form-group row mx-auto">
         <label for="email" class="col-form-label col-md-2 modal-mobile">Email:</label>
         <div class="col-md-10">
@@ -422,7 +422,7 @@ ACCOUNTS
 
     //hide error messages in modal
     $('#error-reload-amount-reload').attr("hidden", true);
-    $('#error-reload-amount-reload').text(""); 
+    $('#error-reload-amount-reload').text("");
     $('#error-reload-amount-reload').attr("hidden", true);
     $('#error-payment-amount-reload').text("");
 
@@ -613,7 +613,7 @@ ACCOUNTS
       var reload_amount = parseFloat($('#reload-amount-reload').val());
       var payment = parseFloat($('#payment-amount-reload').val());
       $('#change-reload').val((payment - reload_amount ? payment - reload_amount : 0).toFixed(2));
-     
+
       //required fields
       // if(($('#reload-amount-reload').val() == '') && ($('#payment-amount-reload').val() == ''))
       // {
@@ -694,7 +694,7 @@ ACCOUNTS
       }
       else
       {
-        $('#update-reload-member').attr('hidden', true); 
+        $('#update-reload-member').attr('hidden', true);
       }
   });
 

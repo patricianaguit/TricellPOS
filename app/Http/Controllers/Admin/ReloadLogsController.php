@@ -15,7 +15,7 @@ class ReloadLogsController extends Controller
 {
     public function index()
     {
-        $reloads = Reload_sale::paginate(7);
+        $reloads = Reload_sale::orderBy('transaction_date', 'desc')->paginate(7);
         return view('admin.reload')->with(['reloads' => $reloads]); 
     }
 

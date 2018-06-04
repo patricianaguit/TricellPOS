@@ -67,12 +67,7 @@ SALES
 
  @if(!empty($account_type) && !empty($payment_mode) && !empty($date_start) && !empty($date_end))
       @if($totalcount > 7)
-        <center><p> Showing {{$count}} out of {{$totalcount}}
-          @if($count > 1)
-            {{'results'}}
-          @else
-            {{'result'}}
-          @endif
+        <center><p> Showing {{$count}} out of {{$totalcount}} results
       @else
         <center><p> Showing {{$count}}
         @if($count > 1 || $count == 0)

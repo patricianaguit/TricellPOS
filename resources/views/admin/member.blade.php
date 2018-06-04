@@ -45,12 +45,7 @@ ACCOUNTS
 
 	 @if(!empty($search))
       @if($totalcount > 7)
-        <center><p> Showing {{$count}} out of {{$totalcount}}
-          @if($count > 1)
-            {{'results'}}
-          @else
-            {{'result'}}
-          @endif
+        <center><p> Showing {{$count}} out of {{$totalcount}} results
         for <b> {{ $search }} </b> </p></center>
       @else
         <center><p> Showing {{$count}}

@@ -37,12 +37,7 @@ RELOAD SALES
 
   @if((!empty($date_start) && !empty($date_end)) && ($date_start != $date_end))
       @if($totalcount > 7)
-        <center><p> Showing {{$count}} out of {{$totalcount}}
-          @if($count > 1)
-            {{'results'}}
-          @else
-            {{'result'}}
-          @endif
+        <center><p> Showing {{$count}} out of {{$totalcount}} results
           from <b>{{date('F d, Y', strtotime($date_start))}}</b> until <b>{{date('F d, Y', strtotime($date_end))}} </b> </p></center>
       @else
         <center><p> Showing {{$count}}
@@ -55,12 +50,7 @@ RELOAD SALES
       @endif
   @elseif((!empty($date_start) && !empty($date_end)) && ($date_start == $date_end))
       @if($totalcount > 7)
-        <center><p> Showing {{$count}} out of {{$totalcount}}
-          @if($count > 1)
-            {{'results'}}
-          @else
-            {{'result'}}
-          @endif
+        <center><p> Showing {{$count}} out of {{$totalcount}} results
           for <b>{{date('F d, Y', strtotime($date_start))}}</b> </p></center>
       @else
         <center><p> Showing {{$count}}

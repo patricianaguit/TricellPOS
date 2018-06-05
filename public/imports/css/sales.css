@@ -78,6 +78,29 @@ font-size: 18px;
    width: 270px !important;
    max-width:500px !important;
 }
+
+.btn.clear-btn:hover {
+    color: #117a8b;
+    background-color: #d1f3f9;
+    border-color: #117a8b;
+}
+.btn.clear-btn{
+  padding: 0rem 0.75rem !important;
+font-size: 10px !important;
+color: #117a8b;
+background-color: #f7f7f7;
+border-color: #117a8b;
+}
+
+.table.date-header{
+  margin-bottom: -1rem !important;
+}
+.table.date-header th{
+  border-top:none!important;
+  border-bottom: none!important;
+  text-align: left !important;
+  padding: -0.25rem !important;
+}
 /****NAV CSS***/
 /**.nav_custom{
 

@@ -1,4 +1,12 @@
 <input type="text" id="reload_id" value="{{$reloads->id}}" hidden="hidden">
+<table class="table date-header">
+  <thead>
+    <th>Receipt #00000001</td>
+    <th></td>
+    <th> May 30, 2018</td>
+    <th>11:18:50 PM</td>
+  </thead>
+</table>
 <table class="table table_modal">
   <thead>
     <tr>

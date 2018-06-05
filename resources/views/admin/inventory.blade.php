@@ -14,6 +14,8 @@ INVENTORY
 <div class="container">
 <!---title inventory-->
 <h3 class="title">Inventory</h3>
+<a href="/inventory/healthy_stocks"><p style="text-align: right">h</a>
+<a href="/inventory/low_stocks">L</p></a>
 </br>
 <hr>
 <!---end of title inventory-->

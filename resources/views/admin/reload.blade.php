@@ -20,7 +20,7 @@ RELOAD SALES
 <!--second row add item button and search bar--->
 <div class="row">
     <div class="col-md-8">
-   <h3 class="text-info">Total Sales: <span style="color:dimgray">P100</span></h3>
+   <h3 class="text-info">Total Sales: <span style="color:dimgray">₱ {{number_format($sumsales,2)}}</span></h3>
   </div>
    <div class="col-md-4">
     <form class="form ml-auto" action="/logs/reload/filter" method="GET">

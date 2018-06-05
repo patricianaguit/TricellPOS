@@ -66,7 +66,6 @@ ACCOUNTS
           <th scope="col">Name</th>
           <th scope="col">Contact No.</th>
           <th scope="col">Load</th>
-          <th scope="col">Points</th>
           <th scope="col" colspan="2">Actions</th>
         </tr>
       </thead>
@@ -77,7 +76,6 @@ ACCOUNTS
           <td class="td-center"> {{$member->firstname . " " . $member->lastname}}</td>
           <td class="td-center">{{$member->contact_number}}</td>
           <td class="td-center">₱ {{$member->balance->load_balance}}</td>
-          <td class="td-center">₱ {{$member->balance->points}}</td>
           <td>
           	<button type="button" id="edit-member" class="btn btn-primary edit-btn" data-toggle="modal" data-target=".edit_member" data-id="{{ $member->id }}" data-cardnumber ="{{ $member->card_number }}" data-firstname="{{$member->firstname}}" data-lastname="{{$member->lastname}}" data-address="{{$member->address}}" data-contact="{{$member->contact_number}}" data-email="{{$member->email}}"><i class="material-icons md-18">mode_edit</i></button>
             <button type="button" id="reload-member" class="btn btn-success edit-btn" data-toggle="modal" data-target=".reload_member" data-id="{{$member->id}}" data-load="{{$member->balance->load_balance}}" data-points="{{$member->balance->points}}"><i class="pp-reload"></i></button>
@@ -170,7 +168,7 @@ ACCOUNTS
       </div>
 
       <div class="modal-footer" id="modal-footer-member-reload">
-        <button type="submit" class="btn btn-info btn-savemem-modal" id="update-reload-member">Save Changes</button>
+        <button type="submit" class="btn btn-info btn-savemem-modal" id="update-reload-member">Reload</button>
         <button type="button" class="btn btn-secondary btn-close-modal" data-dismiss="modal">Cancel</button>
       </div>
       </form>
@@ -471,7 +469,7 @@ ACCOUNTS
   {
     swal({
             title: "Success!",
-            text: "You have successfully updated the member's balance!",
+            text: "You have successfully reloaded the member's account!",
             icon: "success",
             button: "Close",
           });
@@ -677,7 +675,7 @@ ACCOUNTS
       }
 
       //Reload is greater than payment
-      if((reload_amount > payment) && payment != '')
+      if((reload_amount > payment)) // && (payment != '' || payment == ''))
       {
         $('#error-payment-amount-reload').removeAttr("hidden");
         $('#error-payment-amount-reload').text("Payment cannot be less than Reload Amount");
@@ -711,41 +709,9 @@ ACCOUNTS
             'change_amount': $('#change-reload').val()
           },
     success: function(data) {
-      console.log(data);
-      // if ((data.errors)) {
-      //     if(data.errors.reload_amount)
-      //     {
-      //       $('#error-reload-amount-reload').removeAttr("hidden");
-      //       $('#error-reload-amount-reload').text(data.errors.reload_amount);
-      //       $('#reload-amount-reload').css("border", "1px solid #cc0000");
-      //       $('#basic-addon-reload-amount').css("border", "1px solid #cc0000");
-      //     }
-      //     else
-      //     {
-      //       $('#error-reload-amount-reload').attr("hidden", true);
-      //       $('#reload-amount-reload').removeAttr('style');
-      //       $('#basic-addon-reload-amount').removeAttr('style');
-      //     }
-
-      //     if(data.errors.payment_amount)
-      //     {
-      //       $('#error-payment-amount-reload').removeAttr("hidden");
-      //       $('#error-payment-amount-reload').text(data.errors.payment_amount);
-      //       $('#payment-amount-reload').css("border", "1px solid #cc0000");
-      //       $('#basic-addon-payment-amount').css("border", "1px solid #cc0000");
-      //     }
-      //     else
-      //     {
-      //       $('#error-payment-amount-reload').attr("hidden", true);
-      //       $('#payment-amount-reload').removeAttr('style');
-      //       $('#basic-addon-payment-amount').removeAttr('style');
-      //     }
-      // }
-      // else
-      // {
+        console.log(data);
         localStorage.setItem("reload","success");
         window.location.reload();
-      // }
       },
       error: function(jqXHR, textStatus, errorThrown) { // What to do if we fail
         console.log(JSON.stringify(jqXHR));

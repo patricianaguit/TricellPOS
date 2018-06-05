@@ -49,7 +49,6 @@ SALES
       <option selected value="Any">Any</option>
       <option value="Cash">Cash</option>
       <option value="Card Load">Card Load</option>
-      <option value="Points">Points</option>
     </select>
     <br>
 

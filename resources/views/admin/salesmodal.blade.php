@@ -1,11 +1,9 @@
-  <input type="text" id="sales_id" value="{{sprintf('%08d',$sales->id)}}" hidden="hidden">
-  <input type="text" id="sales_date" value="{{date('F d, Y h:i:s A', strtotime($sales->transaction_date))}}" hidden="hidden">
   <table class="table date-header">
     <thead>
-      <th>Receipt #00000001</td>
+      <th>Receipt #{{sprintf('%08d',$sales->id)}}</td>
       <th></td>
-      <th> May 30, 2018</td>
-      <th>11:18:50 PM</td>
+      <th>{{date('F d, Y', strtotime($sales->transaction_date))}}</td>
+      <th>{{date('h:i:s A', strtotime($sales->transaction_date))}}</td>
     </thead>
   </table>
 	<table class="table table_modal">

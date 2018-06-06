@@ -151,6 +151,13 @@ padding: .375rem 2rem !important;
   content: "\e900";
 }
 
+@media (min-width: 768px) {
+  .modal-xl {
+    width: 90% !important;
+   max-width:1200px !important;
+  }
+}
+
 
 /****NAV CSS***/
 /**.nav_custom{

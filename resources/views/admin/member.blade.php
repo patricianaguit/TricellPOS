@@ -181,7 +181,7 @@ ACCOUNTS
 
     <!----start of modal for add members---->
     <div class="modal fade bd-example-modal-lg add_member" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-     <div class="modal-dialog modal-lg">
+     <div class="modal-dialog modal-xl">
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title" id="exampleModalLabel">Add New Member</h5>
@@ -192,63 +192,105 @@ ACCOUNTS
 
         <form class="nosubmitform">
         </br>
-
+    <div class="row">
+    <div class ="col-md-6 members-info border-right">
         <div class="form-group row mx-auto">
-          <label for="card-no" class="col-form-label col-md-2 modal-card">Card Number:</label>
-          <div class="col-md-10">
+          <label for="card-no" class="col-form-label col-md-3 modal-card">Card Number:</label>
+          <div class="col-md-9">
             <input type="text" name="card_number" class="form-control modal-card" id="cardnumber-add">
       	   <p id="error-cardnumber-add" class="error-add" hidden="hidden"></p>
           </div>
         </div>
 
         <div class="form-group row mx-auto">
-          <label for="initial-load" class="col-form-label col-md-2 modal-load">Initial Load:</label>
-          <div class="col-md-10">
-            <input type="text" name="load_balance" class="form-control" id="load-add">
-          <p id="error-load-add" class="error-add" hidden="hidden"></p>
-          </div>
-        </div>
-
-        <div class="form-group row mx-auto">
-          <label for="first-name" class="col-form-label col-md-2 modal-fname">First Name:</label>
-          <div class="col-md-10">
+          <label for="first-name" class="col-form-label col-md-3 modal-fname">First Name:</label>
+          <div class="col-md-9">
             <input type="text" name="firstname" class="form-control modal-fname" id="firstname-add">
             <p id="error-firstname-add" class="error-add" hidden="hidden"></p>
           </div>
         </div>
 
         <div class="form-group row mx-auto">
-          <label for="last-name" class="col-form-label col-md-2 modal-lname">Last Name:</label>
-          <div class="col-md-10">
+          <label for="last-name" class="col-form-label col-md-3 modal-lname">Last Name:</label>
+          <div class="col-md-9">
             <input type="text" name="lastname" class="form-control" id="lastname-add">
             <p id="error-lastname-add" class="error-add" hidden="hidden"></p>
           </div>
         </div>
 
         <div class="form-group row mx-auto">
-          <label for="address" class="col-form-label col-md-2 modal-address">Address:</label>
-          <div class="col-md-10">
+          <label for="address" class="col-form-label col-md-3 modal-address">Address:</label>
+          <div class="col-md-9">
             <input type="text" name="address" class="form-control modal-add" id="address-add">
             <p id="error-address-add" class="error-add" hidden="hidden"></p>
           </div>
         </div>
 
         <div class="form-group row mx-auto">
-          <label for="contact" class="col-form-label col-md-2 modal-contact">Contact #:</label>
-          <div class="col-md-10">
+          <label for="contact" class="col-form-label col-md-3 modal-contact">Contact #:</label>
+          <div class="col-md-9">
             <input type="text" name="contact_number" class="form-control" id="contact-add">
             <p id="error-contact-add" class="error-add" hidden="hidden"></p>
           </div>
         </div>
 
         <div class="form-group row mx-auto">
-          <label for="email" class="col-form-label col-md-2 modal-mobile">Email:</label>
-          <div class="col-md-10">
+          <label for="email" class="col-form-label col-md-3 modal-mobile">Email:</label>
+          <div class="col-md-9">
             <input type="text" name="email" class="form-control" id="email-add">
             <p id="error-email-add" class="error-add" hidden="hidden"></p>
           </div>
         </div>
+    </div>
 
+    <div class="col-md-6">
+      
+    <div class="form-group row mx-auto">
+      <label for="points" class="col-form-label col-sm-4 modal-points">Initial Amount:</label>
+        <div class="col-sm-8">
+          <div class="input-group">
+            <div class="input-group-prepend">
+              <span class="input-group-text" id="basic-addon-reload-amount">₱</span>
+            </div>
+            <input type="text" name="reload-amount" class="form-control modal-add" id="reload-amount-reload" autocomplete="off">
+          </div>
+
+          <p id="error-reload-amount-reload" class="error-reload" hidden="hidden"></p>
+        </div>
+      </div>
+         
+
+      <div class="form-group row mx-auto">
+      <label for="points" class="col-form-label col-sm-4 modal-load">Payment Amount:</label>
+
+        <div class="col-sm-8">
+          <div class="input-group">
+            <div class="input-group-prepend">
+                <span class="input-group-text" id="basic-addon-payment-amount">₱</span>
+            </div>
+            <input type="text" name="payment-amount" class="form-control modal-add" id="payment-amount-reload" autocomplete="off">
+          </div>
+
+          <p id="error-payment-amount-reload" class="error-reload" hidden="hidden"></p>
+        </div>
+      </div>
+
+      <div class="form-group row mx-auto">
+      <label for="points" class="col-form-label col-sm-4 modal-load">Change:</label>
+
+        <div class="col-sm-8">
+          <div class="input-group">
+            <div class="input-group-prepend">
+                <span class="input-group-text" id="basic-addon-change">₱</span>
+            </div>
+            <input type="text" name="change" class="form-control modal-add" id="change-reload" disabled="disabled">
+          </div>
+
+          <p id="error-change-reload" class="error-reload" hidden="hidden"></p>
+        </div>
+      </div>
+    </div>
+  </div>
         <!--modal footer-->
         <div class="modal-footer" id="modal-footer-member-add">
           <button type="submit" id="add-member" class="btn btn-info btn-savemem-modal">Save New Member</button>

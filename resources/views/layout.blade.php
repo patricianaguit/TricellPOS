@@ -38,7 +38,7 @@
        <a class="nav-link" href="#"> DASHBOARD </a>
      </li>
      <li class="nav-item">
-       <a class="nav-link" href="#"> POS </a>
+       <a class="nav-link {{ Request::segment(1)=='sales' ? 'active' : '' }}" href="/sales"> POS </a>
      </li>
      <li class="nav-item dropdown" id="logsdrop">
           <a class="nav-link dropdown-toggle {{ Request::segment(1)=='logs' ? 'active' : '' }}" href="http://example.com" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

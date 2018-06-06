@@ -51,8 +51,10 @@ class MemberAccountsController extends Controller
             $member->role = 'member';
             $member->save();
 
-            $member_load = new Balance(['load_balance' => $request->load_balance]);
-            $member->balance()->save($member_load);
+            $member_load = new Balance;
+            $member_load->id = $member->id;
+            $member_load->load_balance = $request->load_balance; //(['load_balance' => $request->load_balance]);
+            $member_load->save();
         }
     }
 
@@ -95,8 +97,13 @@ class MemberAccountsController extends Controller
         $member->balance->load_balance = $total_load;
         $member->balance->save();
 
-        $member_load = new Reload_sale(['member_id' => $request->member_id, 'amount_due' => $request->reload_amount, 'amount_paid' => $request->payment_amount, 'change_amount' => $request->change_amount]);
-        $member->reload()->save($member_load);
+        $member_reload = new Reload_sale;
+        $member_reload->member_id = $request->member_id;
+        $member_reload->amount_due = $request->reload_amount;
+        $member_reload->amount_paid = $request->payment_amount;
+        $member_reload->change_amount = $request->change_amount;
+        $member_reload->save();
+
     }
 
     public function destroy(Request $request)

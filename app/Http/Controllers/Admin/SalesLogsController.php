@@ -18,7 +18,7 @@ class SalesLogsController extends Controller
 {
     public function index()
     {
-        $sales = Sale::paginate(7);
+        $sales = Sale::orderBy('transaction_date', 'desc')->paginate(7);
         $sumsales = Sale::sum('amount_due');
         return view('admin.sales')->with(['sales'=> $sales, 'sumsales' => $sumsales]);
     }
@@ -37,7 +37,6 @@ class SalesLogsController extends Controller
     {
         $sales = Sale::find($request->sales_id)->delete();
         $salesdetails = Sales_details::where('sales_id', $request->sales_id)->delete();
-
     }
 
     public function filter(Request $request)
@@ -54,7 +53,7 @@ class SalesLogsController extends Controller
             $sales = Sale::where(function($query) use ($request, $account_type, $payment_mode, $date_start, $date_end)
                 {
                     $query->where(DB::raw("(DATE_FORMAT(transaction_date,'%m/%d/%Y'))"), '>=', $date_start)->where(DB::raw("(DATE_FORMAT(transaction_date,'%m/%d/%Y'))"), '<=', $date_end);
-                })->where('payment_mode', $payment_mode)->paginate(7);
+                })->where('payment_mode', $payment_mode)->orderBy('transaction_date', 'desc')->paginate(7);
 
             $sales->appends($request->only('account_type', 'payment_mode', 'date_filter'));
            
@@ -75,7 +74,7 @@ class SalesLogsController extends Controller
             })->whereHas('User', function($query) use ($account_type)
                 {
                         $query->where('role', $account_type);
-                })->paginate(7);
+                })->orderBy('transaction_date', 'desc')->paginate(7);
 
             $sales->appends($request->only('account_type', 'payment_mode', 'date_filter'));
            
@@ -102,7 +101,7 @@ class SalesLogsController extends Controller
                 })->whereHas('User', function($query) use ($account_type)
                 {
                         $query->where('role', $account_type);
-                })->where('payment_mode', $payment_mode)->paginate(7);
+                })->where('payment_mode', $payment_mode)->orderBy('transaction_date', 'desc')->paginate(7);
 
              $sales->appends($request->only('account_type', 'payment_mode', 'date_filter'));
            
@@ -126,7 +125,7 @@ class SalesLogsController extends Controller
             $sales = Sale::with('user')->where(function($query) use ($request, $account_type, $payment_mode, $date_start, $date_end)
                 {
                     $query->where(DB::raw("(DATE_FORMAT(transaction_date,'%m/%d/%Y'))"), '>=', $date_start)->where(DB::raw("(DATE_FORMAT(transaction_date,'%m/%d/%Y'))"), '<=', $date_end);
-                })->paginate(7);
+                })->orderBy('transaction_date', 'desc')->paginate(7);
 
              $sales->appends($request->only('account_type', 'payment_mode', 'date_filter'));
            

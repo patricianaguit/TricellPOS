@@ -16,7 +16,8 @@ class ReloadLogsController extends Controller
     public function index()
     {
         $reloads = Reload_sale::orderBy('transaction_date', 'desc')->paginate(7);
-        return view('admin.reload')->with(['reloads' => $reloads]); 
+        $sumsales = Reload_sale::sum('amount_due');
+        return view('admin.reload')->with(['reloads' => $reloads, 'sumsales' => $sumsales]); 
     }
 
     public function showdetails(Request $request)
@@ -49,7 +50,7 @@ class ReloadLogsController extends Controller
             $reloads = Reload_sale::where(function($query) use ($request, $date_start, $date_end)
                 {
                     $query->where(DB::raw("(DATE_FORMAT(transaction_date,'%m/%d/%Y'))"), '>=', $date_start)->where(DB::raw("(DATE_FORMAT(transaction_date,'%m/%d/%Y'))"), '<=', $date_end);
-                })->paginate(7);
+                })->orderBy('transaction_date', 'desc')->paginate(7);
             $reloads->appends($request->only('date_filter'));
                
             $count = $reloads->count();

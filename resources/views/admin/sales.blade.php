@@ -49,7 +49,6 @@ SALES
       <option selected value="Any">Any</option>
       <option value="Cash">Cash</option>
       <option value="Card Load">Card Load</option>
-      <option value="Points">Points</option>
     </select>
     <br>
 
@@ -128,7 +127,7 @@ SALES
     <div class="modal-dialog ">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Receipt #<span class="receiptnumber"></span> - <span class="receiptdate"></span></h5> <br>
+          <h5 class="modal-title" id="exampleModalLabel">View Receipt</h5> <br>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
@@ -186,8 +185,6 @@ SALES
 
       $('.view_details').modal('show');
       $('#view_body').html(data);
-      $('.receiptnumber').text($('#sales_id').val());
-      $('.receiptdate').text($('#sales_date').val());
       var sum = 0;
 
       $('.totalprice').each(function() {

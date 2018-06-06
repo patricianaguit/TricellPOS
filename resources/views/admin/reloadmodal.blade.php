@@ -1,10 +1,9 @@
-<input type="text" id="reload_id" value="{{$reloads->id}}" hidden="hidden">
 <table class="table date-header">
   <thead>
-    <th>Receipt #00000001</td>
+    <th>Receipt #{{sprintf('%08d',$reloads->id)}}</td>
     <th></td>
-    <th> May 30, 2018</td>
-    <th>11:18:50 PM</td>
+    <th>{{date('F d, Y', strtotime($reloads->transaction_date))}}</td>
+    <th>{{date('h:i:s A', strtotime($reloads->transaction_date))}}</td>
   </thead>
 </table>
 <table class="table table_modal">

@@ -39,6 +39,8 @@ Route::group(['middleware' => ['admin']], function () {
 	Route::post('inventory/update_product', 'Admin\InventoryController@edit');
 	Route::post('inventory/delete_product', 'Admin\InventoryController@destroy');
 	Route::post('inventory/add_product', 'Admin\InventoryController@create');
+	Route::get('inventory/low_stocks', 'Admin\InventoryController@lowstocks');
+	Route::get('inventory/healthy_stocks', 'Admin\InventoryController@healthystocks');
 	Route::get('logs/sales', 'Admin\SalesLogsController@index');
 	Route::post('logs/sales/showdetails', 'Admin\SalesLogsController@showdetails');
 	Route::post('logs/sales/delete_sales', 'Admin\SalesLogsController@destroy');
@@ -51,4 +53,6 @@ Route::group(['middleware' => ['admin']], function () {
     Route::get('backup/download/{file_name}', 'Admin\BackupController@download');
    	Route::get('backup/delete/{file_name}', 'Admin\BackupController@delete');
    	Route::get('backup/search', 'Admin\BackupController@search');
+   	Route::get('sales', 'Admin\PointofSaleController@index');
+   	Route::get('sales/buttons', 'Admin\PointofSaleController@buttonload');
 });

@@ -48,8 +48,6 @@ class InventoryController extends Controller
     {
     	$product = Product::find($request->product_id);
 
-    	//$decimal = "regex:/^\d*(\.\d{1,2})?$/";
-
         $rules = array(
         'product_name' => "required|unique:products,product_name," . $product->product_id .",product_id",
         'product_desc' => 'required',
@@ -101,5 +99,17 @@ class InventoryController extends Controller
                 })->count();
             return view('admin.inventory')->with(['products' => $products, 'search' => $search, 'count' => $count, 'totalcount' => $totalcount]);  	
         }
+    }
+
+    public function lowstocks()
+    {
+        $products = Product::where('product_qty', '<=', 20)->orderBy('product_name', 'asc')->paginate(7);
+        return view('admin.inventory')->with('products', $products);
+    }
+
+    public function healthystocks()
+    {
+        $products = Product::where('product_qty', '>', 20)->orderBy('product_name', 'asc')->paginate(7);
+        return view('admin.inventory')->with('products', $products);
     }
 }

@@ -36,7 +36,7 @@ SALE
             <thead class="table-light">
               <tr>
                 <th scope="col">Description</th>
-                <th scope="col">Qty</th>
+                <th scope="col">Quantity</th>
                 <th scope="col">Price</th>
                 <th scope="col">Subtotal</th>
                 <th scope="col">Action</th>

@@ -29,9 +29,7 @@ class ReloadLogsController extends Controller
 
     public function destroy(Request $request)
     {
-        $reloads = Reload_sale::find($request->sales_id)->delete();
-        $salesdetails = Sales_details::where('sales_id', $request->sales_id)->delete();
-
+        $reloads = Reload_sale::find($request->reload_id)->delete();
     }
 
     public function filter(Request $request)

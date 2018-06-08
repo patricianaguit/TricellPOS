@@ -25,13 +25,14 @@ class MemberAccountsController extends Controller
     public function create(Request $request)
     {
         $rules = array(
-        'card_number' => 'required|unique:users,card_number',
-        'load_balance' => 'required',
-        'firstname' => 'required',
-        'lastname' => 'required',
+        'card_number' => 'required|numeric|unique:users,card_number',
+        'firstname' => 'required|alpha',
+        'lastname' => 'required|alpha',
         'address' => 'required',
         'contact' => 'required|digits_between:7,11',
-        'email' => 'required|email',
+        'email' => 'required|email|unique:users,email',
+        'initial_amount' => 'required|numeric',
+        'payment_amount' => 'required|numeric|greater_than_equal:initial_amount'
         );
 
         $validator = Validator::make($request->all(), $rules);
@@ -53,8 +54,15 @@ class MemberAccountsController extends Controller
 
             $member_load = new Balance;
             $member_load->id = $member->id;
-            $member_load->load_balance = $request->load_balance; //(['load_balance' => $request->load_balance]);
+            $member_load->load_balance = $request->initial_amount; 
             $member_load->save();
+
+            $member_reload = new Reload_sale;
+            $member_reload->member_id = $member->id;
+            $member_reload->amount_due = $request->initial_amount;
+            $member_reload->amount_paid = $request->payment_amount;
+            $member_reload->change_amount = $request->change_amount;
+            $member_reload->save();
         }
     }
 
@@ -63,11 +71,11 @@ class MemberAccountsController extends Controller
         $member = User::find($request->member_id);
 
         $rules = array(
-        'card_number' => "required|unique:users,card_number,$member->id",
-        'firstname' => 'required',
-        'lastname' => 'required',
+        'card_number' => "required|numeric|unique:users,card_number,$member->id",
+        'firstname' => 'required|alpha',
+        'lastname' => 'required|alpha',
         'address' => 'required',
-        'contact' => 'required',
+        'contact' => 'required|digits_between:7,11',
         'email' => "required|email|unique:users,email,$member->id",
         );
 

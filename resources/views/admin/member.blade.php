@@ -244,16 +244,16 @@ ACCOUNTS
     <div class="col-md-6">
       
     <div class="form-group row mx-auto">
-      <label for="points" class="col-form-label col-sm-4 modal-points">Initial Amount:</label>
+      <label for="points" class="col-form-label col-sm-4 modal-points">Load Amount:</label>
         <div class="col-sm-8">
           <div class="input-group">
             <div class="input-group-prepend">
-              <span class="input-group-text" id="basic-addon-reload-amount">₱</span>
+              <span class="input-group-text" id="basic-addon-initial-amount-add">₱</span>
             </div>
-            <input type="text" name="reload-amount" class="form-control modal-add" id="reload-amount-reload" autocomplete="off">
+            <input type="text" name="initial_amount" class="form-control modal-add" id="initial-amount-add" autocomplete="off">
           </div>
 
-          <p id="error-reload-amount-reload" class="error-reload" hidden="hidden"></p>
+          <p id="error-initial-amount-add" class="error-add" hidden="hidden"></p>
         </div>
       </div>
          
@@ -264,12 +264,12 @@ ACCOUNTS
         <div class="col-sm-8">
           <div class="input-group">
             <div class="input-group-prepend">
-                <span class="input-group-text" id="basic-addon-payment-amount">₱</span>
+                <span class="input-group-text" id="basic-addon-payment-amount-add">₱</span>
             </div>
-            <input type="text" name="payment-amount" class="form-control modal-add" id="payment-amount-reload" autocomplete="off">
+            <input type="text" name="payment_amount" class="form-control modal-add" id="payment-amount-add" autocomplete="off">
           </div>
 
-          <p id="error-payment-amount-reload" class="error-reload" hidden="hidden"></p>
+          <p id="error-payment-amount-add" class="error-add" hidden="hidden"></p>
         </div>
       </div>
 
@@ -279,12 +279,12 @@ ACCOUNTS
         <div class="col-sm-8">
           <div class="input-group">
             <div class="input-group-prepend">
-                <span class="input-group-text" id="basic-addon-change">₱</span>
+                <span class="input-group-text" id="basic-addon-change-add">₱</span>
             </div>
-            <input type="text" name="change" class="form-control modal-add" id="change-reload" disabled="disabled">
+            <input type="text" name="change_amount" class="form-control modal-add" id="change-amount-add" disabled="disabled">
           </div>
 
-          <p id="error-change-reload" class="error-reload" hidden="hidden"></p>
+          <p id="error-change-amount-add" class="error-add" hidden="hidden"></p>
         </div>
       </div>
     </div>
@@ -411,20 +411,25 @@ ACCOUNTS
 
   $('.add_member').on('hide.bs.modal', function(){
     //hide error messages in modal
-    $("#cardnumber-add").val(""),
-    $("#load-add").val(""),
-    $("#firstname-add").val(""),
-    $("#lastname-add").val(""),
-    $("#address-add").val(""),
-    $("#contact-add").val(""),
-    $("#email-add").val("")
-    $('#error-cardnumber-add').attr("hidden", true);
-    $('#error-load-add').attr("hidden", true);
-    $('#error-firstname-add').attr("hidden", true);
-    $('#error-lastname-add').attr("hidden", true);
-    $('#error-address-add').attr("hidden", true);
-    $('#error-contact-add').attr("hidden", true);
-    $('#error-email-add').attr("hidden", true);
+    $('#cardnumber-add').val('');
+    $('#load-add').val('');
+    $('#firstname-add').val('');
+    $('#lastname-add').val('');
+    $('#address-add').val('');
+    $('#contact-add').val('');
+    $('#email-add').val('');
+    $('#initial-amount-add').val('');
+    $('#payment-amount-add').val('');
+    $('#change-amount-add').val('');
+    $('#error-cardnumber-add').attr('hidden', true);
+    $('#error-load-add').attr('hidden', true);
+    $('#error-firstname-add').attr('hidden', true);
+    $('#error-lastname-add').attr('hidden', true);
+    $('#error-address-add').attr('hidden', true);
+    $('#error-contact-add').attr('hidden', true);
+    $('#error-email-add').attr('hidden', true);
+    $('#error-initial-amount-add').attr('hidden', true);
+    $('#error-payment-amount-add').attr('hidden', true);
 
     //remove css style in modal
     $('#cardnumber-add').removeAttr('style');
@@ -434,16 +439,20 @@ ACCOUNTS
     $('#address-add').removeAttr('style');
     $('#contact-add').removeAttr('style');
     $('#email-add').removeAttr('style');
+    $('#initial-amount-add').removeAttr('style');
+    $('#payment-amount-add').removeAttr('style');
+    $('#basic-addon-initial-amount-add').removeAttr('style');
+    $('#basic-addon-payment-amount-add').removeAttr('style');
   });
 
   $('.edit_member').on('hide.bs.modal', function(){
     //hide error messages in modal
-    $('#error-cardnumber-edit').attr("hidden", true);
-    $('#error-firstname-edit').attr("hidden", true);
-    $('#error-lastname-edit').attr("hidden", true);
-    $('#error-address-edit').attr("hidden", true);
-    $('#error-contact-edit').attr("hidden", true);
-    $('#error-email-edit').attr("hidden", true);
+    $('#error-cardnumber-edit').attr('hidden', true);
+    $('#error-firstname-edit').attr('hidden', true);
+    $('#error-lastname-edit').attr('hidden', true);
+    $('#error-address-edit').attr('hidden', true);
+    $('#error-contact-edit').attr('hidden', true);
+    $('#error-email-edit').attr('hidden', true);
 
     //remove css style in modal
     $('#cardnumber-edit').removeAttr('style');
@@ -456,21 +465,21 @@ ACCOUNTS
 
   $('.reload_member').on('hide.bs.modal', function(){
     //clear input boxes
-    $('#reload-amount-reload').val("");
-    $('#payment-amount-reload').val("");
-    $('#change-reload').val("");
+    $('#reload-amount-reload').val('');
+    $('#payment-amount-reload').val('');
+    $('#change-reload').val('');
 
     //hide error messages in modal
-    $('#error-reload-amount-reload').attr("hidden", true);
-    $('#error-reload-amount-reload').text("");
-    $('#error-reload-amount-reload').attr("hidden", true);
-    $('#error-payment-amount-reload').text("");
+    $('#error-reload-amount-reload').attr('hidden', true);
+    $('#error-reload-amount-reload').text('');
+    $('#error-reload-amount-reload').attr('hidden', true);
+    $('#error-payment-amount-reload').text('');
 
     //remove css style in modal
-    $('#reload-amount-reload').removeAttr("style")
-    $('#basic-addon-reload-amount').removeAttr("style");
-    $('#payment-amount-reload').removeAttr("style")
-    $('#basic-addon-payment-amount').removeAttr("style");
+    $('#reload-amount-reload').removeAttr('style')
+    $('#basic-addon-reload-amount').removeAttr('style');
+    $('#payment-amount-reload').removeAttr('style')
+    $('#basic-addon-payment-amount').removeAttr('style');
 
     $('#update-reload-member').attr('hidden', true);
   });
@@ -527,12 +536,14 @@ ACCOUNTS
     data: {
             '_token': $('input[name=_token]').val(),
             'card_number': $("#cardnumber-add").val(),
-            'load_balance': $("#load-add").val(),
             'firstname': $("#firstname-add").val(),
             'lastname': $("#lastname-add").val(),
             'address': $("#address-add").val(),
             'contact': $("#contact-add").val(),
-            'email': $("#email-add").val()
+            'email': $("#email-add").val(),
+            'initial_amount': $("#initial-amount-add").val(),
+            'payment_amount': $("#payment-amount-add").val(),
+            'change_amount': $("#change-amount-add").val()
           },
     success: function(data) {
       console.log(data);
@@ -547,18 +558,6 @@ ACCOUNTS
           {
             $('#error-cardnumber-add').attr("hidden", true);
             $('#cardnumber-add').removeAttr('style');
-          }
-
-          if(data.errors.load_balance)
-          {
-            $('#error-load-add').removeAttr("hidden");
-            $('#error-load-add').text(data.errors.load_balance);
-            $('#load-add').css("border", "1px solid #cc0000");
-          }
-          else
-          {
-            $('#error-load-add').attr("hidden", true);
-            $('#load-add').removeAttr('style');
           }
 
           if(data.errors.firstname)
@@ -620,6 +619,34 @@ ACCOUNTS
             $('#error-email-add').attr("hidden", true);
             $('#email-add').removeAttr('style');
           }
+
+          if(data.errors.initial_amount)
+          {
+            $('#error-initial-amount-add').removeAttr("hidden");
+            $('#error-initial-amount-add').text(data.errors.initial_amount);
+            $('#initial-amount-add').css("border", "1px solid #cc0000");
+            $('#basic-addon-initial-amount-add').css("border", "1px solid #cc0000");
+          }
+          else
+          {
+            $('#error-initial-amount-add').attr("hidden", true);
+            $('#initial-amount-add').removeAttr('style');
+            $('#basic-addon-initial-amount-add').removeAttr('style');
+          }
+
+          if(data.errors.payment_amount)
+          {
+            $('#error-payment-amount-add').removeAttr("hidden");
+            $('#error-payment-amount-add').text(data.errors.payment_amount);
+            $('#payment-amount-add').css("border", "1px solid #cc0000");
+            $('#basic-addon-payment-amount-add').css("border", "1px solid #cc0000");
+          }
+          else
+          {
+            $('#error-payment-amount-add').attr("hidden", true);
+            $('#payment-amount-add').removeAttr('style');
+            $('#basic-addon-payment-amount-add').removeAttr('style');
+          }
       }
       else
       {
@@ -634,6 +661,13 @@ ACCOUNTS
   });
   });
 
+  $('#initial-amount-add, #payment-amount-add').on('input',function() {
+    var reload_amount = parseFloat($('#initial-amount-add').val());
+    var payment = parseFloat($('#payment-amount-add').val());
+    $('#change-amount-add').val((payment - reload_amount ? payment - reload_amount : 0).toFixed(2));
+  });
+
+
   //reload member
   $(document).on('click', '#reload-member', function() {
     $('#member-id-reload').val($(this).data('id'));
@@ -641,11 +675,11 @@ ACCOUNTS
 
     if($('#change-reload').val() == ' ')
     {
-      $('#update-reload-member').removeAttr('hidden');
+      $('#update-reload-member').removeAttr('disabled');
     }
     else
     {
-      $('#update-reload-member').attr('hidden', true);
+      $('#update-reload-member').attr('disabled', true);
     }
   });
 
@@ -690,7 +724,7 @@ ACCOUNTS
         $('#error-reload-amount-reload').text("Reload Amount field is not a valid amount.");
         $('#reload-amount-reload').css("border", "1px solid #cc0000");
         $('#basic-addon-reload-amount').css("border", "1px solid #cc0000");
-        $('#update-reload-member').attr('hidden', true);
+        $('#update-reload-member').attr('disabled', true);
       }
       else
       {
@@ -706,7 +740,7 @@ ACCOUNTS
         $('#error-payment-amount-reload').text("Payment Amount field is not a valid amount.");
         $('#payment-amount-reload').css("border", "1px solid #cc0000");
         $('#basic-addon-payment-amount').css("border", "1px solid #cc0000");
-        $('#update-reload-member').attr('hidden', true);
+        $('#update-reload-member').attr('disabled', true);
       }
       else
       {
@@ -723,18 +757,18 @@ ACCOUNTS
         $('#error-payment-amount-reload').text("Payment cannot be less than Reload Amount");
         $('#payment-amount-reload').css("border", "1px solid #cc0000");
         $('#basic-addon-payment-amount').css("border", "1px solid #cc0000");
-        $('#update-reload-member').attr('hidden', true);
+        $('#update-reload-member').attr('disabled', true);
       }
       else if((payment != '' && reload_amount != '') &&
         (reload_amount <= payment) && (isNaN($('#payment-amount-reload').val()) == false && isNaN($('#reload-amount-reload').val()) == false))
       {
         $('#payment-amount-reload').removeAttr("style")
         $('#basic-addon-payment-amount').removeAttr("style");
-        $('#update-reload-member').removeAttr('hidden');
+        $('#update-reload-member').removeAttr('disabled');
       }
       else
       {
-        $('#update-reload-member').attr('hidden', true);
+        $('#update-reload-member').attr('disabled', true);
       }
   });
 

@@ -14,8 +14,13 @@ BACKUP
 <div class="container">
 <!---title inventory-->
 <h3 class="title">Backup Administration</h3>
-</br>
-<hr>
+  <nav>
+    <div class="nav nav-tabs justify-content-end memberstab" id="nav-tab" role="tablist">
+      <a class="nav-item nav-link" id="nav-profile-tab"  href="/preferences/profile" role="tab" aria-controls="nav-profile" aria-selected="true">Profile
+      <a class="nav-item nav-link" id="nav-discount-tab"  href="/preferences/discounts" role="tab" aria-controls="nav-discount" aria-selected="false">Discounts</a>
+      <a class="nav-item nav-link  active" id="nav-discount-tab"  href="/preferences/backup" role="tab" aria-controls="nav-discount" aria-selected="false">Backup</a>
+      </div>
+    </nav>
 <!---end of title inventory-->
 <!--second row add item button and search bar--->
 <div class="row">
@@ -24,7 +29,7 @@ BACKUP
     </div>
 
     <div class="col-md-4">
-      <form class="form ml-auto" action="/backup/search" method="GET">
+      <form class="form ml-auto" action="/preferences/backup/search" method="GET">
             <div class="input-group date" id="datetimepicker4" data-target-input="nearest">
                 <input class="form-control datetimepicker-input" name="search" type="text" placeholder="Search by Date" aria-label="Search" style="padding-left: 20px; border-radius: 40px;" id="product-search" data-toggle ="datetimepicker" data-target="#datetimepicker4" autocomplete="off">
                 <div class="input-group-addon" style="margin-left: -50px; z-index: 3; border-radius: 40px; background-color: transparent; border:none;">

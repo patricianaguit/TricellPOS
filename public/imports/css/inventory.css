@@ -82,6 +82,32 @@ font-size: 18px;
   color: red !important;
   font-size: 13px;
 }
+
+.memberstab.nav-tabs .nav-item.show .nav-link, .memberstab.nav-tabs .nav-link.active {
+    color:  #3A539B !important;
+    background-color: #fefcfc !important;
+    border-color: #dee2e6 #dee2e6 #fcfcfc !important;
+    font-weight: bold !important;
+}
+
+.nav {
+  padding-top: 2px;
+}
+
+.nav-tabs .nav-link:hover {
+    background-color: #fcfcfc !important;
+    border-color: #dee2e6 #dee2e6 ##fcfcfc !important;
+    color:#3A539B!important;
+    font-weight: bold !important;
+}
+
+#nav-tab {
+  margin-bottom: 16.2px !important;
+}
+
+.nav-tabs .nav-link {
+  color: #404040!important;
+}
 /****NAV CSS***/
 /**.nav_custom{
 

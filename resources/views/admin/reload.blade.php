@@ -83,7 +83,7 @@ RELOAD SALES
           <td>₱ {{number_format($reload->amount_due,2, '.', '')}}</td>
 
           <td> <button type="button" id="view-receipt" data-id="{{$reload->id}}" class="btn btn-secondary edit-btn" data-toggle="modal" data-target=".view_details"><i class="material-icons md-18">receipt</i></button>
-      <button type="button" class="btn btn-danger del-btn" data-toggle="modal" data-target=".delete"><i class="material-icons md-18">delete</i></button> </td>
+      <button type="button" class="btn btn-danger del-btn" id="delete-reload" data-id="{{$reload->id}}" data-toggle="modal" data-target=".delete"><i class="material-icons md-18">delete</i></button> </td>
         </tr>
         @endforeach
 
@@ -121,11 +121,12 @@ RELOAD SALES
       </button>
     </div>
     <div class="modal-body">
-        <center>  <p> Are you sure you want to delete this <b>log</b>?</p> </center>
+        <center>  <p> Are you sure you want to delete this <b>reload log</b>?</p> </center>
+        <span class="reload-id-delete" hidden="hidden"></span>
         </div>
 
-    <div class="modal-footer">
-      <button type="button" class="btn btn-info btn-save-modal" data-dismiss="modal">Yes</button>
+    <div class="modal-footer" id="modal-footer-reload-delete">
+      <button type="button" class="btn btn-info btn-save-modal" id="destroy-reload">Yes</button>
       <button type="button" class="btn btn-secondary btn-close-modal" data-dismiss="modal">No</button>
 
     </div>
@@ -136,6 +137,7 @@ RELOAD SALES
 </div>
 
 <script type="text/javascript">
+  //view receipt
   $(document).on('click', '#view-receipt', function() {
     $.ajax({
     type: 'POST',
@@ -154,6 +156,44 @@ RELOAD SALES
     }
     });
   });
+
+  //delete log
+  $(document).on('click', '#delete-reload', function() {
+    $('.reload-id-delete').text($(this).data('id'));
+  });
+
+  $('#modal-footer-reload-delete').on('click', '#destroy-reload', function(){
+  $.ajax({
+    type: 'POST',
+    url: '/logs/reload/delete_reload',
+    data: {
+      '_token': $('input[name=_token]').val(),
+      'reload_id': $('.reload-id-delete').text()
+    },
+    success: function(data){
+      localStorage.setItem("delete","success");
+      window.location.reload();
+    },
+    error: function(jqXHR, textStatus, errorThrown) { // What to do if we fail
+      console.log(JSON.stringify(jqXHR));
+      console.log("AJAX error: " + textStatus + ' : ' + errorThrown);
+    }
+    });
+  });
+
+  $(document).ready(function(){
+    if(localStorage.getItem("delete"))
+    {
+        swal({
+                title: "Success!",
+                text: "You have successfully deleted the reload log!",
+                icon: "success",
+                button: "Close",
+              });
+        localStorage.clear();
+    }
+  });
+
 
   $('input[name="date_filter"]').daterangepicker({
     autoUpdateInput: false,

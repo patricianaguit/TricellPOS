@@ -28,9 +28,10 @@ class SalesLogsController extends Controller
     	$sales_id = $request->sales_id;
         $discount_id = $request->discount_id;
         $sales = Sale::where('id', $sales_id)->first();
+        $profile = DB::table('profile')->select('vat')->where('id', 1)->first();
     	$salesdetails = Sales_details::with('product')->where('sales_id', $sales_id)->get();
-        $discounts = Discount::where('id', $discount_id)->get();
-    	return view('admin.salesmodal')->with(['sales' => $sales, 'salesdetails' => $salesdetails, 'discounts' => $discounts]);  
+        $discounts = Discount::where('id', $discount_id)->first();
+    	return view('admin.salesmodal')->with(['sales' => $sales, 'salesdetails' => $salesdetails, 'profile' => $profile,'discounts' => $discounts]);  
     }
 
     public function destroy(Request $request)

@@ -179,6 +179,10 @@ return [
         'discount_name' => 'Discount Name',
         'discount_type' => 'Discount Type',
         'discount_value' => 'Discount Value',
+        'branch_name' => 'Branch Name',
+        'contact_number' => 'Contact Number',
+        'tin' => 'TIN',
+        'vat' => 'VAT'
     ],
 
 ];

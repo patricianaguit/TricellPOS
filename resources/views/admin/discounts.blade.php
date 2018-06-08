@@ -76,7 +76,8 @@ DISCOUNTS
                {{'₱ '. $discount->discount_value}}
             @endif
           </td>
-          <td><button type="button" class="btn btn-primary edit-btn" id="edit-discount" data-id="{{$discount->id}}" data-name="{{$discount->discount_name}}" data-type="{{$discount->discount_type}}" data-value="{{$discount->discount_value}}" data-toggle="modal" data-target=".edit_discount"><i class="material-icons md-18">mode_edit</i></button>
+          <td>
+            <button type="button" class="btn btn-primary edit-btn" id="edit-discount" data-id="{{$discount->id}}" data-name="{{$discount->discount_name}}" data-type="{{$discount->discount_type}}" data-value="{{$discount->discount_value}}" data-toggle="modal" data-target=".edit_discount"><i class="material-icons md-18">mode_edit</i></button>
             @if($discount->id != 1)
             <button type="button" class="btn btn-danger del-btn" id="delete-discount" data-id="{{$discount->id}}" data-name="{{$discount->discount_name}}" data-toggle="modal" data-target=".delete_discount"><i class="material-icons md-18">delete</i></button>
             @endif

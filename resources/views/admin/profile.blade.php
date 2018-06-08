@@ -31,6 +31,8 @@ SYSTEM PREFERENCES
       <div class="tab-pane fade show active" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
         </br>
         <form class="nosubmitform">
+          @csrf
+          <fieldset id="profile-edit-fieldset" disabled>
           </br>
           <div class="row">
             <div class ="col-md-6 members-info border-right">
@@ -38,29 +40,29 @@ SYSTEM PREFERENCES
               <div class="form-group row mx-auto">
                 <label for="first-name" class="col-form-label col-md-3 modal-fname">Branch Name:</label>
                 <div class="col-md-9">
-                  <input type="text" name="firstname" class="form-control modal-fname" id="firstname-add">
-                  <p id="error-firstname-add" class="error-add" hidden="hidden"></p>
+                  <input type="text" name="branch_name" value="{{$profile->branch_name}}" class="form-control modal-fname" id="branch-name-profile">
+                  <p id="error-branchname-profile" class="error-profile" hidden="hidden"></p>
                 </div>
               </div>
               <div class="form-group row mx-auto">
                 <label for="last-name" class="col-form-label col-md-3 modal-lname">Address:</label>
                 <div class="col-md-9">
-                  <input type="text" name="lastname" class="form-control" id="lastname-add">
-                  <p id="error-lastname-add" class="error-add" hidden="hidden"></p>
+                  <input type="text" name="address" value="{{$profile->address}}" class="form-control" id="address-profile">
+                  <p id="error-address-profile" class="error-profile" hidden="hidden"></p>
                 </div>
               </div>
               <div class="form-group row mx-auto">
                 <label for="contact" class="col-form-label col-md-3 modal-contact">Contact #:</label>
                 <div class="col-md-9">
-                  <input type="text" name="contact_number" class="form-control" id="contact-add">
-                  <p id="error-contact-add" class="error-add" hidden="hidden"></p>
+                  <input type="text" name="contact_number" value="{{$profile->contact_number}}" class="form-control" id="contact-profile">
+                  <p id="error-contact-profile" class="error-profile" hidden="hidden"></p>
                 </div>
               </div>
               <div class="form-group row mx-auto">
                 <label for="email" class="col-form-label col-md-3 modal-mobile">Email:</label>
                 <div class="col-md-9">
-                  <input type="text" name="email" class="form-control" id="email-add">
-                  <p id="error-email-add" class="error-add" hidden="hidden"></p>
+                  <input type="text" name="email" value="{{$profile->email}}" class="form-control" id="email-profile">
+                  <p id="error-email-profile" class="error-profile" hidden="hidden"></p>
                 </div>
               </div>
             </div>
@@ -68,22 +70,30 @@ SYSTEM PREFERENCES
               <div class="form-group row mx-auto">
                 <label for="card-no" class="col-form-label col-md-3 modal-card">TIN:</label>
                 <div class="col-md-9">
-                  <input type="text" name="card_number" class="form-control modal-card" id="cardnumber-add">
-                  <p id="error-cardnumber-add" class="error-add" hidden="hidden"></p>
+                  <input type="text" name="tin" value="{{$profile->tin}}" class="form-control modal-card" id="tin-profile">
+                  <p id="error-tin-profile" class="error-profile" hidden="hidden"></p>
                 </div>
               </div>
               <div class="form-group row mx-auto">
-                <label for="card-no" class="col-form-label col-md-3 modal-card">VAT %:</label>
+                <label for="card-no" class="col-form-label col-md-3 modal-card">VAT:</label>
                 <div class="col-md-9">
-                  <input type="text" name="card_number" class="form-control modal-card" id="cardnumber-add">
-                  <p id="error-cardnumber-add" class="error-add" hidden="hidden"></p>
+                <div class="input-group">
+                  <div class="input-group-prepend">
+                    <span class ="input-group-text" id="basic-addon-profile">%</span>
+                  </div>
+                  <input type="text" name="vat" value="{{floatval($profile->vat)}}" class="form-control modal-card" id="vat-profile">
+                </div>
+                <p id="error-vat-profile" class="error-profile" hidden="hidden"></p>
                 </div>
               </div>
               
             </div>
+          </fieldset>
           </div>
-          <div class="modal-footer" id="modal-footer-member-add">
-            <button type="submit" id="add-member" class="btn btn-info btn-savemem-modal">Update Profile</button>
+          <div class="modal-footer" id="modal-footer-profile-edit">
+            <button type="submit" id="update-profile" class="btn btn-info btn-savemem-modal" style="display: none;">Save Changes</button>
+            <button type="button" id="edit-profile" onclick ="undisableField()" class="btn btn-info btn-savemem-modal">Edit Profile</button>
+            <button type="button" id="close-profile" class="btn btn-secondary btn-close-modal" data-dismiss="modal" style="display: none;">Close</button>
           </div>
         </form>
       </div>
@@ -92,4 +102,146 @@ SYSTEM PREFERENCES
   <!----end of modal---->
   
 </div>
+
+<script type="text/javascript">
+  $('.nosubmitform').submit(function(event){
+    event.preventDefault();
+  });
+
+  //success alerts - add, update, delete
+  $(document).ready(function(){
+  if(localStorage.getItem("update"))
+  {
+    swal({
+            title: "Success!",
+            text: "You have successfully updated the profile!",
+            icon: "success",
+            button: "Close",
+          });
+    localStorage.clear();
+  }
+  });
+
+  function undisableField() {
+    document.getElementById("profile-edit-fieldset").disabled = false;
+    $("#edit-profile").click(function(){
+        $("#edit-profile").hide();
+    });
+  }
+
+  $(document).ready(function(){
+    $("#edit-profile").click(function(){
+        $("#update-profile").show();
+        $("#close-profile").show();
+    });
+
+     $("#close-profile").click(function(){
+        window.location.reload();
+    });
+  });
+
+  //update profile
+  $('#modal-footer-profile-edit').on('click', '#update-profile', function(event) {
+  $.ajax({
+    type: 'POST',
+    url: '/preferences/update_profile',
+    data: {
+            '_token': $('input[name=_token]').val(),
+            'branch_name': $("#branch-name-profile").val(),
+            'address': $("#address-profile").val(),
+            'contact_number': $("#contact-profile").val(),
+            'email': $("#email-profile").val(),
+            'tin': $("#tin-profile").val(),
+            'vat': $("#vat-profile").val(),
+          },
+    success: function(data) {
+      console.log(data);
+      if ((data.errors)) {
+          if(data.errors.branch_name)
+          {
+            $('#error-branchname-profile').removeAttr("hidden");
+            $('#error-branchname-profile').text(data.errors.branch_name);
+            $('#branch-name-profile').css("border", "1px solid #cc0000");
+          }
+          else
+          {
+            $('#error-branchname-profile').attr("hidden", true);
+            $('#branch-name-profile').removeAttr('style');
+          }
+
+          if(data.errors.address)
+          {
+            $('#error-address-profile').removeAttr("hidden");
+            $('#error-address-profile').text(data.errors.address);
+            $('#address-profile').css("border", "1px solid #cc0000");
+          }
+          else
+          {
+            $('#error-address-profile').attr("hidden", true);
+            $('#address-profile').removeAttr('style');
+          }
+
+          if(data.errors.contact_number)
+          {
+            $('#error-contact-profile').removeAttr("hidden");
+            $('#error-contact-profile').text(data.errors.contact_number);
+            $('#contact-profile').css("border", "1px solid #cc0000");
+          }
+          else
+          {
+            $('#error-contact-profile').attr("hidden", true);
+            $('#contact-profile').removeAttr('style');
+          }
+
+          if(data.errors.email)
+          {
+            $('#error-email-profile').removeAttr("hidden");
+            $('#error-email-profile').text(data.errors.email);
+            $('#email-profile').css("border", "1px solid #cc0000");
+          }
+          else
+          {
+            $('#error-email-profile').attr("hidden", true);
+            $('#email-profile').removeAttr('style');
+          }
+
+          if(data.errors.tin)
+          {
+            $('#error-tin-profile').removeAttr("hidden");
+            $('#error-tin-profile').text(data.errors.tin);
+            $('#tin-profile').css("border", "1px solid #cc0000");
+          }
+          else
+          {
+            $('#error-tin-profile').attr("hidden", true);
+            $('#tin-profile').removeAttr('style');
+          }
+
+          if(data.errors.vat)
+          {
+            $('#error-vat-profile').removeAttr("hidden");
+            $('#error-vat-profile').text(data.errors.vat);
+            $('#vat-profile').css("border", "1px solid #cc0000");
+            $('#basic-addon-profile').css("border", "1px solid #cc0000");
+          }
+          else
+          {
+            $('#error-vat-profile').attr("hidden", true);
+            $('#vat-profile').removeAttr('style');
+            $('#basic-addon-profile').removeAttr('style');
+          }
+      }
+      else
+      {
+        localStorage.setItem("update","success");
+        window.location.reload();
+      }
+    },
+    error: function(jqXHR, textStatus, errorThrown) { // What to do if we fail
+      console.log(JSON.stringify(jqXHR));
+      console.log("AJAX error: " + textStatus + ' : ' + errorThrown);
+    }
+  });
+  });
+</script>
 @endsection

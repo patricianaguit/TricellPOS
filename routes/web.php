@@ -57,6 +57,7 @@ Route::group(['middleware' => ['admin']], function () {
    	Route::get('sales', 'Admin\PointofSaleController@index');
    	Route::get('sales/buttons', 'Admin\PointofSaleController@buttonload');
    	Route::get('preferences/profile', 'Admin\ProfileController@index');
+   	Route::post('preferences/update_profile', 'Admin\ProfileController@edit');
    	Route::get('preferences/discounts', 'Admin\DiscountsController@index');
    	Route::post('preferences/add_discount', 'Admin\DiscountsController@create');
    	Route::post('preferences/update_discount', 'Admin\DiscountsController@edit');

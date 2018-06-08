@@ -481,7 +481,7 @@ ACCOUNTS
     $('#payment-amount-reload').removeAttr('style')
     $('#basic-addon-payment-amount').removeAttr('style');
 
-    $('#update-reload-member').attr('hidden', true);
+    $('#update-reload-member').attr('disabled', true);
   });
 
   //success alerts - add, update, delete

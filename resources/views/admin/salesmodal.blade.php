@@ -1,3 +1,4 @@
+  <input type="text" id="vat_amount" value="{{$sales->vat}}" hidden="hidden">
   <table class="table date-header">
     <thead>
       <th>Receipt #{{sprintf('%08d',$sales->id)}}</td>
@@ -34,7 +35,7 @@
       <td colspan="2">₱ <span class="subtotal"></span></td>
   </tr>
 	<tr class="table-light">
-      <td colspan="3"><b>12% VAT</b></td>
+      <td colspan="3"><b>{{floatval($sales->vat)}}% VAT</b></td>
       <td colspan="2">₱ <span class="vat"></span></td>
   </tr>
   <tr class="table-light">
@@ -49,28 +50,44 @@
       <td colspan="3"><b>Zero-Rated</b></td>
       <td colspan="2">₱ <span class="zerorated"></span></td>
   </tr>
-  @foreach($discounts as $discount)
-  <input type="text" id="discount_id" value="{{$discount->id}}" hidden="hidden">
-  <input type="text" id="discount_name" value="{{$discount->discount_name}}" hidden="hidden">
-  <input type="text" id="discount_amount" value="{{number_format($discount->amount,2, '.', '')}}" hidden="hidden">
-  <input type="text" id="discount_percent" value="{{$discount->percent}}" hidden="hidden">
-	<tr class="table-light">
-      <td colspan="3"><b>Discount <span class="discount_name"></span></b></td>
-      <td colspan="2">₱ <span class="discount"></span></td>
-  </tr>
-  @endforeach
+  @if(isset($discounts))
+    <input type="text" id="discount_id" value="{{$discounts->id}}" hidden="hidden">
+    <input type="text" id="discount_name" value="{{$discounts->discount_name}}" hidden="hidden">
+    <input type="text" id="discount_type" value="{{$discounts->discount_type}}" hidden="hidden">
+    <input type="text" id="discount_value" value="{{$discounts->discount_value}}" hidden="hidden">
+  	<tr class="table-light">
+        <td colspan="3"><b>Discount <span class="discount_name"></span></b></td>
+        <td colspan="2">₱ <span class="discount"></span></td>
+    </tr>
+  @else
+    <tr class="table-light">
+        <td colspan="3"><b>Discount <span class="discount_name"></span></b></td>
+        <td colspan="2">₱ 0.00</td>
+    </tr>
+  @endif
+
+
 	<tr class="table-light">
       <td colspan="3"><b>Total</b></td>
       <td colspan="2">₱ <span class="total"></span></td>
   </tr>
-  <tr class="table-light">
-      <td colspan="3"><b>Amount Paid</b></td>
-      <td colspan="2">₱ {{number_format($sales->amount_paid,2, '.', '')}}<span class="payment"></span></td>
-  </tr>
-  <tr class="table-light">
-      <td colspan="3"><b>Change</b></td>
-      <td colspan="2">₱ {{number_format($sales->change_amount,2, '.', '')}} <span class="change"></span></td>
-  </tr>
+
+  @if($sales->payment_mode == 'cash')
+    <tr class="table-light">
+        <td colspan="3"><b>Amount Paid</b></td>
+        <td colspan="2">₱ {{number_format($sales->amount_paid,2, '.', '')}}<span class="payment"></span></td>
+    </tr>
+    <tr class="table-light">
+        <td colspan="3"><b>Change</b></td>
+        <td colspan="2">₱ {{number_format($sales->change_amount,2, '.', '')}} <span class="change"></span></td>
+    </tr>
+  @else
+    <tr class="table-light">
+        <td colspan="3"><b>Load Deducted</b></td>
+        <td colspan="2">₱ {{number_format($sales->amount_paid,2, '.', '')}}<span class="payment"></span></td>
+    </tr>
+  @endif
+
 
 	</tbody>
 

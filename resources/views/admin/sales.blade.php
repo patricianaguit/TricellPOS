@@ -91,7 +91,6 @@ SALES
       </thead>
       <tbody class="td_class">
         @foreach($sales as $sale)
-        <!-- <input type="text" value="{{$sale->id}}" class="sales_id" hidden="hidden"> -->
         <tr>
           <th scope="row">{{ date("F d, Y", strtotime($sale->transaction_date)) }}</th>
           <td>{{$sale->user->firstname . " " . $sale->user->lastname}}</td>
@@ -104,10 +103,10 @@ SALES
             @endif
           </td>
           <td>₱ {{number_format($sale->amount_due,2, '.', '')}}</td>
-          <td>{{$sale->payment_mode}}</td>
+          <td>{{ucfirst($sale->payment_mode)}}</td>
 
           <td> <button type="button" class="btn btn-secondary edit-btn" id="view-receipt" data-id="{{$sale->id}}" data-discount_id="@if(isset($sale->discount->discount_name)){{$sale->discount->id}}@else
-            {{'0'}}
+            {{''}}
             @endif"><i class="material-icons md-18">receipt</i></button>
 		  <button type="button" class="btn btn-danger del-btn" id="delete-sales" data-id="{{$sale->id}}" data-toggle="modal" data-target=".delete"><i class="material-icons md-18">delete</i></button>
 
@@ -198,18 +197,20 @@ SALES
       {
         var subtotal = $('.subtotal').text();
         var discount_name = $('#discount_name').val();
-        var discount_percent = $('#discount_percent').val() * 100;
+        var discount_percent = $('#discount_value').val() * 100;
+        var vat_amount = $('#vat_amount').val();
+        var vat_percent = (100 + parseFloat(vat_amount)) / 100;
         var zero = 0;
 
         $('.vat').text(zero.toFixed(2));
         $('.vatsale').text(zero.toFixed(2));
 
-        var vatexempt =  subtotal / 1.12;
+        var vatexempt =  subtotal / vat_percent;
         $('.vatexempt').text(vatexempt.toFixed(2));
 
         $('.zerorated').text(zero.toFixed(2));
 
-        var percent = $('#discount_percent').val()
+        var percent = parseFloat($('#discount_value').val());
         var discount = (vatexempt * percent);
         $('.discount').text(discount.toFixed(2));
 
@@ -218,26 +219,49 @@ SALES
 
         $('.discount_name').text('[' + discount_name + ' ' + discount_percent + '%]');
       }
+      else if($('#discount_id').val() == undefined)
+      {
+          var zero = 0;
+          var subtotal = $('.subtotal').text();
+          var vat_amount = $('#vat_amount').val();
+          var vat_percent = (100 + parseFloat(vat_amount)) / 100;
+          var vat_pointpercent = parseFloat(vat_amount) / 100;
+          var vatsale =  subtotal / vat_percent;
+          var vat = vatsale * vat_pointpercent;
+          var discount_name = $('#discount_name').val();
+          var discount_type = $('#discount_type').val();
+          var discount_value = $('#discount_value').val();
+
+          $('.vat').text(vat.toFixed(2));
+          $('.vatsale').text(vatsale.toFixed(2));
+          $('.vatexempt').text(zero.toFixed(2));
+          $('.zerorated').text(zero.toFixed(2));
+
+          var total = subtotal;
+          $('.total').text(total);
+      }
       else
       {
         var zero = 0;
         var subtotal = $('.subtotal').text();
-        var vatsale =  subtotal / 1.12;
-        var vat = vatsale * .12;
+        var vat_amount = $('#vat_amount').val();
+        var vat_percent = (100 + parseFloat(vat_amount)) / 100;
+        var vat_pointpercent = parseFloat(vat_amount) / 100;
+        var vatsale =  subtotal / vat_percent;
+        var vat = vatsale * vat_pointpercent;
         var discount_name = $('#discount_name').val();
-        var discount_amount = $('#discount_amount').val();
-        var discount_percent = $('#discount_percent').val() * 100;
+        var discount_type = $('#discount_type').val();
+        var discount_value = $('#discount_value').val();
 
         $('.vat').text(vat.toFixed(2));
         $('.vatsale').text(vatsale.toFixed(2));
         $('.vatexempt').text(zero.toFixed(2));
         $('.zerorated').text(zero.toFixed(2));
 
-        if(discount_percent == '' && discount_amount != 0)
+        if(discount_type == 'deduction')
         {
-          var discount = discount_amount;
+          var discount = discount_value;
           $('.discount').text(discount);
-
 
           var total = subtotal -  discount;
           if(total > 0)
@@ -249,12 +273,13 @@ SALES
             $('.total').text(zero.toFixed(2));
           }
 
-          $('.discount_name').text('[' + discount_name + ' - ₱' + discount_amount + ']');
+          $('.discount_name').text('[' + discount_name + ' - ₱' + discount_value + ']');
         }
-        else if(discount_percent != '' && discount_amount == 0)
+        else if(discount_type = 'percentage')
         {
-          var percent = $('#discount_percent').val()
-          var discount = subtotal * percent;
+          var discount_percent = $('#discount_value').val() * 100;
+          var percent = parseFloat($('#discount_value').val());
+          var discount = subtotal * percent;  
           $('.discount').text(discount.toFixed(2));
 
           var total = subtotal -  discount;
@@ -268,11 +293,6 @@ SALES
           }
 
           $('.discount_name').text('[' + discount_name + ' ' + discount_percent + '%]');
-        }
-        else
-        {
-          var total = subtotal;
-          $('.total').text(total);
         }
       }
 

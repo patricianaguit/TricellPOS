@@ -121,6 +121,12 @@ padding: .375rem 2rem !important;
   margin-bottom: -0.2rem;
 }
 
+.error-profile {
+  color: red !important;
+  font-size: 13px;
+  margin-bottom: -0.2rem;
+}
+
 @font-face {
   font-family: 'reload';
   src:  url('fonts/reload.eot?ulukch');

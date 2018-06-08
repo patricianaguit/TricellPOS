@@ -1,5 +1,3 @@
-</br>
-
 @foreach($items->chunk(4) as $chunk)
 
   @if($chunk->count() == 4) 
@@ -36,5 +34,5 @@
     </div>
   @endif
 @endforeach 
-
+<br><br>
 {{$items->links()}}

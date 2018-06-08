@@ -667,7 +667,6 @@ ACCOUNTS
     $('#change-amount-add').val((payment - reload_amount ? payment - reload_amount : 0).toFixed(2));
   });
 
-
   //reload member
   $(document).on('click', '#reload-member', function() {
     $('#member-id-reload').val($(this).data('id'));

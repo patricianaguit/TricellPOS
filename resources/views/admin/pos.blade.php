@@ -22,7 +22,7 @@ SALE
             <tbody>
               <tr>
                 <th scope="row" class="table-dark" style="width: 73%" id="total">TOTAL</th>
-                <td class="table-dark" id="total">P 3.00</td>
+                <td class="table-dark" id="total">₱ <span class="totalprice">0.00</span></td>
               </tr>
               
             </tbody>
@@ -32,7 +32,7 @@ SALE
         
         
         <div class="row items-table">
-          <table class="table pos-table">
+          <table class="table pos-table" id="display_table">
             <thead class="table-light">
               <tr>
                 <th scope="col">Description</th>
@@ -43,12 +43,10 @@ SALE
               </tr>
             </thead>
             
-            <tbody id="display_table">
+            <tbody>
             </tbody>
           </table>
-          
-          
-          </div><!---end of row-->
+        </div><!---end of row-->
           
           <div class="row">
             
@@ -57,15 +55,16 @@ SALE
                 
                 <tr>
                   <th scope="row" class="table-light" style="width: 73%">Subtotal</th>
-                  <td class="table-light">P 3.00</td>
+                  <td class="table-light">₱ <span class="subtotal">0.00</td>
                 </tr>
                 <tr>
                   <th scope="row" class="table-light" style="width: 73%">Discount</th>
-                  <td class="table-light"> <input type="text" id="tax_input"></td>
+                  <td class="table-light"> 
+                    <input type="text" id="tax_input"></td>
                 </tr>
                 <tr>
-                  <th scope="row" class="table-light" style="width: 73%">Tax</th>
-                  <td class="table-light">12%</td>
+                  <th scope="row" class="table-light" style="width: 73%">VAT</th>
+                  <td class="table-light">{{floatval($vat->vat)}}%</td>
                 </tr>
                 
               </tbody>
@@ -245,8 +244,10 @@ SALE
         </div> <!---end first div--->
         
         <!---second div start-->
-        <div class="col-lg-7 mx-auto right second_div">
-          @include('admin.posbuttons')
+        <div class="col-lg-7 mx-auto right ">
+          <div class="second_div">
+            @include('admin.posbuttons')
+          </div>
         </div> <!---end second div--->
 
           
@@ -256,7 +257,16 @@ SALE
   </div> <!--container-->
          
 <script>
-
+var checkScrollBars = function(){
+    var b = $('body');
+    var normalw = 0;
+    var scrollw = 0;
+    if(b.prop('scrollHeight')>b.height()){
+        normalw = window.innerWidth;
+        scrollw = normalw - b.width();
+        $('#container').css({marginRight:'-'+scrollw+'px'});
+    }
+}
   $(document).on('click', '.pagination a', function(e){
     e.preventDefault();
     var myurl = $(this).attr('href');
@@ -280,13 +290,45 @@ SALE
     })
   }
 
-$(document).ready(function() {
-    $('table').on('click', '.delete', function() {
-        DeleteRow(this);
+  function update_total(){
+    var sum = 0;
+       
+    $('.itemsubtotal').each(function() {
+      sum += parseFloat($(this).text());
     });
-});
+    
+    $('.totalprice').text(sum.toFixed(2));
+    $('.subtotal').text(sum.toFixed(2));
+  }
 
-function DeleteRow(cellButton) {
+  $(document).on("click",".pos-button", function() {
+      $(this).addClass('active');
+      var price = $(this).attr("data-price");
+      var description = $(this).attr("data-description");
+      var checkContent =  $('#display_table').find($('.description:contains('+ description + ')')).length;
+
+      if(checkContent == 0)
+      {
+      var str_item = '<tr class="itemrow"><td class="description"><b>' + description + '</b></td>' +
+          '<td><input type="text" onkeypress="return (event.charCode == 8 || event.charCode == 0 || event.charCode == 13) ? null : event.charCode >= 48 && event.charCode <= 57" id="qty_input" value="1" maxlength="6"></td>' +
+          '<td class="itemprice">' + price + '</td>' +
+          '<td class="itemsubtotal">' + price + '</td>' +
+          '<td><button type="submit" class="btn btn-default delete">&times;</button></tr>';
+
+        //$("#display_table").append(str_item).fadeIn(1000);
+        $(str_item).hide().appendTo("#display_table").fadeIn(370);
+        update_total();
+      }
+      else
+      {
+        var existdelete = $('#display_table').find($('.description:contains('+ description + ')'));
+        $(this).removeClass('active');
+        DeleteRow(existdelete);
+        update_total();
+      }
+  });
+
+  function DeleteRow(cellButton) {
     var row = $(cellButton).closest('tr')
         .children('td');
     setTimeout(function() {
@@ -299,51 +341,61 @@ function DeleteRow(cellButton) {
             .children()
             .slideUp(400, function() {
                 $(this).closest('tr').remove();
+                update_total();
             });
-    }, 250);
-};
+    }, 150);
+  }
 
+  $(document).ready(function() {
+      $(document).on('click', '.delete', function() {
+          DeleteRow(this);
+      });
+  });
 
-$('body').on('mouseenter mouseleave', '.dropdown', function(e) {
-    var _d = $(e.target).closest('.dropdown');
-    _d.addClass('show');
-    setTimeout(function() {
-        _d[_d.is(':hover') ? 'addClass' : 'removeClass']('show');
-        $('[data-toggle="dropdown"]', _d).attr('aria-expanded', _d.is(':hover'));
-    }, 300);
-});
+ $(document).on('blur','#qty_input',function(){
+    var whichtr = $(this).closest("tr"); 
+    var itemprice = whichtr.find($('.itemprice')).text();
 
-$(document).on("click",".pos-button", function() {
+    if(whichtr.find($(this)).val().trim().length == 0 || whichtr.find($(this)).val().trim() == 0){
+      whichtr.find($(this)).val(1);
+      whichtr.find($('.itemsubtotal')).text(itemprice); 
+    }
+  });
 
-    var price = $(this).attr("data-price");
-    var description = $(this).attr("data-description");
+  $(document).on('keydown','#qty_input',function(event){
+    if (event.which == 13) {
+        $(this).blur();
+        // update_total();
+    }
+  });
 
-    var str_item = '<tr><td><b>' + description + '</b></td>' +
-        '<td><input type="text" id="qty_input" value="1"></td>' +
-        '<td>P ' + price + '</td>' +
-        '<td>P ' + price + '</td>' +
-        '<td><button type="submit" class="btn btn-default delete">x</button></tr>';
+  $(document).on('input','#qty_input', function() {
+    var whichtr = $(this).closest("tr");  
+    var zero = 0;
+    var product = 0;
+    var qty = $(this).val();
+    var price = parseFloat(whichtr.find($('.itemprice')).text());
+    product = qty * price;
 
-    //$("#display_table").append(str_item).fadeIn(1000);
-    $(str_item).hide().appendTo("#display_table").fadeIn(400);
-});
+    whichtr.find($('.itemsubtotal')).text(product.toFixed(2));
+    update_total();
+  });
 
-$("select").change(function() {
+  $("select").change(function() {
+    var str = $("select option:selected").text();
+    if (str === "Member") {
+        if ($("#member").not(':visible')) {
 
-        var str = $("select option:selected").text();
-        if (str === "Member") {
-            if ($("#member").not(':visible')) {
-
-                $("#member").show();
-                $("#guest").hide();
-            }
-        } else {
-            $("#member").hide();
-            $("#guest").show();
+            $("#member").show();
+            $("#guest").hide();
         }
+    } else {
+        $("#member").hide();
+        $("#guest").show();
+    }
 
-    })
-    .trigger("change");
+})
+.trigger("change");
         
         
 </script>

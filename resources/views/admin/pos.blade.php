@@ -60,7 +60,16 @@ SALE
                 <tr>
                   <th scope="row" class="table-light" style="width: 73%">Discount</th>
                   <td class="table-light"> 
-                    <input type="text" id="tax_input"></td>
+                    <select class="form-control form-control-sm select-box-discount">
+                      <option>No Discount</option>
+                      @foreach($discounts as $discount)
+                        @if($discount->discount_type=='percentage')
+                          <option class="discountoption" data-id="{{$discount->id}}" data-name="{{$discount->discount_name}}" data-type="{{$discount->discount_type}}" data-value="{{$discount->discount_value}}">{{$discount->discount_name}} - {{$discount->discount_value * 100}}%</option>
+                        @else
+                          <option class="discountoption" data-id="{{$discount->id}}" data-name="{{$discount->discount_name}}" data-type="{{$discount->discount_type}}" data-value="{{$discount->discount_value}}">{{$discount->discount_name}} - ₱{{$discount->discount_value}}</option>
+                        @endif
+                      @endforeach
+                    </select></td>
                 </tr>
                 <tr>
                   <th scope="row" class="table-light" style="width: 73%">VAT</th>
@@ -72,13 +81,14 @@ SALE
           </div>
           
           <div class="row" id="onchange">
-            <select class="form-control form-control-sm select-box">
-              <option value="guest">Guest</option>
+            <select class="form-control form-control-sm select-box-role">
+              <option value="guest">Walk-in</option>
               <option value="member">Member</option>
             </select>
           </div>
           
           <div class="row" id="member">
+            <input type="hidden" id="membernumber" value="">
             
             <input type="text" class="form-control form-control-sm" id="member_input">
             <i class="material-icons" id="faces">faces</i>
@@ -244,11 +254,17 @@ SALE
         </div> <!---end first div--->
         
         <!---second div start-->
-        <div class="col-lg-7 mx-auto right ">
-          <div class="second_div">
+        <div class="col-lg-7 mx-auto right second_div">
             @include('admin.posbuttons')
-          </div>
         </div> <!---end second div--->
+
+        <div id="mirror-pos" hidden="hidden">
+          @foreach($allitems as $item)
+            <div class="col-lg-12 ">
+              <div class="btn btn-sm btn-info full mirror-pos-button" data-id="{{$item->product_id}}" data-description="{{$item->product_name}}" data-price="{{$item->price}}" data-memprice="{{$item->member_price}}">{{str_limit($item->product_name,10)}}</div>
+            </div>
+          @endforeach
+        </div>
 
           
           
@@ -257,16 +273,6 @@ SALE
   </div> <!--container-->
          
 <script>
-var checkScrollBars = function(){
-    var b = $('body');
-    var normalw = 0;
-    var scrollw = 0;
-    if(b.prop('scrollHeight')>b.height()){
-        normalw = window.innerWidth;
-        scrollw = normalw - b.width();
-        $('#container').css({marginRight:'-'+scrollw+'px'});
-    }
-}
   $(document).on('click', '.pagination a', function(e){
     e.preventDefault();
     var myurl = $(this).attr('href');
@@ -278,15 +284,13 @@ var checkScrollBars = function(){
 
   function getData(page)
   {
-    console.log(page);
     $.ajax({
       url:'/sales/buttons?page='+ page
 
     }).done(function(data){
-
-      console.log(data);
       $('.second_div').html(data);
       location.hash=page;
+      update_paginate();
     })
   }
 
@@ -303,29 +307,44 @@ var checkScrollBars = function(){
 
   $(document).on("click",".pos-button", function() {
       $(this).addClass('active');
+      var id =$(this).attr("data-id");
       var price = $(this).attr("data-price");
       var description = $(this).attr("data-description");
       var checkContent =  $('#display_table').find($('.description:contains('+ description + ')')).length;
+      var checkMirror =  $('#mirror-pos').find($('[data-id="'+id +'"]')).addClass('active');
+
+
+
+      if($("#membernumber").val().length == 0)
+      {
+        price = $(this).attr("data-price");
+      }
+      else
+      {
+        price = $(this).attr("data-memprice");
+
+      }
 
       if(checkContent == 0)
       {
-      var str_item = '<tr class="itemrow"><td class="description"><b>' + description + '</b></td>' +
-          '<td><input type="text" onkeypress="return (event.charCode == 8 || event.charCode == 0 || event.charCode == 13) ? null : event.charCode >= 48 && event.charCode <= 57" id="qty_input" value="1" maxlength="6"></td>' +
+      var str_item = '<tr class="itemrow" id="'+ id +'"><td class="description"><b>' + description + '</b></td>' +
+          '<td><input type="text" class="quantity" onkeypress="return (event.charCode == 8 || event.charCode == 0 || event.charCode == 13) ? null : event.charCode >= 48 && event.charCode <= 57" id="qty_input" value="1" maxlength="6"></td>' +
           '<td class="itemprice">' + price + '</td>' +
           '<td class="itemsubtotal">' + price + '</td>' +
           '<td><button type="submit" class="btn btn-default delete">&times;</button></tr>';
 
         //$("#display_table").append(str_item).fadeIn(1000);
-        $(str_item).hide().appendTo("#display_table").fadeIn(370);
+        $(str_item).hide().appendTo("#display_table tbody").fadeIn(370);
+        $(".quantity").focus().select();
         update_total();
       }
-      else
-      {
-        var existdelete = $('#display_table').find($('.description:contains('+ description + ')'));
-        $(this).removeClass('active');
-        DeleteRow(existdelete);
-        update_total();
-      }
+      // else
+      // {
+      //   var existdelete = $('#display_table').find($('.description:contains('+ description + ')'));
+      //   $(this).removeClass('active');
+      //   DeleteRow(existdelete);
+      //   update_total();
+      // }
   });
 
   function DeleteRow(cellButton) {
@@ -348,7 +367,14 @@ var checkScrollBars = function(){
 
   $(document).ready(function() {
       $(document).on('click', '.delete', function() {
-          DeleteRow(this);
+        var whichtr = $(this).closest("tr"); 
+        var description = whichtr.find($('.description')).text();
+        var existdelete = $('.second_div').find($('[data-description="'+description +'"]'));
+        var deletemirror =  $('#mirror-pos').find($('[data-description="'+description +'"]'));
+        
+        DeleteRow(this);
+        $(existdelete).removeClass('active');
+        $(deletemirror).removeClass('active');
       });
   });
 
@@ -372,31 +398,70 @@ var checkScrollBars = function(){
   $(document).on('input','#qty_input', function() {
     var whichtr = $(this).closest("tr");  
     var zero = 0;
-    var product = 0;
+    var subtotal = 0;
     var qty = $(this).val();
     var price = parseFloat(whichtr.find($('.itemprice')).text());
-    product = qty * price;
+    subtotal = qty * price;
 
-    whichtr.find($('.itemsubtotal')).text(product.toFixed(2));
+    whichtr.find($('.itemsubtotal')).text(subtotal.toFixed(2));
     update_total();
   });
 
-  $("select").change(function() {
-    var str = $("select option:selected").text();
-    if (str === "Member") {
-        if ($("#member").not(':visible')) {
-
-            $("#member").show();
-            $("#guest").hide();
-        }
-    } else {
-        $("#member").hide();
-        $("#guest").show();
+  $(document).on('change', '.select-box-role',function() {
+    var type = $(".select-box-role option:selected").text();
+    
+    if (type === "Member") 
+    {
+      $("#membernumber").val(1);
+      align_price();
+      if($("#member").not(':visible')) 
+      {
+        $("#member").show();
+        $("#guest").hide();
+      }
+    } 
+    else 
+    {
+      $("#membernumber").val('');
+      align_price();
+      $("#member").hide();
+      $("#guest").show();
     }
 
-})
-.trigger("change");
-        
-        
+  }).trigger("change");
+
+  function align_price()
+  {
+    $("#mirror-pos .btn.active").each(function(){
+    var price = $(this).attr("data-price");
+
+    if($("#membernumber").val().length == 0)
+    {
+      price = price;
+    }
+    else
+    {
+      price = $(this).attr("data-memprice");
+    }
+
+    var quantity = $("#display_table tbody tr#"+$(this).attr("data-id")).find("input.quantity").val();
+    var subtotal = parseFloat(price) * quantity;
+
+    $("#display_table tbody tr#"+$(this).attr("data-id")).find("td.itemprice").text(price);
+
+    $("#display_table tbody tr#"+$(this).attr("data-id")).find("td.itemsubtotal").text(subtotal.toFixed(2));
+    });
+    update_total();
+
+  }
+
+  function update_paginate(){
+    $("#mirror-pos .btn.active").each(function(){
+      var id = $(this).attr("data-id");
+      var button = $('.second_div').find($('[data-id="'+ id +'"]'));
+      button.addClass("active");
+    });
+  };
+  
 </script>
 @endsection

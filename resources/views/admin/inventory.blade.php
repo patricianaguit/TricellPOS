@@ -56,10 +56,10 @@ INVENTORY
     @csrf
       <thead class ="th_css">
         <tr>
-		  <th scope="col">Item Name</th>
+		      <th scope="col">Item Name</th>
           <th scope="col">Description</th>
-		  <th scope="col">Price</th>
-		  <th scope="col">Member's Price</th>
+		      <th scope="col">Price</th>
+		      <th scope="col">Member's Price</th>
           <th scope="col">Stock on Hand</th>
           <th scope="col">Actions</th>
         </tr>
@@ -71,10 +71,10 @@ INVENTORY
           <th scope="row" class="td-center">{{str_limit($product->product_name,40)}}</th>
           <td class="td-center">{{str_limit($product->product_desc,30)}}</td>
           <td class="td-center">₱ {{$product->price}}</td>
-          <td class="td-center">₱ 0.00 </td>
+          <td class="td-center">₱ {{$product->member_price}}</td>
           <td class="td-center">{{$product->product_qty}}</td>
           <td>
-            <button type="button" id="edit-product" class="btn btn-primary edit-btn" data-toggle="modal" data-target=".edit_product" data-id="{{$product->product_id}}" data-prodname = "{{$product->product_name}}" data-proddesc ="{{$product->product_desc}}" data-prodqty="{{$product->product_qty}}" data-price="{{$product->price}}"><i class="material-icons md-18">mode_edit</i></button>
+            <button type="button" id="edit-product" class="btn btn-primary edit-btn" data-toggle="modal" data-target=".edit_product" data-id="{{$product->product_id}}" data-prodname = "{{$product->product_name}}" data-proddesc ="{{$product->product_desc}}" data-prodqty="{{$product->product_qty}}" data-price="{{$product->price}}" data-memprice="{{$product->member_price}}"><i class="material-icons md-18">mode_edit</i></button>
             <button type="button" id="delete-product" class="btn btn-danger del-btn" data-toggle="modal" data-target=".delete" data-id="{{$product->product_id}}" data-prodname="{{$product->product_name}}"><i class="material-icons md-18">delete</i></button>
           </td>
         </tr>
@@ -119,11 +119,11 @@ INVENTORY
           <div class="col-md-8">
           	<div class="input-group">
             <div class="input-group-prepend">
-                <span class="input-group-text" id="basic-addon-change-add">₱</span>
+                <span class="input-group-text" id="basic-addon-price-add">₱</span>
             </div>
              <input type="text" name="price" class="form-control modal-add" id="product-price-add">
-          	 <p id="error-price-add" class="error-add" hidden="hidden"></p>
           </div>
+          <p id="error-price-add" class="error-add" hidden="hidden"></p>
           </div>
      </div>
 
@@ -132,11 +132,11 @@ INVENTORY
           <div class="col-md-8">
           <div class="input-group">
             <div class="input-group-prepend">
-                <span class="input-group-text" id="basic-addon-change-add">₱</span>
+                <span class="input-group-text" id="basic-addon-memprice-add">₱</span>
             </div>
-             <input type="text" name="price" class="form-control modal-add" id="product-memprice-add">
-          	 <p id="error-memprice-add" class="error-add" hidden="hidden"></p>
+             <input type="text" name="memberprice" class="form-control modal-add" id="product-memprice-add">
           </div>
+          <p id="error-memprice-add" class="error-add" hidden="hidden"></p>
       	  </div>
      </div>
 
@@ -172,34 +172,56 @@ INVENTORY
         </div>
 
     <form class="nosubmitform">
-    <input type="hidden" name="product_id" id="product-id-edit">
-    <div class="form-group">
-    <div class="container-fluid">
-		  <div class="col-md-11 mx-auto">
-          <label for="prodname" class="col-form-label modal-address">Item Name:</label>
-          <input type="text" name="product_name" class="form-control modal-add" id="product-name-edit">
-          <p id="error-product-name-edit" class="error-edit" hidden="hidden">
+    <br>
+      <input type="hidden" name="product_id" id="product-id-edit">
+		  <div class="form-group row mx-auto">
+          <label for="prodname" class="col-form-label col-md-4 modal-itemname">Item Name:</label>
+          <div class="col-md-8">
+            <input type="text" name="product_name" class="form-control modal-add" id="product-name-edit">
+            <p id="error-product-name-edit" class="error-edit" hidden="hidden"></p>
+          </div>
 		  </div>
-  		  <div class="col-md-11 mx-auto">
-          <label for="type" class="col-form-label modal-address">Description:</label>
-          <input type="text" name="product_desc" class="form-control modal-add" id="product-desc-edit">
-          <p id="error-product-desc-edit" class="error-edit" hidden="hidden">
-		  </div>
-		  <div class="col-md-11 mx-auto">
-          <label for="price" class="col-form-label modal-address">Price:</label>
-          <input type="text" name="price" class="form-control modal-add" id="product-price-edit">
-          <p id="error-price-edit" class="error-edit" hidden="hidden">
-		  </div>
-		  <div class="col-md-11 mx-auto">
-          <label for="qty" class="col-form-label modal-address">Stock on Hand:</label>
-          <input type="text" name="product_qty" class="form-control modal-add" id="product-qty-edit">
-          <p id="error-product-qty-edit" class="error-edit" hidden="hidden">
+  		<div class="form-group row mx-auto">
+          <label for="type" class="col-form-label col-md-4 modal-address">Description:</label>
+          <div class="col-md-8">
+            <input type="text" name="product_desc" class="form-control modal-add" id="product-desc-edit">
+            <p id="error-product-desc-edit" class="error-edit" hidden="hidden"></p>
+          </div>
 		  </div>
 
+		  <div class="form-group row mx-auto">
+          <label for="price" class="col-form-label col-md-4 modal-address">Price:</label>
+          <div class="col-md-8">
+            <div class="input-group">
+              <div class="input-group-prepend">
+                <span class="input-group-text" id="basic-addon-price-edit">₱</span>
+              </div>
+              <input type="text" name="price" class="form-control modal-add" id="product-price-edit">
+            </div>
+            <p id="error-price-edit" class="error-edit" hidden="hidden"></p>
+          </div>
+		  </div>
 
+      <div class="form-group row mx-auto">
+          <label for="memprice" class="col-form-label col-md-4 modal-address">Member's Price:</label>
+          <div class="col-md-8">
+            <div class="input-group">
+              <div class="input-group-prepend">
+                <span class="input-group-text" id="basic-addon-memprice-edit">₱</span>
+              </div>
+              <input type="text" name="memprice" class="form-control modal-add" id="product-memprice-edit">
+            </div>
+            <p id="error-memprice-edit" class="error-edit" hidden="hidden"></p>
+          </div>
+      </div>
 
-        </div>
-        </div>
+		  <div class="form-group row mx-auto">
+          <label for="qty" class="col-form-label col-md-4 modal-address">Stock on Hand:</label>
+          <div class="col-md-8">
+            <input type="text" name="product_qty" class="form-control modal-add" id="product-qty-edit">
+            <p id="error-product-qty-edit" class="error-edit" hidden="hidden"></p>
+          </div>
+		  </div>
 
         <div class="modal-footer" id="modal-footer-product-edit">
           <button type="submit" id="update-product" class="btn btn-info btn-save-modal">Save Changes</button>
@@ -284,12 +306,16 @@ $('.edit_product').on('hide.bs.modal', function(){
     $('#error-product-name-edit').attr("hidden", true);
     $('#error-product-desc-edit').attr("hidden", true);
     $('#error-price-edit').attr("hidden", true);
+    $('#error-memprice-edit').attr("hidden", true);
     $('#error-product-qty-edit').attr("hidden", true);
 
     //remove css style in modal
     $('#product-name-edit').removeAttr('style');
     $('#product-desc-edit').removeAttr('style');
     $('#product-price-edit').removeAttr('style');
+    $('#basic-addon-price-edit').removeAttr('style');
+    $('#product-memprice-edit').removeAttr('style');
+    $('#basic-addon-memprice-edit').removeAttr('style');
     $('#product-qty-edit').removeAttr('style');
 });
 
@@ -298,12 +324,16 @@ $('.add_product').on('hide.bs.modal', function(){
     $('#error-product-name-add').attr("hidden", true);
     $('#error-product-desc-add').attr("hidden", true);
     $('#error-price-add').attr("hidden", true);
+    $('#error-memprice-add').attr("hidden", true);
     $('#error-product-qty-add').attr("hidden", true);
 
     //remove css style in modal
     $('#product-name-add').removeAttr('style');
     $('#product-desc-add').removeAttr('style');
     $('#product-price-add').removeAttr('style');
+    $('#basic-addon-price-add').removeAttr('style');
+    $('#product-memprice-add').removeAttr('style');
+    $('#basic-addon-memprice-add').removeAttr('style');
     $('#product-qty-add').removeAttr('style');
 });
 
@@ -317,6 +347,7 @@ $.ajax({
           'product_name': $("#product-name-add").val(),
           'product_desc': $("#product-desc-add").val(),
           'price': $("#product-price-add").val(),
+          'member_price': $("#product-memprice-add").val(),
           'product_qty': $("#product-qty-add").val()
         },
   success: function(data) {
@@ -351,11 +382,27 @@ $.ajax({
           $('#error-price-add').removeAttr("hidden");
           $('#error-price-add').text(data.errors.price);
           $('#product-price-add').css("border", "1px solid #cc0000");
+          $('#basic-addon-price-add').css("border", "1px solid #cc0000");
         }
         else
         {
           $('#error-price-add').attr("hidden", true);
           $('#product-price-add').removeAttr('style');
+          $('#basic-addon-price-add').removeAttr('style');
+        }
+
+        if(data.errors.member_price)
+        {
+          $('#error-memprice-add').removeAttr("hidden");
+          $('#error-memprice-add').text(data.errors.member_price);
+          $('#product-memprice-add').css("border", "1px solid #cc0000");
+          $('#basic-addon-memprice-add').css("border", "1px solid #cc0000");
+        }
+        else
+        {
+          $('#error-memprice-add').attr("hidden", true);
+          $('#product-memprice-add').removeAttr('style');
+          $('#basic-addon-memprice-add').removeAttr('style');
         }
 
         if(data.errors.product_qty)
@@ -390,6 +437,7 @@ $(document).on('click', '#edit-product', function() {
   $('#product-name-edit').val($(this).data('prodname'));
   $('#product-desc-edit').val($(this).data('proddesc'));
   $("#product-price-edit").val($(this).data('price'));
+  $("#product-memprice-edit").val($(this).data('memprice'));
   $("#product-qty-edit").val($(this).data('prodqty'));
 });
 
@@ -403,6 +451,7 @@ $.ajax({
           'product_name': $("#product-name-edit").val(),
           'product_desc': $("#product-desc-edit").val(),
           'price': $("#product-price-edit").val(),
+          'member_price': $("#product-memprice-edit").val(),
           'product_qty': $("#product-qty-edit").val()
         },
   success: function(data) {
@@ -437,11 +486,27 @@ $.ajax({
           $('#error-price-edit').removeAttr("hidden");
           $('#error-price-edit').text(data.errors.price);
           $('#product-price-edit').css("border", "1px solid #cc0000");
+          $('#basic-addon-price-edit').css("border", "1px solid #cc0000");
         }
         else
         {
           $('#error-price-edit').attr("hidden", true);
           $('#product-price-edit').removeAttr('style');
+          $('#basic-addon-price-edit').removeAttr('style');
+        }
+
+        if(data.errors.member_price)
+        {
+          $('#error-memprice-edit').removeAttr("hidden");
+          $('#error-memprice-edit').text(data.errors.member_price);
+          $('#product-memprice-edit').css("border", "1px solid #cc0000");
+          $('#basic-addon-memprice-edit').css("border", "1px solid #cc0000");
+        }
+        else
+        {
+          $('#error-memprice-edit').attr("hidden", true);
+          $('#product-memprice-edit').removeAttr('style');
+          $('#basic-addon-memprice-edit').removeAttr('style');
         }
 
         if(data.errors.product_qty)

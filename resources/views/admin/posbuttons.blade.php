@@ -4,7 +4,7 @@
     <div class="row pad">
       @foreach($chunk as $item)
       <div class="col-lg-3 ">
-        <div class="btn btn-sm btn-info full pos-button" data-description="{{$item->product_name}}" data-price="{{$item->price}}">{{str_limit($item->product_name,10)}}</div>
+        <div class="btn btn-sm btn-info full pos-button" data-id="{{$item->product_id}}" data-description="{{$item->product_name}}" data-price="{{$item->price}}" data-memprice="{{$item->member_price}}">{{str_limit($item->product_name,10)}}</div>
       </div>
       @endforeach
     </div>
@@ -12,7 +12,7 @@
     <div class="row pad">
       @foreach($chunk as $item)
       <div class="col-lg-4 ">
-        <div class="btn btn-sm btn-info full pos-button" data-description="{{$item->product_name}}" data-price="{{$item->price}}">{{str_limit($item->product_name,10)}}</div>
+        <div class="btn btn-sm btn-info full pos-button" data-id="{{$item->product_id}}" data-description="{{$item->product_name}}" data-price="{{$item->price}}" data-memprice="{{$item->member_price}}">{{str_limit($item->product_name,10)}}</div>
       </div>
       @endforeach
     </div>
@@ -20,7 +20,7 @@
     <div class="row pad">
       @foreach($chunk as $item)
       <div class="col-lg-6">
-        <div class="btn btn-sm btn-info full pos-button" data-description="{{$item->product_name}}" data-price="{{$item->price}}">{{str_limit($item->product_name,10)}}</div>
+        <div class="btn btn-sm btn-info full pos-button" data-id="{{$item->product_id}}" data-description="{{$item->product_name}}" data-price="{{$item->price}}" data-memprice="{{$item->member_price}}">{{str_limit($item->product_name,10)}}</div>
       </div>
       @endforeach
     </div>
@@ -28,11 +28,11 @@
     <div class="row pad">
       @foreach($chunk as $item)
       <div class="col-lg-12">
-        <div class="btn btn-sm btn-info full pos-button" data-description="{{$item->product_name}}" data-price="{{$item->price}}">{{str_limit($item->product_name,10)}}</div>
+        <div class="btn btn-sm btn-info full pos-button" data-id="{{$item->product_id}}" data-description="{{$item->product_name}}" data-price="{{$item->price}}" data-memprice="{{$item->member_price}}">{{str_limit($item->product_name,10)}}</div>
       </div>
       @endforeach
     </div>
   @endif
 @endforeach 
-<br><br>
+<br>
 {{$items->links()}}

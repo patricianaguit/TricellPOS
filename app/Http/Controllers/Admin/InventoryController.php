@@ -25,6 +25,7 @@ class InventoryController extends Controller
         'product_name' => 'required|unique:products,product_name',
         'product_desc' => 'required',
         'price' => 'required|numeric',
+        'member_price' => 'required|numeric',
         'product_qty' => 'required|integer'	
         );
 
@@ -39,6 +40,7 @@ class InventoryController extends Controller
             $product->product_name = $request->product_name;
             $product->product_desc = $request->product_desc;
             $product->price = $request->price;
+            $product->member_price = $request->member_price;
             $product->product_qty = $request->product_qty;
             $product->save();
         }	
@@ -52,6 +54,7 @@ class InventoryController extends Controller
         'product_name' => "required|unique:products,product_name," . $product->product_id .",product_id",
         'product_desc' => 'required',
         'price' => 'required|numeric',
+        'member_price' => 'required|numeric',
         'product_qty' => 'required|integer'	
         );
 
@@ -66,6 +69,7 @@ class InventoryController extends Controller
             $product->product_name = $request->product_name;
             $product->product_desc = $request->product_desc;
             $product->price = $request->price;
+            $product->member_price = $request->member_price;
             $product->product_qty = $request->product_qty;
             $product->save();
         }	

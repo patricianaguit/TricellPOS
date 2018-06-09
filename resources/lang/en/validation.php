@@ -173,6 +173,7 @@ return [
         'product_name' => 'Item Name',
         'product_desc' => 'Item Description',
         'price' => 'Price',
+        'member_price' => 'Member Price',
         'product_qty' => 'Stock on Hand',
         'payment_amount' => 'Payment',
         'initial_amount' => 'Initial Amount',

@@ -94,12 +94,17 @@ border-color: #117a8b;
 
 .table.date-header{
   margin-bottom: -1rem !important;
+  margin-top: 0 !important;
 }
 .table.date-header th{
   border-top:none!important;
   border-bottom: none!important;
   text-align: left !important;
   padding: -0.25rem !important;
+}
+
+.td-center{
+  padding:20px !important;
 }
 /****NAV CSS***/
 /**.nav_custom{

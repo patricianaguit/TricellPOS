@@ -145,7 +145,7 @@ ACCOUNTS
         </div>
 
         <div class="form-group row mx-auto">
-          <label for="contact" class="col-form-label col-md-3 modal-contact">Contact #:</label>
+          <label for="contact" class="col-form-label col-md-3 modal-contact">Contact No:</label>
           <div class="col-md-9">
               <input type="text" name="contact_number" class="form-control" id="contact-add">
               <p id="error-contact-add" class="error-add" hidden="hidden"></p>
@@ -236,7 +236,7 @@ ACCOUNTS
         </div>
 
         <div class="form-group row mx-auto">
-          <label for="contact" class="col-form-label col-md-3 modal-contact">Contact #:</label>
+          <label for="contact" class="col-form-label col-md-3 modal-contact">Contact No:</label>
           <div class="col-md-9">
               <input type="text" name="contact_number" class="form-control" id="contact-view">
               <p id="error-contact-view" class="error-add" hidden="hidden"></p>

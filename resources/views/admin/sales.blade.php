@@ -92,18 +92,18 @@ SALES
       <tbody class="td_class">
         @foreach($sales as $sale)
         <tr>
-          <th scope="row">{{ date("F d, Y", strtotime($sale->transaction_date)) }}</th>
-          <td>{{$sale->user->firstname . " " . $sale->user->lastname}}</td>
-          <td>{{ucfirst($sale->user->role)}}</td>
-          <td>
+          <th scope="row" class="td-center">{{ date("F d, Y", strtotime($sale->transaction_date)) }}</th>
+          <td class="td-center">{{$sale->user->firstname . " " . $sale->user->lastname}}</td>
+          <td class="td-center">{{ucfirst($sale->user->role)}}</td>
+          <td class="td-center">
             @if(isset($sale->discount->discount_name))
             {{$sale->discount->discount_name}}
             @else
             {{'None'}}
             @endif
           </td>
-          <td>₱ {{number_format($sale->amount_due,2, '.', '')}}</td>
-          <td>{{ucfirst($sale->payment_mode)}}</td>
+          <td class="td-center">₱ {{number_format($sale->amount_due,2, '.', '')}}</td>
+          <td class="td-center">{{ucfirst($sale->payment_mode)}}</td>
 
           <td> <button type="button" class="btn btn-secondary edit-btn" id="view-receipt" data-id="{{$sale->id}}" data-discount_id="@if(isset($sale->discount->discount_name)){{$sale->discount->id}}@else
             {{''}}
@@ -380,6 +380,7 @@ SALES
       });
     });
   });
+
 
 </script>
 @endsection

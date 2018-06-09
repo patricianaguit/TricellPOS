@@ -60,7 +60,7 @@ ACCOUNTS
         <tr>
           <th scope="col">Username</th>
           <th scope="col">Name</th>
-          <th scope="col">Contact Number</th>
+          <th scope="col">Contact No.</th>
           <th scope="col">E-mail Address</th>
           <th scope="col">Actions</th>
         </tr>
@@ -147,7 +147,7 @@ ACCOUNTS
         </div>
 
         <div class="form-group row mx-auto">
-          <label for="contact" class="col-form-label col-md-3 modal-contact">Contact #:</label>
+          <label for="contact" class="col-form-label col-md-3 modal-contact">Contact No:</label>
           <div class="col-md-9">
               <input type="text" name="contact_number" class="form-control" id="contact-add">
               <p id="error-contact-add" class="error-add" hidden="hidden"></p>
@@ -237,7 +237,7 @@ ACCOUNTS
       </div>
 
       <div class="form-group row mx-auto">
-        <label for="contact" class="col-form-label col-md-3 modal-contact">Contact #:</label>
+        <label for="contact" class="col-form-label col-md-3 modal-contact">Contact No:</label>
         <div class="col-md-9">
             <input type="text" name="contact_number" class="form-control" id="contact-edit">
             <p id="error-contact-edit" class="error-edit" hidden="hidden"></p>

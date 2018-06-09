@@ -193,7 +193,7 @@ ACCOUNTS
     <div class="row">
     <div class ="col-md-6 members-info border-right">
         <div class="form-group row mx-auto">
-          <label for="card-no" class="col-form-label col-md-3 modal-card">Card Number:</label>
+          <label for="card-no" class="col-form-label col-md-3 modal-card">Card No:</label>
           <div class="col-md-9">
             <input type="text" name="card_number" class="form-control modal-card" id="cardnumber-add">
       	   <p id="error-cardnumber-add" class="error-add" hidden="hidden"></p>
@@ -225,7 +225,7 @@ ACCOUNTS
         </div>
 
         <div class="form-group row mx-auto">
-          <label for="contact" class="col-form-label col-md-3 modal-contact">Contact #:</label>
+          <label for="contact" class="col-form-label col-md-3 modal-contact">Contact No:</label>
           <div class="col-md-9">
             <input type="text" name="contact_number" class="form-control" id="contact-add">
             <p id="error-contact-add" class="error-add" hidden="hidden"></p>
@@ -313,10 +313,11 @@ ACCOUNTS
       </br>
 
       <form class="nosubmitform">
+      </br>
       <input type="hidden" name="member_id" id="member-id-edit">
 
       <div class="form-group row mx-auto">
-        <label for="card-no" class="col-form-label col-md-2 modal-card">Card Number:</label>
+        <label for="card-no" class="col-form-label col-md-2 modal-card">Card No:</label>
         <div class="col-md-10">
             <input type="text" name="card_number" class="form-control modal-card" id="cardnumber-edit">
             <p id="error-cardnumber-edit" class="error-edit" hidden="hidden"></p>
@@ -348,7 +349,7 @@ ACCOUNTS
       </div>
 
       <div class="form-group row mx-auto">
-        <label for="contact" class="col-form-label col-md-2 modal-contact">Contact #:</label>
+        <label for="contact" class="col-form-label col-md-2 modal-contact">Contact No:</label>
         <div class="col-md-10">
             <input type="text" name="contact_number" class="form-control" id="contact-edit">
     	      <p id="error-contact-edit" class="error-edit" hidden="hidden"></p>

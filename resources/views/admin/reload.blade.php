@@ -77,10 +77,10 @@ RELOAD SALES
       <tbody class="td_class">
         @foreach($reloads as $reload)
         <tr>
-          <th scope="row">{{date("F d, Y", strtotime($reload->transaction_date))}}</th>
-          <td>{{$reload->user->card_number}}</td>
-          <td>{{$reload->user->firstname . " " . $reload->user->lastname}}</td>
-          <td>₱ {{number_format($reload->amount_due,2, '.', '')}}</td>
+          <th scope="row" class="td-center">{{date("F d, Y", strtotime($reload->transaction_date))}}</th>
+          <td class="td-center">{{$reload->user->card_number}}</td>
+          <td class="td-center">{{$reload->user->firstname . " " . $reload->user->lastname}}</td>
+          <td class="td-center">₱ {{number_format($reload->amount_due,2, '.', '')}}</td>
 
           <td> <button type="button" id="view-receipt" data-id="{{$reload->id}}" class="btn btn-secondary edit-btn" data-toggle="modal" data-target=".view_details"><i class="material-icons md-18">receipt</i></button>
       <button type="button" class="btn btn-danger del-btn" id="delete-reload" data-id="{{$reload->id}}" data-toggle="modal" data-target=".delete"><i class="material-icons md-18">delete</i></button> </td>

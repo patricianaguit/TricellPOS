@@ -59,6 +59,7 @@ INVENTORY
 		  <th scope="col">Item Name</th>
           <th scope="col">Description</th>
 		  <th scope="col">Price</th>
+		  <th scope="col">Member's Price</th>
           <th scope="col">Stock on Hand</th>
           <th scope="col">Actions</th>
         </tr>
@@ -70,6 +71,7 @@ INVENTORY
           <th scope="row" class="td-center">{{str_limit($product->product_name,40)}}</th>
           <td class="td-center">{{str_limit($product->product_desc,30)}}</td>
           <td class="td-center">₱ {{$product->price}}</td>
+          <td class="td-center">₱ 0.00 </td>
           <td class="td-center">{{$product->product_qty}}</td>
           <td>
             <button type="button" id="edit-product" class="btn btn-primary edit-btn" data-toggle="modal" data-target=".edit_product" data-id="{{$product->product_id}}" data-prodname = "{{$product->product_name}}" data-proddesc ="{{$product->product_desc}}" data-prodqty="{{$product->product_qty}}" data-price="{{$product->price}}"><i class="material-icons md-18">mode_edit</i></button>
@@ -94,38 +96,65 @@ INVENTORY
           </button>
         </div>
 
-      <form class="nosubmitform">
-      <div class="form-group">
-      <div class="container-fluid">
+     <form class="nosubmitform">
+     </br>
+     <div class="form-group row mx-auto">
+          	<label for="card-no" class="col-form-label col-md-4 modal-card">Item Name:</label>
+          <div class="col-md-8">
+             <input type="text" name="product_name" class="form-control modal-add" id="product-name-add">
+          	<p id="error-product-name-add" class="error-add" hidden="hidden"></p>
+          </div>
+     </div>
 
-      <div class="col-md-11 mx-auto">
-          <label for="address" class="col-form-label modal-address">Item Name:</label>
-          <input type="text" name="product_name" class="form-control modal-add" id="product-name-add">
-          <p id="error-product-name-add" class="error-add" hidden="hidden"></p>
-		  </div>
-  		  <div class="col-md-11 mx-auto">
-          <label for="address" class="col-form-label modal-address">Description:</label>
-          <input type="text" name="product_desc" class="form-control modal-add" id="product-desc-add">
+     <div class="form-group row mx-auto">
+          	<label for="card-no" class="col-form-label col-md-4 modal-card">Description:</label>
+          <div class="col-md-8">
+            <input type="text" name="product_desc" class="form-control modal-add" id="product-desc-add">
           <p id="error-product-desc-add" class="error-add" hidden="hidden"></p>
-		  </div>
-		  <div class="col-md-11 mx-auto">
-          <label for="address" class="col-form-label modal-address">Price:</label>
-          <input type="text" name="price" class="form-control modal-add" id="product-price-add">
-          <p id="error-price-add" class="error-add" hidden="hidden"></p>
-		  </div>
-		  <div class="col-md-11 mx-auto">
-          <label for="address" class="col-form-label modal-address">Stock:</label>
-          <input type="text" name="product_qty" class="form-control modal-add" id="product-qty-add">
-          <p id="error-product-qty-add" class="error-add" hidden="hidden"></p>
-		  </div>
+          </div>
+     </div>
 
-      </div>
-      </div>
-        <div class="modal-footer" id="modal-footer-product-add">
+     <div class="form-group row mx-auto">
+          	<label for="card-no" class="col-form-label col-md-4 modal-card">Price:</label>
+          <div class="col-md-8">
+          	<div class="input-group">
+            <div class="input-group-prepend">
+                <span class="input-group-text" id="basic-addon-change-add">₱</span>
+            </div>
+             <input type="text" name="price" class="form-control modal-add" id="product-price-add">
+          	 <p id="error-price-add" class="error-add" hidden="hidden"></p>
+          </div>
+          </div>
+     </div>
+
+     <div class="form-group row mx-auto">
+          	<label for="card-no" class="col-form-label col-md-4 modal-card">Member's Price:</label>
+          <div class="col-md-8">
+          <div class="input-group">
+            <div class="input-group-prepend">
+                <span class="input-group-text" id="basic-addon-change-add">₱</span>
+            </div>
+             <input type="text" name="price" class="form-control modal-add" id="product-memprice-add">
+          	 <p id="error-memprice-add" class="error-add" hidden="hidden"></p>
+          </div>
+      	  </div>
+     </div>
+
+     <div class="form-group row mx-auto">
+          	<label for="card-no" class="col-form-label col-md-4 modal-card">Stock:</label>
+          <div class="col-md-8">
+             <input type="text" name="product_qty" class="form-control modal-add" id="product-qty-add">
+          	<p id="error-product-qty-add" class="error-add" hidden="hidden"></p>
+          </div>
+     </div>
+
+
+     <div class="modal-footer" id="modal-footer-product-add">
           <button type="submit" class="btn btn-info btn-save-modal" id="add-product">Save New Item</button>
           <button type="button" class="btn btn-secondary btn-close-modal" data-dismiss="modal">Cancel</button>
-        </div>
+     </div>
       </form>
+
       </div>
     </div>
     </div>

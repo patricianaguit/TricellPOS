@@ -60,8 +60,9 @@ SALE
                 <tr>
                   <th scope="row" class="table-light" style="width: 73%">Discount</th>
                   <td class="table-light"> 
+                    <input type="hidden" id="discountvalue" value="" data-type=""> 
                     <select class="form-control form-control-sm select-box-discount">
-                      <option>No Discount</option>
+                      <option class="discountoption" data-name="No Discount" data-type="deduction" data-value="0">No Discount</option>
                       @foreach($discounts as $discount)
                         @if($discount->discount_type=='percentage')
                           <option class="discountoption" data-id="{{$discount->id}}" data-name="{{$discount->discount_name}}" data-type="{{$discount->discount_type}}" data-value="{{$discount->discount_value}}">{{$discount->discount_name}} - {{$discount->discount_value * 100}}%</option>
@@ -88,7 +89,7 @@ SALE
           </div>
           
           <div class="row" id="member">
-            <input type="hidden" id="membernumber" value="">
+            <input type="hidden" id="membercardno" value="">
             
             <input type="text" class="form-control form-control-sm" id="member_input">
             <i class="material-icons" id="faces">faces</i>
@@ -315,7 +316,7 @@ SALE
 
 
 
-      if($("#membernumber").val().length == 0)
+      if($("#membercardno").val().length == 0)
       {
         price = $(this).attr("data-price");
       }
@@ -407,12 +408,24 @@ SALE
     update_total();
   });
 
+  $(document).on('change', '.select-box-discount',function() {
+    var discount_id = $('.select-box-discount option:selected').attr('data-id');
+    var discount_name = $('.select-box-discount option:selected').attr('data-name');
+    var discount_type = $('.select-box-discount option:selected').attr('data-type');
+    var discount_value = $('.select-box-discount option:selected').attr('data-value');
+
+    $('#discountvalue').attr('data-id', discount_id);
+    $('#discountvalue').attr('discount_name', discount_name);
+    $('#discountvalue').attr('discount_type', discount_type);
+    $('#discountvalue').val(discount_value);
+  });
+
   $(document).on('change', '.select-box-role',function() {
     var type = $(".select-box-role option:selected").text();
     
     if (type === "Member") 
     {
-      $("#membernumber").val(1);
+      $("#membercardno").val(1);
       align_price();
       if($("#member").not(':visible')) 
       {
@@ -422,7 +435,7 @@ SALE
     } 
     else 
     {
-      $("#membernumber").val('');
+      $("#membercardno").val('');
       align_price();
       $("#member").hide();
       $("#guest").show();

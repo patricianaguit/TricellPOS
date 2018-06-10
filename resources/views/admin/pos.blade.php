@@ -83,7 +83,7 @@ SALE
           
           <div class="row" id="onchange">
             <select class="form-control form-control-sm select-box-role">
-              <option value="guest">Walk-in</option>
+              <option value="guest" selected>Walk-in</option>
               <option value="member">Member</option>
             </select>
           </div>
@@ -392,7 +392,6 @@ SALE
   $(document).on('keydown','#qty_input',function(event){
     if (event.which == 13) {
         $(this).blur();
-        // update_total();
     }
   });
 
@@ -420,12 +419,17 @@ SALE
     $('#discountvalue').val(discount_value);
   });
 
+  $(document).ready(function(){
+    $("#member").hide();
+    $("#guest").show();
+  });
+
   $(document).on('change', '.select-box-role',function() {
     var type = $(".select-box-role option:selected").text();
     
     if (type === "Member") 
     {
-      $("#membercardno").val(1);
+      //$("#membercardno").val(1);
       align_price();
       if($("#member").not(':visible')) 
       {
@@ -435,7 +439,7 @@ SALE
     } 
     else 
     {
-      $("#membercardno").val('');
+      //$("#membercardno").val('');
       align_price();
       $("#member").hide();
       $("#guest").show();

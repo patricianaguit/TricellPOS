@@ -60,7 +60,7 @@ SALE
                 <tr>
                   <th scope="row" class="table-light" style="width: 73%">Discount</th>
                   <td class="table-light"> 
-                    <input type="hidden" id="discountvalue" value="" data-type=""> 
+                    <input type="hidden" id="discountvalue" value="0"> 
                     <select class="form-control form-control-sm select-box-discount">
                       <option class="discountoption" data-name="No Discount" data-type="deduction" data-value="0">No Discount</option>
                       @foreach($discounts as $discount)
@@ -73,6 +73,7 @@ SALE
                     </select></td>
                 </tr>
                 <tr>
+                  <input type="hidden" id="posvat" value="{{floatval($vat->vat)}}">
                   <th scope="row" class="table-light" style="width: 73%">VAT</th>
                   <td class="table-light">{{floatval($vat->vat)}}%</td>
                 </tr>
@@ -91,18 +92,18 @@ SALE
           <div class="row" id="member">
             <input type="hidden" id="membercardno" value="">
             
-            <input type="text" class="form-control form-control-sm" id="member_input">
+            <input type="text" class="form-control form-control-sm" onkeypress="return (event.charCode == 8 || event.charCode == 0 || event.charCode == 13) ? null : event.charCode >= 48 && event.charCode <= 57" id="member_input">
             <i class="material-icons" id="faces">faces</i>
             <p id="member-name">Howell Manongsong</p>
             <i class="material-icons icon-align-right" id="date_range">date_range</i>
-            <p align="right" id="date">Jun 2, 2018</p>
+            <p align="right" id="date">{{date('F d, Y')}}</p>
             
           </div>
           
           <div class="row" id="guest">
-            <input type="text" class="form-control form-control-sm" id="guest_input">
+            <input type="text" class="form-control form-control-sm" onkeypress="return alpha(event)" id="guest_input">
             <i class="material-icons icon-align-right" id="date_range_2">date_range</i>
-            <p id="date_2">Jun 2, 2018</p>
+            <p id="date_2">{{date('F d, Y')}}</p>
           </div>
           
           <div class="row">
@@ -110,8 +111,8 @@ SALE
               <tbody>
                 <tr>
                   <th scope="row"  style="width: 73%" id="total"></th>
-                  <td><button type="button" class="btn btn-secondary float-right payment-btn" data-toggle="modal" data-target=".payment">&#8369;</button><td>
-                  <button type="button" class="btn btn-secondary float-right lpayment-btn" data-toggle="modal" data-target=".lpayment"><i class="material-icons" id="card">credit_card</i></button></td>
+                  <td><button type="button" class="btn btn-secondary float-right payment-btn">&#8369;</button><td>
+                  <button type="button" class="btn btn-secondary float-right lpayment-btn"><i class="material-icons" id="card">credit_card</i></button></td>
                 </td></td>
               </tr>
             </tbody>
@@ -154,7 +155,7 @@ SALE
                   
                 </form>
                 <div class="modal-footer">
-                  <button type="button" class="btn btn-info btn-savemem-modal" data-dismiss="modal">Pay</button>
+                  <button type="button" class="btn btn-info btn-savemem-modal" id="paysale" data-dismiss="modal">Pay</button>
                   <button type="button" class="btn btn-secondary btn-close-modal" data-dismiss="modal">Cancel</button>
                 </div>
               </div>
@@ -274,6 +275,50 @@ SALE
   </div> <!--container-->
          
 <script>
+  //success alerts - add, update, delete
+  $(document).ready(function(){
+  if(localStorage.getItem("noinput"))
+  {
+    swal({
+            title: "Error!",
+            text: "You haven't input the guest name yet!",
+            icon: "error",
+            button: "Close",
+          });
+    localStorage.clear();
+  }
+  else if(localStorage.getItem("delete"))
+  {
+    swal({
+            title: "Success!",
+            text: "You have successfully deleted the member!",
+            icon: "success",
+            button: "Close",
+          });
+    localStorage.clear();
+  }
+  else if(localStorage.getItem("add"))
+  {
+    swal({
+            title: "Success!",
+            text: "You have successfully added a member!",
+            icon: "success",
+            button: "Close",
+          });
+    localStorage.clear();
+  }
+  else if(localStorage.getItem("reload"))
+  {
+    swal({
+            title: "Success!",
+            text: "You have successfully reloaded the member's account!",
+            icon: "success",
+            button: "Close",
+          });
+    localStorage.clear();
+  }
+  });
+
   $(document).on('click', '.pagination a', function(e){
     e.preventDefault();
     var myurl = $(this).attr('href');
@@ -297,12 +342,66 @@ SALE
 
   function update_total(){
     var sum = 0;
+    var discount = $('#discountvalue').val();
+    var discount_id = $('#discountvalue').attr('discount_id');
+    var discount_type = $('#discountvalue').attr('discount_type');
        
     $('.itemsubtotal').each(function() {
       sum += parseFloat($(this).text());
     });
-    
-    $('.totalprice').text(sum.toFixed(2));
+
+    if(discount_type == 'percentage' && discount_id == 1)
+    {
+        var vat_amount = $('#posvat').val();
+        var vat_percent = (100 + parseFloat(vat_amount)) / 100;
+        var zero = 0;
+
+        var vatexempt =  sum / vat_percent;
+
+        var totaldiscount = (vatexempt * discount);
+
+        var total = vatexempt - totaldiscount;
+
+        if(total < 0)
+        {
+          $('.totalprice').text(zero.toFixed(2)); 
+        }
+        else
+        {
+          $('.totalprice').text(total.toFixed(2)); 
+        }
+    }
+    else if(discount_type == 'percentage' && discount_id != 1)
+    {
+      var discountpercent = $('#discountvalue').val();
+      var discountdeduct = sum * parseFloat(discount);
+      var total = sum - discountdeduct;
+      var zero = 0;
+
+      if(total < 0)
+      {
+        $('.totalprice').text(zero.toFixed(2)); 
+      }
+      else
+      {
+        $('.totalprice').text(total.toFixed(2)); 
+      }
+    }
+    else
+    {
+      var total = sum - discount;
+      var zero = 0;
+      
+      if(total < 0)
+      {
+        $('.totalprice').text(zero.toFixed(2)); 
+      }
+      else
+      {
+        $('.totalprice').text(total.toFixed(2)); 
+      }
+    }
+
     $('.subtotal').text(sum.toFixed(2));
   }
 
@@ -388,7 +487,6 @@ SALE
       whichtr.find($('.itemsubtotal')).text(itemprice); 
     }
   });
-
   $(document).on('keydown','#qty_input',function(event){
     if (event.which == 13) {
         $(this).blur();
@@ -413,15 +511,25 @@ SALE
     var discount_type = $('.select-box-discount option:selected').attr('data-type');
     var discount_value = $('.select-box-discount option:selected').attr('data-value');
 
-    $('#discountvalue').attr('data-id', discount_id);
+    $('#discountvalue').attr('discount_id', discount_id);
     $('#discountvalue').attr('discount_name', discount_name);
     $('#discountvalue').attr('discount_type', discount_type);
     $('#discountvalue').val(discount_value);
+
+    update_total();
   });
 
+  function alpha(e) {
+    var k;
+    document.all ? k = e.keyCode : k = e.which;
+    return ((k > 64 && k < 91) || (k > 96 && k < 123) || k == 8 || k == 32);
+  }
+
   $(document).ready(function(){
-    $("#member").hide();
-    $("#guest").show();
+    $('#member').hide();
+    $('#guest').show();
+
+    $('.lpayment-btn').hide();
   });
 
   $(document).on('change', '.select-box-role',function() {
@@ -429,7 +537,8 @@ SALE
     
     if (type === "Member") 
     {
-      //$("#membercardno").val(1);
+      $('.lpayment-btn').show();
+      $("#membercardno").val(1);
       align_price();
       if($("#member").not(':visible')) 
       {
@@ -439,7 +548,8 @@ SALE
     } 
     else 
     {
-      //$("#membercardno").val('');
+      $('.lpayment-btn').hide();
+      $("#membercardno").val('');
       align_price();
       $("#member").hide();
       $("#guest").show();
@@ -452,7 +562,7 @@ SALE
     $("#mirror-pos .btn.active").each(function(){
     var price = $(this).attr("data-price");
 
-    if($("#membernumber").val().length == 0)
+    if($("#membercardno").val().length == 0)
     {
       price = price;
     }
@@ -479,6 +589,88 @@ SALE
       button.addClass("active");
     });
   };
+
+  $(document).on('click', '.lpayment-btn', function()
+  {
+    var member_input = $('#member_input').val();
+
+    if(member_input == '')
+      {
+        swal({
+              title: "Error!",
+              text: "Please tap the customer card first!",
+              icon: "error",
+              button: "Close",
+            });
+
+        $('#member_input').css("border", "1px solid #cc0000");
+        for(var i = 0; i < 3; i++)
+        {
+          $('#member_input').fadeOut().fadeIn('slow');
+        }
+      }
+      else
+      {
+        $('#member_input').removeAttr('style');
+        $('.lpayment').modal('show');
+      } 
+  });
   
+  $(document).on('click', '.payment-btn', function()
+  {
+    var rowcount = $('#display_table tbody').find('tr').length;
+    var guest_input = $('#guest_input').val();
+    var member_input = $('#member_input').val();
+    var type = $(".select-box-role option:selected").text();
+
+    if(type == "Walk-in")
+    {
+      if(guest_input == '')
+      {
+        swal({
+              title: "Error!",
+              text: "Please input the customer name first!",
+              icon: "error",
+              button: "Close",
+            });
+
+        $('#guest_input').css("border", "1px solid #cc0000");
+        for(var i = 0; i < 3; i++)
+        {
+          $('#guest_input').fadeOut().fadeIn('slow');
+        }
+      }
+      else
+      {
+        $('#guest_input').removeAttr('style');
+        $('.payment').modal('show');
+      } 
+    }
+    else
+    {
+      if(member_input == '')
+      {
+        swal({
+              title: "Error!",
+              text: "Please tap the customer card first!",
+              icon: "error",
+              button: "Close",
+            });
+
+        $('#member_input').css("border", "1px solid #cc0000");
+        for(var i = 0; i < 3; i++)
+        {
+          $('#member_input').fadeOut().fadeIn('slow');
+        }
+      }
+      else
+      {
+        $('#member_input').removeAttr('style');
+        $('.payment').modal('show');
+      } 
+    }
+  });
+
+
 </script>
 @endsection

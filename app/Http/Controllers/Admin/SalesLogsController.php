@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use DB;
 use App\User;
+use App\Guest;
 use App\Product;
 use App\Discount;
 use App\Sale;

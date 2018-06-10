@@ -16,6 +16,11 @@ class Sale extends Model
         return $this->belongsTo('App\User', 'customer_id', 'id');
     }
 
+    public function guest()
+    {
+        return $this->belongsTo('App\Guest', 'guest_id', 'id');
+    }
+
     public function salesdetails()
     {
         return $this->hasOne('App\Sales_details','sales_id', 'id');  

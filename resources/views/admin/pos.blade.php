@@ -1196,10 +1196,31 @@ SALE
       arrayOfThisRow.push(id,qty.val(),price.text(), subtotal.text()); 
       itemsBought.push(arrayOfThisRow);
     });
-    
+
     if($('#memberid').val().length <= 0)
     {
-      alert('Im a Guest');
+      $.ajax({
+        type: 'POST',
+        url: '/sales/guest_cashpayment',
+        data: {
+                '_token': $('input[name=_token]').val(),
+                'customer_name': $('#guest_input').val(),
+                'discount_id': $('#discountvalue').attr('discount_id'),
+                'amount_due': $("#total-price-cash").val(),
+                'amount_paid': $("#payment-amount-cash").val(),
+                'change_amount': $("#change-amount-cash").val(),
+                'vat': $("#posvat").val(),
+                'itemsbought': itemsBought
+              },
+        success: function(data) {
+          localStorage.setItem("sold","success");
+          window.location.reload();
+        },
+        error: function(jqXHR, textStatus, errorThrown) { // What to do if we fail
+          console.log(JSON.stringify(jqXHR));
+          console.log("AJAX error: " + textStatus + ' : ' + errorThrown);
+        }
+      });
     }
     else
     {

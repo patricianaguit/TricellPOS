@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 
 use App\User;
+use App\Guest;
 use App\Balance;
 use App\Product;
 use App\Sale;
@@ -42,6 +43,45 @@ class PointofSaleController extends Controller
         $member = User::with('balance')->where('role', 'member')->where('card_number', 'LIKE', "{$input}%")->first();
                             
         return json_encode($member);
+    }
+
+    public function guest_cashpayment(Request $request)
+    {
+        $guest = new Guest;
+        $guest->customer_name = $request->customer_name;
+        $guest->save();
+
+        $sale = new Sale;
+        $sale->member_id = 0;
+        $sale->guest_id = $guest->id;
+        $sale->discount_id = $request->discount_id;
+        $sale->amount_due = $request->amount_due;
+        $sale->amount_paid = $request->amount_paid;
+        $sale->change_amount = $request->change_amount;
+        $sale->payment_mode = 'cash';
+        $sale->vat = $request->vat;
+        $sale->save();
+
+        $itemsBought = $request->itemsbought;
+        $count = count($itemsBought);
+        
+        for($i= 0; $i < $count; $i++){
+            $y=0;
+            $sales_details[] = [
+                'sales_id' => $sale->id,
+                'product_id' => $itemsBought[$i][$y],
+                'quantity' => $itemsBought[$i][++$y],
+                'subtotal' => $itemsBought[$i][++$y],
+                ];
+            }
+        Sales_details::insert($sales_details);
+
+        for($i= 0; $i < $count; $i++){
+            $y=0;
+            $product = Product::find($itemsBought[$i][$y]);
+            $product->product_qty =  $product->product_qty - $itemsBought[$i][++$y];
+            $product->save();
+        }
     }
 
     public function member_cashpayment(Request $request)

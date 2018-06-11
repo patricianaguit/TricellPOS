@@ -545,7 +545,7 @@ SALE
     
 
     var desc = whichtr.find($('.description')).text();
-    var dataqty = $('.second_div').find($('[data-description="'+ desc +'"]')).attr('data-qty');
+    var dataqty = $('#mirror-pos').find($('[data-description="'+ desc +'"]')).attr('data-qty');
 
     if(parseFloat($(this).val()) > dataqty)
     {
@@ -749,7 +749,7 @@ SALE
     $("#display_table .itemrow").each(function() { 
         var arrayOfThisRow = [];
         var desc = $(this).find('.description').text();
-        var id = $('.second_div').find($('[data-description="'+ desc +'"]')).attr('data-id');
+        var id = $('#mirror-pos').find($('[data-description="'+ desc +'"]')).attr('data-id');
         var qty = $(this).find('.quantity');
         var price = $(this).find('.itemprice');
         var subtotal = $(this).find('.itemsubtotal');
@@ -1188,7 +1188,7 @@ SALE
     $("#display_table .itemrow").each(function() { 
       var arrayOfThisRow = [];
       var desc = $(this).find('.description').text();
-      var id = $('.second_div').find($('[data-description="'+ desc +'"]')).attr('data-id');
+      var id = $('#mirror-pos').find($('[data-description="'+ desc +'"]')).attr('data-id');
       var qty = $(this).find('.quantity');
       var price = $(this).find('.itemprice');
       var subtotal = $(this).find('.itemsubtotal');

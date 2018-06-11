@@ -93,6 +93,9 @@ SALE
             <p id="member-name">&nbsp;<span id="membername"></span></p>
             <i class="material-icons icon-align-right" id="date_range">date_range</i>
             <p align="right" id="date">{{date('F d, Y')}}</p>
+
+            <i class="material-icons" id="faces">credit_card</i>
+            <p id="member-name">&nbsp;<span id="memberspanload"></span></p>
             
           </div>
           
@@ -606,7 +609,9 @@ SALE
         $('#membercardno').val('');
         $('#memberid').val('');
         $('#membername').text('');
+        $('#memberspanload').text('');
         $('#member_input').val('');
+        $('#guest_input').val('');
         $('#member_input').removeAttr('style');
         $('#guest_input').removeAttr('style');
       }
@@ -620,7 +625,9 @@ SALE
       $('#membercardno').val('');
       $('#memberid').val('');
       $('#membername').text('');
+      $('#memberspanload').text('');
       $('#member_input').val('');
+      $('#guest_input').val('');
       $('#member_input').removeAttr('style');
       $('#guest_input').removeAttr('style');
 
@@ -895,6 +902,7 @@ SALE
         var newload = parseload.toFixed(2);
 
         $('#memberload').val(newload);
+        $('#memberspanload').text('₱ ' + newload);
         $('.reload').modal('hide');
 
       },
@@ -936,6 +944,53 @@ SALE
         {
           $('#guest_input').removeAttr('style');
           $('.payment').modal('show');
+          $('#paysale').attr('disabled', true);
+
+          var total_amount = $('.totalprice').text();
+          $('#total-price-cash').val(total_amount);
+
+          $('#payment-amount-cash').on('input',function() {
+            var total = parseFloat($('#total-price-cash').val());
+            var payment = parseFloat($('#payment-amount-cash').val());
+            $('#change-amount-cash').val((payment - total ? payment - total : 0).toFixed(2));
+
+            //isNaN
+            if(isNaN($('#payment-amount-cash').val()))
+            {
+              $('#error-payment-amount-cash').removeAttr("hidden");
+              $('#error-payment-amount-cash').text("Payment Amount field is not a valid amount.");
+              $('#payment-amount-cash').css("border", "1px solid #cc0000");
+              $('#basic-addon-paymentamount-cash').css("border", "1px solid #cc0000");
+              $('#paysale').attr('disabled', true);
+            }
+            else
+            {
+              $('#error-payment-amount-cash').attr("hidden", true);
+              $('#error-payment-amount-cash').text("");
+              $('#payment-amount-cash').removeAttr("style")
+              $('#basic-addon-paymentamount-cash').removeAttr("style");
+            }
+
+            //Total is greater than payment
+            if((total > payment)) // && (payment != '' || payment == ''))
+            {
+              $('#error-payment-amount-cash').removeAttr("hidden");
+              $('#error-payment-amount-cash').text("Payment cannot be less than the Total Price");
+              $('#payment-amount-cash').css("border", "1px solid #cc0000");
+              $('#basic-addon-paymentamount-cash').css("border", "1px solid #cc0000");
+              $('#paysale').attr('disabled', true);
+            }
+            else if((payment != '' && total != '') &&(total <= payment) && (isNaN($('#payment-amount-cash').val()) == false))
+            {
+              $('#payment-amount-cash').removeAttr("style")
+              $('#basic-addon-paymentamount-cash').removeAttr("style");
+              $('#paysale').removeAttr('disabled');
+            }
+            else
+            {
+              $('#paysale').attr('disabled', true);
+            }
+          });
         } 
       }
       else
@@ -1085,6 +1140,7 @@ SALE
         $('#memberid').val(ui.item.id);
         $('#membercardno').val(ui.item.label);
         $('#membername').text(ui.item.fullname);
+        $('#memberspanload').text('₱ ' + ui.item.load);
         $('#memberload').val(ui.item.load);
         align_price();
       }
@@ -1098,6 +1154,7 @@ SALE
       $('#membercardno').val('');
       $('#memberid').val('');
       $('#membername').text('');
+      $('#memberspanload').text('');
       align_price();
     }
   });
@@ -1126,26 +1183,26 @@ SALE
   }
 
   $(document).on('click', '#paysale', function(){
+    var itemsBought = [];
+    
+    $("#display_table .itemrow").each(function() { 
+      var arrayOfThisRow = [];
+      var desc = $(this).find('.description').text();
+      var id = $('.second_div').find($('[data-description="'+ desc +'"]')).attr('data-id');
+      var qty = $(this).find('.quantity');
+      var price = $(this).find('.itemprice');
+      var subtotal = $(this).find('.itemsubtotal');
+
+      arrayOfThisRow.push(id,qty.val(),price.text(), subtotal.text()); 
+      itemsBought.push(arrayOfThisRow);
+    });
+    
     if($('#memberid').val().length <= 0)
     {
       alert('Im a Guest');
     }
     else
     {
-      var itemsBought = [];
-      
-      $("#display_table .itemrow").each(function() { 
-        var arrayOfThisRow = [];
-        var desc = $(this).find('.description').text();
-        var id = $('.second_div').find($('[data-description="'+ desc +'"]')).attr('data-id');
-        var qty = $(this).find('.quantity');
-        var price = $(this).find('.itemprice');
-        var subtotal = $(this).find('.itemsubtotal');
-
-        arrayOfThisRow.push(id,qty.val(),price.text(), subtotal.text()); 
-        itemsBought.push(arrayOfThisRow);
-      });
-
       $.ajax({
         type: 'POST',
         url: '/sales/member_cashpayment',

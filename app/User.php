@@ -33,7 +33,7 @@ class User extends Model implements
 
     public function sale()
     {
-        return $this->hasMany('App\Sales','customer_id', 'id');
+        return $this->hasMany('App\Sales','member_id', 'id');
     }
 
     public function reload()

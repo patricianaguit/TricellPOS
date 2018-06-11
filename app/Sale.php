@@ -13,7 +13,7 @@ class Sale extends Model
 
     public function user()
     {
-        return $this->belongsTo('App\User', 'customer_id', 'id');
+        return $this->belongsTo('App\User', 'member_id', 'id');
     }
 
     public function guest()

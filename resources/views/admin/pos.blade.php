@@ -11,7 +11,7 @@ SALE
 @section('content')
 
 <div class="container-fluid">
-  
+  @csrf
   <div class="row">
     <div class="col-lg-5 border" id="left">
       <div class="mx-auto">
@@ -60,9 +60,8 @@ SALE
                 <tr>
                   <th scope="row" class="table-light" style="width: 73%">Discount</th>
                   <td class="table-light"> 
-                    <input type="hidden" id="discountvalue" value="0"> 
                     <select class="form-control form-control-sm select-box-discount">
-                      <option class="discountoption" data-name="No Discount" data-type="deduction" data-value="0">No Discount</option>
+                      <option class="discountoption" data-name="No Discount" data-id="0" data-type="deduction" data-value="0" selected>No Discount</option>
                       @foreach($discounts as $discount)
                         @if($discount->discount_type=='percentage')
                           <option class="discountoption" data-id="{{$discount->id}}" data-name="{{$discount->discount_name}}" data-type="{{$discount->discount_type}}" data-value="{{$discount->discount_value}}">{{$discount->discount_name}} - {{$discount->discount_value * 100}}%</option>
@@ -73,7 +72,6 @@ SALE
                     </select></td>
                 </tr>
                 <tr>
-                  <input type="hidden" id="posvat" value="{{floatval($vat->vat)}}">
                   <th scope="row" class="table-light" style="width: 73%">VAT</th>
                   <td class="table-light">{{floatval($vat->vat)}}%</td>
                 </tr>
@@ -89,12 +87,10 @@ SALE
             </select>
           </div>
           
-          <div class="row" id="member">
-            <input type="hidden" id="membercardno" value="">
-            
+          <div class="row" id="member">  
             <input type="text" class="form-control form-control-sm" onkeypress="return (event.charCode == 8 || event.charCode == 0 || event.charCode == 13) ? null : event.charCode >= 48 && event.charCode <= 57" id="member_input">
             <i class="material-icons" id="faces">faces</i>
-            <p id="member-name">Howell Manongsong</p>
+            <p id="member-name">&nbsp;<span id="membername"></span></p>
             <i class="material-icons icon-align-right" id="date_range">date_range</i>
             <p align="right" id="date">{{date('F d, Y')}}</p>
             
@@ -131,31 +127,57 @@ SALE
                 
                 <form>
                   <div class="form-group">
-                    <div class="containter-fluid">
-                      
-                      <table class="table" id="table-modal">
-                        <tbody>
-                          <tr class="table-success">
-                            <td>Amount</td>
-                            <td>P100</td>
-                          </tr>
-                          
-                          <tr>
-                            <td>Payment</td>
-                            <td>  <input type="text" class="form-control modal-add" id="address"></td>
-                          </tr>
-                          <tr class="table-danger">
-                            <td>Change</td>
-                            <td>P0.00</td>
-                          </tr>
-                        </tbody>
-                      </table>
+                    <div class="container-fluid">
+                    <br>
+                      <div class="form-group row mx-auto">
+                      <label for="totalprice" class="col-form-label col-sm-4 modal-pay">Total Price:</label>
+
+                        <div class="col-sm-8">
+                          <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="basic-addon-totalprice-cash">₱</span>
+                            </div>
+                            <input type="text" name="total-price" class="form-control modal-add" id="total-price-cash" disabled="disabled">
+                          </div>
+
+                          <p id="error-total-price-cash" class="error-pos" hidden="hidden"></p>
+                        </div>
+                      </div>
+
+                      <div class="form-group row mx-auto">
+                      <label for="paymentamount" class="col-form-label col-sm-4 modal-pay">Payment Amount:</label>
+
+                        <div class="col-sm-8">
+                          <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="basic-addon-paymentamount-cash">₱</span>
+                            </div>
+                            <input type="text" name="paymentamount" class="form-control modal-add" id="payment-amount-cash">
+                          </div>
+
+                          <p id="error-payment-amount-cash" class="error-pos" hidden="hidden"></p>
+                        </div>
+                      </div>
+
+                      <div class="form-group row mx-auto">
+                      <label for="changeamount" class="col-form-label col-sm-4 modal-pay">Change:</label>
+
+                        <div class="col-sm-8">
+                          <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="basic-addon-changeamount-cash">₱</span>
+                            </div>
+                            <input type="text" name="changeamount" class="form-control modal-add" id="change-amount-cash" disabled="disabled">
+                          </div>
+                          <p id="error-change-amount-cash" class="error-pos" hidden="hidden"></p>
+                        </div>
+                      </div>
                     </div>
                   </div>
                   
                 </form>
                 <div class="modal-footer">
-                  <button type="button" class="btn btn-info btn-savemem-modal" id="paysale" data-dismiss="modal">Pay</button>
+                  <button type="button" class="btn btn-info btn-savemem-modal" id="paysale">Pay</button>
                   <button type="button" class="btn btn-secondary btn-close-modal" data-dismiss="modal">Cancel</button>
                 </div>
               </div>
@@ -268,57 +290,16 @@ SALE
           @endforeach
         </div>
 
-          
-          
-          
+       <input type="hidden" id="discountvalue" value="0"> 
+       <input type="hidden" id="memberload" value="">
+       <input type="hidden" id="memberid" value="">
+       <input type="hidden" id="membercardno" value="">
+       <input type="hidden" id="posvat" value="{{floatval($vat->vat)}}">
+
      </div>  <!---row-->
   </div> <!--container-->
          
 <script>
-  //success alerts - add, update, delete
-  $(document).ready(function(){
-  if(localStorage.getItem("noinput"))
-  {
-    swal({
-            title: "Error!",
-            text: "You haven't input the guest name yet!",
-            icon: "error",
-            button: "Close",
-          });
-    localStorage.clear();
-  }
-  else if(localStorage.getItem("delete"))
-  {
-    swal({
-            title: "Success!",
-            text: "You have successfully deleted the member!",
-            icon: "success",
-            button: "Close",
-          });
-    localStorage.clear();
-  }
-  else if(localStorage.getItem("add"))
-  {
-    swal({
-            title: "Success!",
-            text: "You have successfully added a member!",
-            icon: "success",
-            button: "Close",
-          });
-    localStorage.clear();
-  }
-  else if(localStorage.getItem("reload"))
-  {
-    swal({
-            title: "Success!",
-            text: "You have successfully reloaded the member's account!",
-            icon: "success",
-            button: "Close",
-          });
-    localStorage.clear();
-  }
-  });
-
   $(document).on('click', '.pagination a', function(e){
     e.preventDefault();
     var myurl = $(this).attr('href');
@@ -425,7 +406,7 @@ SALE
 
       }
 
-      if(checkContent == 0)
+      if(checkContent == 0 && !$(this).hasClass('disabled'))
       {
       var str_item = '<tr class="itemrow" id="'+ id +'"><td class="description"><b>' + description + '</b></td>' +
           '<td><input type="text" class="quantity" onkeypress="return (event.charCode == 8 || event.charCode == 0 || event.charCode == 13) ? null : event.charCode >= 48 && event.charCode <= 57" id="qty_input" value="1" maxlength="6"></td>' +
@@ -489,7 +470,7 @@ SALE
   });
   $(document).on('keydown','#qty_input',function(event){
     if (event.which == 13) {
-        $(this).blur();
+      $(this).blur();
     }
   });
 
@@ -499,12 +480,33 @@ SALE
     var subtotal = 0;
     var qty = $(this).val();
     var price = parseFloat(whichtr.find($('.itemprice')).text());
-    subtotal = qty * price;
+    
 
-    whichtr.find($('.itemsubtotal')).text(subtotal.toFixed(2));
-    update_total();
+    var desc = whichtr.find($('.description')).text();
+    var dataqty = $('.second_div').find($('[data-description="'+ desc +'"]')).attr('data-qty');
+
+    if(parseFloat($(this).val()) > dataqty)
+    {
+      $(this).val(dataqty);
+      var newqty = $(this).val()
+      subtotal = newqty * price;
+      
+      whichtr.find($('.itemsubtotal')).text(subtotal.toFixed(2));
+      update_total();
+    }
+    else
+    {
+      subtotal = qty * price;
+
+      whichtr.find($('.itemsubtotal')).text(subtotal.toFixed(2));
+      update_total();
+    }
   });
 
+  $(document).ready(function(){
+     var discount_id = $('.select-box-discount option:selected').attr('data-id');
+     $('#discountvalue').attr('discount_id', discount_id);
+  })
   $(document).on('change', '.select-box-discount',function() {
     var discount_id = $('.select-box-discount option:selected').attr('data-id');
     var discount_name = $('.select-box-discount option:selected').attr('data-name');
@@ -538,21 +540,32 @@ SALE
     if (type === "Member") 
     {
       $('.lpayment-btn').show();
-      $("#membercardno").val(1);
-      align_price();
       if($("#member").not(':visible')) 
       {
         $("#member").show();
         $("#guest").hide();
+        $('#membercardno').val('');
+        $('#memberid').val('');
+        $('#membername').text('');
+        $('#member_input').val('');
+        $('#member_input').removeAttr('style');
+        $('#guest_input').removeAttr('style');
       }
+      align_price();
     } 
     else 
     {
       $('.lpayment-btn').hide();
-      $("#membercardno").val('');
-      align_price();
       $("#member").hide();
       $("#guest").show();
+      $('#membercardno').val('');
+      $('#memberid').val('');
+      $('#membername').text('');
+      $('#member_input').val('');
+      $('#member_input').removeAttr('style');
+      $('#guest_input').removeAttr('style');
+
+      align_price();
     }
 
   }).trigger("change");
@@ -593,27 +606,43 @@ SALE
   $(document).on('click', '.lpayment-btn', function()
   {
     var member_input = $('#member_input').val();
+    var member_name = $('#membername').text();
 
-    if(member_input == '')
+    if(member_name == '' && member_input == '')
+    {
+      swal({
+            title: "Error!",
+            text: "Please tap the customer card first!",
+            icon: "error",
+            button: "Close",
+          });
+
+      $('#member_input').css("border", "1px solid #cc0000");
+      for(var i = 0; i < 3; i++)
       {
-        swal({
-              title: "Error!",
-              text: "Please tap the customer card first!",
-              icon: "error",
-              button: "Close",
-            });
-
-        $('#member_input').css("border", "1px solid #cc0000");
-        for(var i = 0; i < 3; i++)
-        {
-          $('#member_input').fadeOut().fadeIn('slow');
-        }
+        $('#member_input').fadeOut().fadeIn('slow');
       }
-      else
+    }
+    else if(member_name == '' && member_input != '')
+    {
+      swal({
+            title: "Error!",
+            text: "Please double check the card number!",
+            icon: "error",
+            button: "Close",
+          });
+
+      $('#member_input').css("border", "1px solid #cc0000");
+      for(var i = 0; i < 3; i++)
       {
-        $('#member_input').removeAttr('style');
-        $('.lpayment').modal('show');
-      } 
+        $('#member_input').fadeOut().fadeIn('slow');
+      }
+    }
+    else
+    {
+      $('#member_input').removeAttr('style');
+      $('.lpayment').modal('show');
+    } 
   });
   
   $(document).on('click', '.payment-btn', function()
@@ -621,55 +650,273 @@ SALE
     var rowcount = $('#display_table tbody').find('tr').length;
     var guest_input = $('#guest_input').val();
     var member_input = $('#member_input').val();
+    var member_name = $('#membername').text();
     var type = $(".select-box-role option:selected").text();
 
-    if(type == "Walk-in")
-    {
-      if(guest_input == '')
+    if(rowcount > 0)
+    {  
+      if(type == "Walk-in")
       {
-        swal({
-              title: "Error!",
-              text: "Please input the customer name first!",
-              icon: "error",
-              button: "Close",
-            });
-
-        $('#guest_input').css("border", "1px solid #cc0000");
-        for(var i = 0; i < 3; i++)
+        if(guest_input == '')
         {
-          $('#guest_input').fadeOut().fadeIn('slow');
+          swal({
+                title: "Error!",
+                text: "Please input the customer name first!",
+                icon: "error",
+                button: "Close",
+              });
+
+          $('#guest_input').css("border", "1px solid #cc0000");
+          for(var i = 0; i < 3; i++)
+          {
+            $('#guest_input').fadeOut().fadeIn('slow');
+          }
         }
+        else
+        {
+          $('#guest_input').removeAttr('style');
+          $('.payment').modal('show');
+        } 
       }
       else
       {
-        $('#guest_input').removeAttr('style');
-        $('.payment').modal('show');
-      } 
+        if(member_name == '' && member_input == '')
+        {
+          swal({
+                title: "Error!",
+                text: "Please tap the customer card first!",
+                icon: "error",
+                button: "Close",
+              });
+
+          $('#member_input').css("border", "1px solid #cc0000");
+          for(var i = 0; i < 3; i++)
+          {
+            $('#member_input').fadeOut().fadeIn('slow');
+          }
+        }
+        else if(member_name == '' && member_input != '')
+        {
+          swal({
+                title: "Error!",
+                text: "Please double check the card number!",
+                icon: "error",
+                button: "Close",
+              });
+
+          $('#member_input').css("border", "1px solid #cc0000");
+          for(var i = 0; i < 3; i++)
+          {
+            $('#member_input').fadeOut().fadeIn('slow');
+          }
+        }
+        else
+        {
+          $('#member_input').removeAttr('style');
+          $('.payment').modal('show');
+
+          $('#paysale').attr('disabled', true);
+
+          var total_amount = $('.totalprice').text();
+          $('#total-price-cash').val(total_amount);
+
+          $('#payment-amount-cash').on('input',function() {
+            var total = parseFloat($('#total-price-cash').val());
+            var payment = parseFloat($('#payment-amount-cash').val());
+            $('#change-amount-cash').val((payment - total ? payment - total : 0).toFixed(2));
+
+            //isNaN
+            if(isNaN($('#payment-amount-cash').val()))
+            {
+              $('#error-payment-amount-cash').removeAttr("hidden");
+              $('#error-payment-amount-cash').text("Payment Amount field is not a valid amount.");
+              $('#payment-amount-cash').css("border", "1px solid #cc0000");
+              $('#basic-addon-paymentamount-cash').css("border", "1px solid #cc0000");
+              $('#paysale').attr('disabled', true);
+            }
+            else
+            {
+              $('#error-payment-amount-cash').attr("hidden", true);
+              $('#error-payment-amount-cash').text("");
+              $('#payment-amount-cash').removeAttr("style")
+              $('#basic-addon-paymentamount-cash').removeAttr("style");
+            }
+
+            //Total is greater than payment
+            if((total > payment)) // && (payment != '' || payment == ''))
+            {
+              $('#error-payment-amount-cash').removeAttr("hidden");
+              $('#error-payment-amount-cash').text("Payment cannot be less than the Total Price");
+              $('#payment-amount-cash').css("border", "1px solid #cc0000");
+              $('#basic-addon-paymentamount-cash').css("border", "1px solid #cc0000");
+              $('#paysale').attr('disabled', true);
+            }
+            else if((payment != '' && total != '') &&(total <= payment) && (isNaN($('#payment-amount-cash').val()) == false))
+            {
+              $('#payment-amount-cash').removeAttr("style")
+              $('#basic-addon-paymentamount-cash').removeAttr("style");
+              $('#paysale').removeAttr('disabled');
+            }
+            else
+            {
+              $('#paysale').attr('disabled', true);
+            }
+          });
+        } 
+      }
     }
     else
     {
-      if(member_input == '')
-      {
-        swal({
-              title: "Error!",
-              text: "Please tap the customer card first!",
-              icon: "error",
-              button: "Close",
-            });
-
-        $('#member_input').css("border", "1px solid #cc0000");
-        for(var i = 0; i < 3; i++)
-        {
-          $('#member_input').fadeOut().fadeIn('slow');
-        }
-      }
-      else
-      {
-        $('#member_input').removeAttr('style');
-        $('.payment').modal('show');
-      } 
+      $('#guest_input').removeAttr('style');
+      $('#member_input').removeAttr('style');
+      swal({
+        title: "Error!",
+        text: "You must select an item first!",
+        icon: "error",
+        button: "Close",
+      });
     }
   });
+
+  $(document).ready(function(){
+    autocomplete();
+  function autocomplete(){
+    $('#member_input').autocomplete({
+      minLength:4, 
+      delay: 0,
+      selectFirst: true,
+      autoFocus: true,
+      response: function(event, ui) {
+          ui.item = ui.content[0];
+          $(this).data('ui-autocomplete')._trigger('select', 'autocompleteselect', ui);
+          $(this).autocomplete('close');
+      },
+      source: function(request,response){
+        $.ajax({
+            url: '/sales/member_autocomplete/',
+            data: { 'input': $('#member_input').val() },
+            type: "GET",
+            success: function(data){
+              var parser = jQuery.parseJSON(data); 
+
+              console.log(parser);         
+              response(
+              $.map(parser, function() {
+                  var id = parser.id;
+                  var card_number = parser.card_number;
+                  var fullname = parser.firstname + " " + parser.lastname;
+                  var load = parser.load_balance;
+                  return {
+                      label: card_number,
+                      id: id,
+                      fullname: fullname,
+                      load: load
+                  }
+                }));
+            },
+            error: function(jqXHR, textStatus, errorThrown) { // What to do if we fail
+              console.log(JSON.stringify(jqXHR));
+              console.log("AJAX error: " + textStatus + ' : ' + errorThrown);
+              }
+          });
+      },
+      select: function(event, ui) {
+        event.preventDefault();
+        $(this).val(ui.item.label);
+        $('#member_input').removeAttr('style');
+        $('#memberid').val(ui.item.id);
+        $('#membercardno').val(ui.item.label);
+        $('#membername').text(ui.item.fullname);
+        $('#memberload').val(ui.item.load);
+        align_price();
+      }
+    });
+  }
+  });
+
+  $(document).on('keyup', '#member_input', function() {
+    if(!this.value)
+    {
+      $('#membercardno').val('');
+      $('#memberid').val('');
+      $('#membername').text('');
+      align_price();
+    }
+  });
+
+  $('.payment').on('hide.bs.modal', function(){
+     $('#payment-amount-cash').val('');
+     $('#change-amount-cash').val('');
+     $('#payment-amount-cash').removeAttr('style');
+     $('#basic-addon-paymentamount-cash').removeAttr('style');
+     $('#error-payment-amount-cash').attr('hidden', true);
+  });
+
+  $(document).on('input', '#guest_input', function() {
+      $('#guest_input').removeAttr('style');
+  });
+
+  if(localStorage.getItem("sold"))
+  {
+    swal({
+            title: "Success!",
+            text: "The transaction has been completed!",
+            icon: "success",
+            button: "Close",
+          });
+    localStorage.clear();
+  }
+
+  $(document).on('click', '#paysale', function(){
+    if($('#memberid').val().length <= 0)
+    {
+      alert('Im a Guest');
+    }
+    else
+    {
+      var itemsBought = [];
+      
+      $("#display_table .itemrow").each(function() { 
+        var arrayOfThisRow = [];
+        var desc = $(this).find('.description').text();
+        var id = $('.second_div').find($('[data-description="'+ desc +'"]')).attr('data-id');
+        var qty = $(this).find('.quantity');
+        var price = $(this).find('.itemprice');
+        var subtotal = $(this).find('.itemsubtotal');
+
+        arrayOfThisRow.push(id,qty.val(),price.text(), subtotal.text()); 
+        itemsBought.push(arrayOfThisRow);
+      });
+
+      console.log(itemsBought);
+
+      $.ajax({
+        type: 'POST',
+        url: '/sales/member_cashpayment',
+        data: {
+                '_token': $('input[name=_token]').val(),
+                'member_id': $("#memberid").val(),
+                'discount_id': $('#discountvalue').attr('discount_id'),
+                'amount_due': $("#total-price-cash").val(),
+                'amount_paid': $("#payment-amount-cash").val(),
+                'change_amount': $("#change-amount-cash").val(),
+                'vat': $("#posvat").val(),
+                'itemsbought': itemsBought
+              },
+        success: function(data) {
+          console.log(data);
+          localStorage.setItem("sold","success");
+          window.location.reload();
+        },
+        error: function(jqXHR, textStatus, errorThrown) { // What to do if we fail
+          console.log(JSON.stringify(jqXHR));
+          console.log("AJAX error: " + textStatus + ' : ' + errorThrown);
+        }
+      });
+    }
+  });
+
+
 
 
 </script>

@@ -94,14 +94,14 @@ SALES
         <tr>
           <th scope="row" class="td-center">{{ date("F d, Y", strtotime($sale->transaction_date)) }}</th>
           <td class="td-center">
-            @if($sale->customer_id == 0)
+            @if($sale->member_id == 0)
               {{$sale->guest->customer_name}}
             @else
               {{$sale->user->firstname . " " . $sale->user->lastname}}
             @endif
           </td>
           <td class="td-center">
-            @if($sale->customer_id == 0)
+            @if($sale->member_id == 0)
               {{"Walk-in"}}
             @else
               {{ucfirst($sale->user->role)}}

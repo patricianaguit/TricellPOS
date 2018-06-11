@@ -22,7 +22,7 @@
       <td>{{$details->product->product_name}}</td>
       <td>{{$details->quantity}}</td>
       <td>₱ {{$details->product->price}}</td>
-      <td class="totalprice">₱ {{number_format($details->subtotal,2, '.', '')}}</td>
+      <td class="totalprice">₱ {{number_format($details->subtotal * $details->quantity,2, '.', '')}}</td>
     </tr>
     @endforeach
 

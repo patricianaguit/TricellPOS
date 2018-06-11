@@ -53,12 +53,11 @@
     /*display: flex !important;
      flex-wrap: wrap !important;
      */
-     overflow-y: auto !important;
-     height:auto !important;
+     height: 92.6% !important;
      padding: 50px;
 }
  .table.table-total td, .table.table-total th {
-     padding: .01rem;
+     padding: .5rem;
      vertical-align: top;
      border-top: 1px solid #848484;
 }
@@ -67,7 +66,7 @@
 }
  #left{
      background-color: #fff!important;
-     height:auto !important;
+    height:auto!important;
 }
  .table.pos-table thead th{
      border-bottom: 0.5px solid #dee2e6 !important;
@@ -102,7 +101,7 @@
      height: 55px !important;
 }
  .table td, .table th {
-     font-size: 11px !important;
+     font-size: 12px !important;
 }
  .table td {
      text-align:: inherit !important;
@@ -236,7 +235,7 @@
      height: 30px;
 }
  .table.pos-table tbody {
-     height:362px !important;
+     height:305px !important;
      overflow-y: auto;
 }
  .table.pos-table thead {
@@ -282,39 +281,9 @@
       margin-top: -2px !important;
       position: absolute !important;
       top: 50% !important;
-      width: 0 !important; }
-
-.row.items-table {
-    height: 60%;
-}
-
-.row.div-total-table {
-    height: 10% !important;
-}*/
-
-.blink{
-border: 1px solid red !important;
-    -webkit-background-clip: padding-box; /* for Safari */
-    background-clip: padding-box; /* for IE9+, Firefox 4+, Opera, Chrome */
-  -webkit-animation: underBlink 1s infinite;
-  -moz-animation:    underBlink 1s infinite;
-  -o-animation:      underBlink 1s infinite;
-  animation:         underBlink 1s infinite;
-}
-
-@-webkit-keyframes underBlink {
-  0%   { border-bottom: 1px solid rgba(0, 0, 0, .2); }
-  100% { border-bottom: 1px solid rgba(0, 0, 0, .5); }
-}
-@-moz-keyframes underBlink {
-  0%   { border-bottom: 1px solid rgba(0, 0, 0, .2); }
-  100% { border-bottom: 1px solid rgba(0, 0, 0, .5); }
-}
-@-o-keyframes underBlink {
-  0%   { border-bottom: 1px solid rgba(0, 0, 0, .2); }
-  100% { border-bottom: 1px solid rgba(0, 0, 0, .5); }
-}
-@keyframes underBlink {
-  0%   { border-bottom: 1px solid rgba(0, 0, 0, .2); }
-  100% { border-bottom: 1px solid rgba(0, 0, 0, .5); }
+      width: 0 !important; } */
+.error-pos {
+  color: red !important;
+  font-size: 13px;
+  margin-bottom: -0.2rem;
 }

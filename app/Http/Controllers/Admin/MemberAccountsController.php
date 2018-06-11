@@ -26,8 +26,8 @@ class MemberAccountsController extends Controller
     {
         $rules = array(
         'card_number' => 'required|numeric|unique:users,card_number',
-        'firstname' => 'required|alpha',
-        'lastname' => 'required|alpha',
+        'firstname' => 'required',
+        'lastname' => 'required',
         'address' => 'required',
         'contact' => 'required|digits_between:7,11',
         'email' => 'required|email|unique:users,email',
@@ -72,8 +72,8 @@ class MemberAccountsController extends Controller
 
         $rules = array(
         'card_number' => "required|numeric|unique:users,card_number,$member->id",
-        'firstname' => 'required|alpha',
-        'lastname' => 'required|alpha',
+        'firstname' => 'required',
+        'lastname' => 'required',
         'address' => 'required',
         'contact' => 'required|digits_between:7,11',
         'email' => "required|email|unique:users,email,$member->id",

@@ -38,10 +38,10 @@ a.nav-link.active {
     border-radius: 5px !important;
 }
 
-.hello.dropdown:hover>.dropdown-menu, #logsdrop.dropdown:hover>.dropdown-menu {
+/*.hello.dropdown:hover>.dropdown-menu, #logsdrop.dropdown:hover>.dropdown-menu {
   display: block;
   /*margin-left: 600px!important;*/
-}
+}*/
 
 .nav-item.dropdown.hello {
   margin-left: 630px!important;

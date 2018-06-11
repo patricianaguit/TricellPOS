@@ -183,7 +183,8 @@ return [
         'branch_name' => 'Branch Name',
         'contact_number' => 'Contact Number',
         'tin' => 'TIN',
-        'vat' => 'VAT'
+        'vat' => 'VAT',
+        'lowstock' => 'Low Stock Indicator'
     ],
 
 ];

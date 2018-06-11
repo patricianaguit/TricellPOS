@@ -37,6 +37,10 @@ class SalesLogsController extends Controller
 
     public function destroy(Request $request)
     {
+        if($request->type == 'guest')
+        {
+            $guest = Guest::find($request->cust_id)->delete();
+        }
         $sales = Sale::find($request->sales_id)->delete();
         $salesdetails = Sales_details::where('sales_id', $request->sales_id)->delete();
     }

@@ -13,7 +13,7 @@ SYSTEM PREFERENCES
 <div class="container">
   <!----sys pref nav--->
   <nav>
-    <h3 class="title">Profile</h3>
+    <h3 class="title">System Profile</h3>
     <div class="nav nav-tabs justify-content-end memberstab" id="nav-tab" role="tablist">
       
       <a class="nav-item nav-link active " id="nav-profile-tab" href="/preferences/profile" role="tab" aria-controls="nav-profile" aria-selected="true">Profile
@@ -86,6 +86,14 @@ SYSTEM PREFERENCES
                 <p id="error-vat-profile" class="error-profile" hidden="hidden"></p>
                 </div>
               </div>
+              <div class="form-group row mx-auto">
+                <label for="lowstock" class="col-form-label col-md-3 modal-mobile">Low Stock Indicator</label>
+                <div class="col-md-9">
+                  <input type="text" name="lowstock" value="{{$profile->low_stock}}" class="form-control" id="lowstock-profile">
+                  <p id="error-lowstock-profile" class="error-profile" hidden="hidden"></p>
+                </div>
+              </div>
+            </div>
               
             </div>
           </fieldset>
@@ -153,6 +161,7 @@ SYSTEM PREFERENCES
             'email': $("#email-profile").val(),
             'tin': $("#tin-profile").val(),
             'vat': $("#vat-profile").val(),
+            'lowstock': $("#lowstock-profile").val(),
           },
     success: function(data) {
       console.log(data);
@@ -229,6 +238,18 @@ SYSTEM PREFERENCES
             $('#error-vat-profile').attr("hidden", true);
             $('#vat-profile').removeAttr('style');
             $('#basic-addon-profile').removeAttr('style');
+          }
+
+          if(data.errors.lowstock)
+          {
+            $('#error-lowstock-profile').removeAttr("hidden");
+            $('#error-lowstock-profile').text(data.errors.lowstock);
+            $('#lowstock-profile').css("border", "1px solid #cc0000");
+          }
+          else
+          {
+            $('#error-lowstock-profile').attr("hidden", true);
+            $('#lowstock-profile').removeAttr('style');
           }
       }
       else

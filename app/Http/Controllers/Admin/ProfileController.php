@@ -25,7 +25,8 @@ class ProfileController extends Controller
         'contact_number' => 'required|digits_between:7,11',
         'email' => 'required|email',
         'tin' => 'required',
-        'vat' => 'required|numeric'
+        'vat' => 'required|numeric',
+        'lowstock' => 'required|integer'
         );
 
         $validator = Validator::make($request->all(), $rules);
@@ -41,7 +42,8 @@ class ProfileController extends Controller
     		'contact_number' => $request->contact_number,
     		'email' => $request->email,
     		'tin' => $request->tin,
-    		'vat' => $request->vat
+    		'vat' => $request->vat,
+            'low_stock' => $request->lowstock,
     		]);
         }
     }

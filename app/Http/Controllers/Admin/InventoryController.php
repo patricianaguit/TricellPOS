@@ -5,6 +5,7 @@ use App\Http\Controllers\Controller;
 use App\Product;
 use Response;
 use Validator;
+use DB;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\RedirectResponse;
@@ -107,13 +108,73 @@ class InventoryController extends Controller
 
     public function lowstocks()
     {
-        $products = Product::where('product_qty', '<=', 20)->orderBy('product_name', 'asc')->paginate(7);
-        return view('admin.inventory')->with('products', $products);
+        $lowstock = DB::table('profile')->select('low_stock')->where('id', 1)->first();
+        $products = Product::where('product_qty', '<=', $lowstock->low_stock)->orderBy('product_name', 'asc')->paginate(7);
+        return view('admin.inventorylow')->with('products', $products);
+    }
+
+    public function search_low(Request $request)
+    {
+        $search = $request->search;
+        $lowstock = DB::table('profile')->select('low_stock')->where('id', 1)->first();
+
+        if($search == "")
+        {
+            return Redirect::to('inventory/low_stocks');
+        }
+        else
+        {
+            $products = Product::where(function($query) use ($request, $search, $lowstock)
+                {
+                    $query->where('product_name', 'LIKE', '%' . $search . '%')->orWhere('product_desc', 'LIKE', '%' . $search . '%');})->where(function($query) use ($request, $search, $lowstock)
+                {
+                    $query->where('product_qty', '<=', $lowstock->low_stock);
+                })->paginate(7);
+
+            $products->appends($request->only('search'));
+            $count = $products->count();
+            $totalcount = Product::where(function($query) use ($request, $search, $lowstock)
+                {
+                    $query->where('product_name', 'LIKE', '%' . $search . '%')->orWhere('product_desc', 'LIKE', '%' . $search . '%');})->where(function($query) use ($request, $search, $lowstock)
+                {
+                    $query->where('product_qty', '<=', $lowstock->low_stock);
+                })->count();
+            return view('admin.inventorylow')->with(['products' => $products, 'search' => $search, 'count' => $count, 'totalcount' => $totalcount]);   
+        }
     }
 
     public function healthystocks()
     {
         $products = Product::where('product_qty', '>', 20)->orderBy('product_name', 'asc')->paginate(7);
-        return view('admin.inventory')->with('products', $products);
+        return view('admin.inventoryhealthy')->with('products', $products);
+    }
+
+    public function search_healthy(Request $request)
+    {
+        $search = $request->search;
+
+        if($search == "")
+        {
+            return Redirect::to('inventory/healthy_stocks');
+        }
+        else
+        {
+            $products = Product::where(function($query) use ($request, $search)
+                {
+                    $query->where('product_name', 'LIKE', '%' . $search . '%')->orWhere('product_desc', 'LIKE', '%' . $search . '%');})->where(function($query) use ($request, $search)
+                {
+                    $query->where('product_qty', '>', 20);
+                })->paginate(7);
+
+            $products->appends($request->only('search'));
+            $count = $products->count();
+            $totalcount = Product::where(function($query) use ($request, $search)
+                {
+                    $query->where('product_name', 'LIKE', '%' . $search . '%')->orWhere('product_desc', 'LIKE', '%' . $search . '%');})->where(function($query) use ($request, $search)
+                {
+                    $query->where('product_qty', '>', 20);
+                })->count();
+            return view('admin.inventoryhealthy')->with(['products' => $products, 'search' => $search, 'count' => $count, 'totalcount' => $totalcount]);   
+        }
     }
 }

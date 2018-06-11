@@ -120,7 +120,7 @@ SALES
           <td> <button type="button" class="btn btn-secondary edit-btn" id="view-receipt" data-id="{{$sale->id}}" data-discount_id="@if(isset($sale->discount->discount_name)){{$sale->discount->id}}@else
             {{''}}
             @endif"><i class="material-icons md-18">receipt</i></button>
-		  <button type="button" class="btn btn-danger del-btn" id="delete-sales" data-id="{{$sale->id}}" data-toggle="modal" data-target=".delete"><i class="material-icons md-18">delete</i></button>
+		  <button type="button" class="btn btn-danger del-btn" id="delete-sales" data-id="{{$sale->id}}" data-custid="@if(isset($sale->guest->id)) {{$sale->guest->id}} @else {{$sale->user->id}} @endif" data-type="@if(isset($sale->user->role)) {{'member'}} @else {{'guest'}} @endif" data-toggle="modal" data-target=".delete"><i class="material-icons md-18">delete</i></button>
 
           </td>
         </tr>
@@ -164,6 +164,8 @@ SALES
     <div class="modal-body">
         <center> <p> Are you sure you want to delete this <b>sales log</b>?</p> </center>
         <span class="sales-id-delete" hidden="hidden"></span>
+        <span class="cust-id-delete" hidden="hidden"></span>
+        <span class="cust-type-delete" hidden="hidden"></span>
         </div>
 
     <div class="modal-footer" id="modal-footer-sales-delete">
@@ -318,6 +320,8 @@ SALES
 
   $(document).on('click', '#delete-sales', function() {
     $('.sales-id-delete').text($(this).data('id'));
+    $('.cust-id-delete').text($(this).data('custid'));
+    $('.cust-type-delete').text($(this).data('type'));
   });
 
   $('#modal-footer-sales-delete').on('click', '#destroy-sales', function(){
@@ -326,7 +330,9 @@ SALES
     url: '/logs/sales/delete_sales',
     data: {
       '_token': $('input[name=_token]').val(),
-      'sales_id': $('.sales-id-delete').text()
+      'sales_id': $('.sales-id-delete').text(),
+      'cust_id': $('.cust-id-delete').text(),
+      'type': $('.cust-type-delete').text(),
     },
     success: function(data){
       localStorage.setItem("delete","success");

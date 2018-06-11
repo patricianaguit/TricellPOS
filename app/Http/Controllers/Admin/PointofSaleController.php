@@ -10,8 +10,8 @@ use App\Product;
 use App\Sale;
 use App\Reload_sale;
 use App\Sales_details;
-use Response;
 use App\Discount;
+use Response;
 use Validator;
 use DB;
 
@@ -27,14 +27,16 @@ class PointofSaleController extends Controller
         $allitems = Product::orderBy('product_name', 'asc')->get();
     	$items = Product::orderBy('product_name', 'asc')->simplepaginate(32);
         $vat = DB::table('profile')->select('vat')->where('id', 1)->first();
+        $lowstock = DB::table('profile')->select('low_stock')->where('id', 1)->first();
         $discounts = Discount::all();
-    	return view('admin.pos')->with(['items' => $items, 'allitems' => $allitems, 'vat' => $vat, 'discounts' => $discounts]);
+    	return view('admin.pos')->with(['items' => $items, 'allitems' => $allitems, 'vat' => $vat,'lowstock' => $lowstock, 'discounts' => $discounts]);
     }
 
     public function buttonload()
     {
         $items = Product::orderBy('product_name', 'asc')->simplepaginate(32);
-        return view('admin.posbuttons')->with('items', $items)->render();
+        $lowstock = DB::table('profile')->select('low_stock')->where('id', 1)->first();
+        return view('admin.posbuttons')->with(['items' => $items, 'lowstock' => $lowstock])->render();
     }
 
     public function member_autocomplete(Request $request)

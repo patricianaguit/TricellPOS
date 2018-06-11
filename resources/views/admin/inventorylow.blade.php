@@ -7,7 +7,7 @@ INVENTORY
 @section('css')
 {{ asset('imports/css/inventory.css') }}
 @endsection
-
+  
 @section('content')
 
 </br>
@@ -17,9 +17,9 @@ INVENTORY
     <h3 class="title">Inventory</h3>
     <div class="nav nav-tabs justify-content-end memberstab" id="nav-tab" role="tablist">
       
-      <a class="nav-item nav-link active " id="nav-profile-tab" href="/inventory/profile" role="tab" aria-controls="nav-profile" aria-selected="true">All Stocks
+      <a class="nav-item nav-link" id="nav-profile-tab" href="/inventory" role="tab" aria-controls="nav-profile" aria-selected="true">All Stocks
       <a class="nav-item nav-link" id="nav-discount-tab"  href="/inventory/healthy_stocks" role="tab" aria-controls="nav-discount" aria-selected="false">Healthy Stocks</a>
-      <a class="nav-item nav-link" id="nav-discount-tab"  href="/inventory/low_stocks" role="tab" aria-controls="nav-discount" aria-selected="false">Low Stocks</a>
+      <a class="nav-item nav-link active " id="nav-discount-tab"  href="/inventory/low_stocks" role="tab" aria-controls="nav-discount" aria-selected="false">Low Stocks</a>
         
       </div>
     </nav>
@@ -35,7 +35,7 @@ INVENTORY
     </div>
 
     <div class="col-md-4">
-      <form class="form ml-auto" action="/inventory/search" method="GET">
+      <form class="form ml-auto" action="/inventory/search_low" method="GET">
 			<div class="input-group">
     			<input class="form-control" name="search" type="text" placeholder="Search" aria-label="Search" style="padding-left: 20px; border-radius: 40px;" id="product-search">
     			<div class="input-group-addon" style="margin-left: -50px; z-index: 3; border-radius: 40px; background-color: transparent; border:none;">

@@ -5,7 +5,7 @@ use Auth;
 
 use Closure;
 
-class AdminMiddleware
+class StaffMiddleware
 {
     /**
      * Handle an incoming request.
@@ -19,7 +19,7 @@ class AdminMiddleware
 
         if(Auth::check())
         {
-            if(Auth::user()->role == 'admin')
+            if(Auth::user()->role == 'staff')
             {
                 return $next($request);
             }

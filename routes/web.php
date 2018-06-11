@@ -84,3 +84,14 @@ Route::group(['middleware' => ['admin']], function () {
    	Route::post('sales/member_reload', 'Admin\PointofSaleController@reload');
    
 });
+
+Route::group(['middleware' => ['staff']], function () {
+	Route::get('staff/sales', 'Staff\PointofSaleController@index');
+   	Route::get('staff/sales/buttons', 'Staff\PointofSaleController@buttonload');
+   	Route::post('staff/sales/member_cashpayment', 'Staff\PointofSaleController@member_cashpayment');
+   	Route::post('staff/sales/member_loadpayment', 'Staff\PointofSaleController@member_loadpayment');
+   	Route::get('staff/sales/member_autocomplete', 'Staff\PointofSaleController@member_autocomplete');
+   	Route::post('staff/sales/guest_cashpayment', 'Staff\PointofSaleController@guest_cashpayment');
+   	Route::post('staff/sales/member_reload', 'Staff\PointofSaleController@reload');
+
+});

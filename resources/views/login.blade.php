@@ -28,7 +28,7 @@
 
 
       <span class="glyphicon glyphicon-user"></span>
-      <input type="text" class="form-control" id="log_user_form" name="username" placeholder="Username" pattern="[a-z A-Z ]{2,30}" title="First Name must include a minimum of 2 and a maximum of 30 alphabetical characters only."required>
+      <input type="text" class="form-control" id="log_user_form" name="username" placeholder="Username" required="">
 
       <span class="glyphicon glyphicon-lock"></span>
       <input type="password" class="form-control" name="password" id="log_pass_form" placeholder="Password" required>

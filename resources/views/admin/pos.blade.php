@@ -198,28 +198,42 @@ SALE
                 
                 <form>
                   <div class="form-group">
-                    <div class="containter-fluid">
-                      
-                      <table class="table" id="table-modal">
-                        <tbody>
-                          <tr class>
-                            <td>Current Load</td>
-                            <td>P1000.00</td>
-                          </tr>
-                          <tr class="table-success">
-                            <td>Amount</td>
-                            <td>P100</td>
-                          </tr>
-                          
-                        </tbody>
-                      </table>
+                    <div class="container-fluid">
+                      <br>
+                      <div class="form-group row mx-auto">
+                        <label for="currentload" class="col-form-label col-sm-4 modal-pay">Current Load:</label>
+
+                          <div class="col-sm-8">
+                            <div class="input-group">
+                              <div class="input-group-prepend">
+                                  <span class="input-group-text" id="basic-addon-currentload-card">₱</span>
+                              </div>
+                              <input type="text" name="paymentamount" class="form-control modal-add" id="current-load-card" disabled="disabled">
+                            </div>
+                            <p id="error-current-load-card" class="error-pos" hidden="hidden"></p>
+                          </div>
+                        </div>
+
+                        <div class="form-group row mx-auto">
+                        <label for="loadpay" class="col-form-label col-sm-4 modal-pay">Amount to Pay:</label>
+
+                          <div class="col-sm-8">
+                            <div class="input-group">
+                              <div class="input-group-prepend">
+                                  <span class="input-group-text" id="basic-addon-loadpay-card">₱</span>
+                              </div>
+                              <input type="text" name="paymentamount" class="form-control modal-add" id="loadpay-card" disabled="disabled">
+                            </div>
+                            <p id="error-loadpay-card" class="error-pos" hidden="hidden"></p>
+                          </div>
+                        </div>
+                      </div>
                     </div>
-                  </div>
                   
                 </form>
                 <div class="modal-footer">
-                  <button type="button" class="btn btn-danger btn-savemem-modal reload-btn" data-toggle="modal" data-target=".reload">Reload</button>
-                  <button type="button" class="btn btn-info btn-savemem-modal" data-dismiss="modal">Pay</button>
+                  <button type="button" class="btn btn-danger btn-savemem-modal reload-btn" id="reload" hidden="hidden">Reload</button>
+                  <button type="button" class="btn btn-info btn-savemem-modal" id="payload">Pay</button>
                   <button type="button" class="btn btn-secondary btn-close-modal" data-dismiss="modal">Cancel</button>
                 </div>
               </div>
@@ -240,27 +254,71 @@ SALE
                 
                 <form>
                   <div class="form-group">
-                    <div class="containter-fluid">
-                      
-                      <table class="table" id="table-modal">
-                        <tbody>
-                          <tr class="table-success">
-                            <td>Current Load</td>
-                            <td>P100</td>
-                          </tr>
-                          
-                          <tr>
-                            <td>Amount</td>
-                            <td>  <input type="text" class="form-control modal-add" id="address"></td>
-                          </tr>
-                        </tbody>
-                      </table>
+                    <div class="container-fluid">
+                    <br>
+                      <div class="form-group row mx-auto">
+                        <label for="points" class="col-form-label col-sm-4 modal-load">Current Load:</label>
+                          <div class="col-sm-8">
+                            <div class="input-group">
+                              <div class="input-group-prepend">
+                                  <span class="input-group-text" id="basic-addon-load">₱</span>
+                              </div>
+                              <input type="text" name="load" class="form-control modal-add" id="load-reload" disabled="disabled">
+                            </div>
+
+                            <p id="error-load-reload" class="error-pos" hidden="hidden"></p>
+                          </div>
+                        </div>
+
+                        <div class="form-group row mx-auto">
+                        <label for="points" class="col-form-label col-sm-4 modal-points">Reload Amount:</label>
+                          <div class="col-sm-8">
+                            <div class="input-group">
+                              <div class="input-group-prepend">
+                                <span class="input-group-text" id="basic-addon-reload-amount">₱</span>
+                              </div>
+                              <input type="text" name="reload-amount" class="form-control modal-add" id="reload-amount-reload" autocomplete="off">
+                            </div>
+
+                            <p id="error-reload-amount-reload" class="error-pos" hidden="hidden"></p>
+                          </div>
+                        </div>
+
+                        <div class="form-group row mx-auto">
+                        <label for="points" class="col-form-label col-sm-4 modal-load">Payment Amount:</label>
+
+                          <div class="col-sm-8">
+                            <div class="input-group">
+                              <div class="input-group-prepend">
+                                  <span class="input-group-text" id="basic-addon-payment-amount">₱</span>
+                              </div>
+                              <input type="text" name="payment-amount" class="form-control modal-add" id="payment-amount-reload" autocomplete="off">
+                            </div>
+
+                            <p id="error-payment-amount-reload" class="error-pos" hidden="hidden"></p>
+                          </div>
+                        </div>
+
+                        <div class="form-group row mx-auto">
+                        <label for="points" class="col-form-label col-sm-4 modal-load">Change:</label>
+
+                          <div class="col-sm-8">
+                            <div class="input-group">
+                              <div class="input-group-prepend">
+                                  <span class="input-group-text" id="basic-addon-change">₱</span>
+                              </div>
+                              <input type="text" name="change" class="form-control modal-add" id="change-reload" disabled="disabled">
+                            </div>
+
+                            <p id="error-change-reload" class="error-pos" hidden="hidden"></p>
+                          </div>
+                        </div>
                     </div>
                   </div>
                   
                 </form>
                 <div class="modal-footer">
-                  <button type="button" class="btn btn-info btn-savemem-modal" data-dismiss="modal">Reload</button>
+                  <button type="button" class="btn btn-info btn-savemem-modal" id="update-reload-member">Reload</button>
                   <button type="button" class="btn btn-secondary btn-close-modal" data-dismiss="modal">Cancel</button>
                 </div>
               </div>
@@ -467,6 +525,7 @@ SALE
       whichtr.find($(this)).val(1);
       whichtr.find($('.itemsubtotal')).text(itemprice); 
     }
+    update_total();
   });
   $(document).on('keydown','#qty_input',function(event){
     if (event.which == 13) {
@@ -605,46 +664,247 @@ SALE
 
   $(document).on('click', '.lpayment-btn', function()
   {
+    var rowcount = $('#display_table tbody').find('tr').length;
     var member_input = $('#member_input').val();
     var member_name = $('#membername').text();
 
-    if(member_name == '' && member_input == '')
+    if(rowcount > 0)
     {
-      swal({
-            title: "Error!",
-            text: "Please tap the customer card first!",
-            icon: "error",
-            button: "Close",
-          });
-
-      $('#member_input').css("border", "1px solid #cc0000");
-      for(var i = 0; i < 3; i++)
+      if(member_name == '' && member_input == '')
       {
-        $('#member_input').fadeOut().fadeIn('slow');
+        swal({
+              title: "Error!",
+              text: "Please tap the customer card first!",
+              icon: "error",
+              button: "Close",
+            });
+
+        $('#member_input').css("border", "1px solid #cc0000");
+        for(var i = 0; i < 3; i++)
+        {
+          $('#member_input').fadeOut().fadeIn('slow');
+        }
       }
-    }
-    else if(member_name == '' && member_input != '')
-    {
-      swal({
-            title: "Error!",
-            text: "Please double check the card number!",
-            icon: "error",
-            button: "Close",
-          });
-
-      $('#member_input').css("border", "1px solid #cc0000");
-      for(var i = 0; i < 3; i++)
+      else if(member_name == '' && member_input != '')
       {
-        $('#member_input').fadeOut().fadeIn('slow');
+        swal({
+              title: "Error!",
+              text: "Please double check the card number!",
+              icon: "error",
+              button: "Close",
+            });
+
+        $('#member_input').css("border", "1px solid #cc0000");
+        for(var i = 0; i < 3; i++)
+        {
+          $('#member_input').fadeOut().fadeIn('slow');
+        }
+      }
+      else
+      {
+        $('#member_input').removeAttr('style');
+        $('.lpayment').modal('show');
+
+        var currentload = parseFloat($('#memberload').val());
+        var amount = parseFloat($('.totalprice').text());
+
+        $('#current-load-card').val(currentload.toFixed(2));
+        $('#loadpay-card').val(amount.toFixed(2));
+
+
+        if(currentload < amount)
+        {
+          $('#reload').removeAttr('hidden');
+          $('#payload').attr('hidden', true);
+        }
+        else
+        {
+          $('#reload').attr('hidden', true);
+          $('#payload').removeAttr('hidden');
+        }  
       }
     }
     else
     {
+      $('#guest_input').removeAttr('style');
       $('#member_input').removeAttr('style');
-      $('.lpayment').modal('show');
+      swal({
+        title: "Error!",
+        text: "You must select an item first!",
+        icon: "error",
+        button: "Close",
+      });
     } 
   });
-  
+
+  $(document).on('click', '#payload', function(){
+    var itemsBought = [];
+    $("#display_table .itemrow").each(function() { 
+        var arrayOfThisRow = [];
+        var desc = $(this).find('.description').text();
+        var id = $('.second_div').find($('[data-description="'+ desc +'"]')).attr('data-id');
+        var qty = $(this).find('.quantity');
+        var price = $(this).find('.itemprice');
+        var subtotal = $(this).find('.itemsubtotal');
+
+        arrayOfThisRow.push(id,qty.val(),price.text(), subtotal.text()); 
+        itemsBought.push(arrayOfThisRow);
+    });
+
+    $.ajax({
+      type: 'POST',
+      url: '/sales/member_loadpayment',
+      data: {
+              '_token': $('input[name=_token]').val(),
+              'member_id': $("#memberid").val(),
+              'discount_id': $('#discountvalue').attr('discount_id'),
+              'amount_paid': $("#loadpay-card").val(),
+              'current_load': $("#current-load-card").val(),
+              'vat': $("#posvat").val(),
+              'itemsbought': itemsBought
+            },
+      success: function(data) {
+        localStorage.setItem("sold","success");
+        window.location.reload();
+      },
+      error: function(jqXHR, textStatus, errorThrown) { // What to do if we fail
+        console.log(JSON.stringify(jqXHR));
+        console.log("AJAX error: " + textStatus + ' : ' + errorThrown);
+      }
+    });
+  });
+
+  $(document).on('click', '#reload', function(){
+    $('.reload').modal('show');
+    $('.lpayment').modal('hide');
+    var currentload = parseFloat($('#memberload').val());
+    $('#load-reload').val(currentload.toFixed(2));
+
+    if($('#change-reload').val() == ' ')
+    {
+      $('#update-reload-member').removeAttr('disabled');
+    }
+    else
+    {
+      $('#update-reload-member').attr('disabled', true);
+    }
+  });
+
+  $('.reload').on('hide.bs.modal', function(){
+    //clear input boxes
+    $('#reload-amount-reload').val('');
+    $('#payment-amount-reload').val('');
+    $('#change-reload').val('');
+
+    //hide error messages in modal
+    $('#error-reload-amount-reload').attr('hidden', true);
+    $('#error-reload-amount-reload').text('');
+    $('#error-reload-amount-reload').attr('hidden', true);
+    $('#error-payment-amount-reload').text('');
+
+    //remove css style in modal
+    $('#reload-amount-reload').removeAttr('style')
+    $('#basic-addon-reload-amount').removeAttr('style');
+    $('#payment-amount-reload').removeAttr('style')
+    $('#basic-addon-payment-amount').removeAttr('style');
+
+    $('#update-reload-member').attr('disabled', true);
+  });
+
+  $('#reload-amount-reload, #payment-amount-reload').on('input',function() {
+      var reload_amount = parseFloat($('#reload-amount-reload').val());
+      var payment = parseFloat($('#payment-amount-reload').val());
+      $('#change-reload').val((payment - reload_amount ? payment - reload_amount : 0).toFixed(2));
+
+      //isNaN
+      if(isNaN($('#reload-amount-reload').val()))
+      {
+        $('#error-reload-amount-reload').removeAttr("hidden");
+        $('#error-reload-amount-reload').text("Reload Amount field is not a valid amount.");
+        $('#reload-amount-reload').css("border", "1px solid #cc0000");
+        $('#basic-addon-reload-amount').css("border", "1px solid #cc0000");
+        $('#update-reload-member').attr('disabled', true);
+      }
+      else
+      {
+        $('#error-reload-amount-reload').attr("hidden", true);
+        $('#error-reload-amount-reload').text("");
+        $('#reload-amount-reload').removeAttr("style")
+        $('#basic-addon-reload-amount').removeAttr("style");
+      }
+
+      if(isNaN($('#payment-amount-reload').val()))
+      {
+        $('#error-payment-amount-reload').removeAttr("hidden");
+        $('#error-payment-amount-reload').text("Payment Amount field is not a valid amount.");
+        $('#payment-amount-reload').css("border", "1px solid #cc0000");
+        $('#basic-addon-payment-amount').css("border", "1px solid #cc0000");
+        $('#update-reload-member').attr('disabled', true);
+      }
+      else
+      {
+        $('#error-payment-amount-reload').attr("hidden", true);
+        $('#error-payment-amount-reload').text("");
+        $('#payment-amount-reload').removeAttr("style")
+        $('#basic-addon-payment-amount').removeAttr("style");
+      }
+
+      //Reload is greater than payment
+      if((reload_amount > payment)) // && (payment != '' || payment == ''))
+      {
+        $('#error-payment-amount-reload').removeAttr("hidden");
+        $('#error-payment-amount-reload').text("Payment cannot be less than Reload Amount");
+        $('#payment-amount-reload').css("border", "1px solid #cc0000");
+        $('#basic-addon-payment-amount').css("border", "1px solid #cc0000");
+        $('#update-reload-member').attr('disabled', true);
+      }
+      else if((payment != '' && reload_amount != '') &&
+        (reload_amount <= payment) && (isNaN($('#payment-amount-reload').val()) == false && isNaN($('#reload-amount-reload').val()) == false))
+      {
+        $('#payment-amount-reload').removeAttr("style")
+        $('#basic-addon-payment-amount').removeAttr("style");
+        $('#update-reload-member').removeAttr('disabled');
+      }
+      else
+      {
+        $('#update-reload-member').attr('disabled', true);
+      }
+  });
+
+  $(document).on('click', '#update-reload-member', function(event) {
+  $.ajax({
+    type: 'POST',
+    url: '/sales/member_reload',
+    data: {
+            '_token': $('input[name=_token]').val(),
+            'member_id': $("#memberid").val(),
+            'current_load': $('#load-reload').val(),
+            'reload_amount': $('#reload-amount-reload').val(),
+            'payment_amount': $('#payment-amount-reload').val(),
+            'change_amount': $('#change-reload').val()
+          },
+    success: function(data) {
+        swal({
+                title: "Success!",
+                text: "You have successfully reloaded the member's account!",
+                icon: "success",
+                button: "Close",
+              });
+        
+        var parseload = parseFloat(data);
+        var newload = parseload.toFixed(2);
+
+        $('#memberload').val(newload);
+        $('.reload').modal('hide');
+
+      },
+      error: function(jqXHR, textStatus, errorThrown) { // What to do if we fail
+        console.log(JSON.stringify(jqXHR));
+        console.log("AJAX error: " + textStatus + ' : ' + errorThrown);
+        }
+    });
+  });
+
   $(document).on('click', '.payment-btn', function()
   {
     var rowcount = $('#display_table tbody').find('tr').length;
@@ -797,15 +1057,13 @@ SALE
             data: { 'input': $('#member_input').val() },
             type: "GET",
             success: function(data){
-              var parser = jQuery.parseJSON(data); 
-
-              console.log(parser);         
+              var parser = jQuery.parseJSON(data);         
               response(
               $.map(parser, function() {
                   var id = parser.id;
                   var card_number = parser.card_number;
                   var fullname = parser.firstname + " " + parser.lastname;
-                  var load = parser.load_balance;
+                  var load = parser.balance.load_balance;
                   return {
                       label: card_number,
                       id: id,
@@ -888,8 +1146,6 @@ SALE
         itemsBought.push(arrayOfThisRow);
       });
 
-      console.log(itemsBought);
-
       $.ajax({
         type: 'POST',
         url: '/sales/member_cashpayment',
@@ -904,7 +1160,6 @@ SALE
                 'itemsbought': itemsBought
               },
         success: function(data) {
-          console.log(data);
           localStorage.setItem("sold","success");
           window.location.reload();
         },

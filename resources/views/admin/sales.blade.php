@@ -115,7 +115,7 @@ SALES
             @endif
           </td>
           <td class="td-center">₱ {{number_format($sale->amount_due,2, '.', '')}}</td>
-          <td class="td-center">{{ucfirst($sale->payment_mode)}}</td>
+          <td class="td-center">{{ucwords($sale->payment_mode)}}</td>
 
           <td> <button type="button" class="btn btn-secondary edit-btn" id="view-receipt" data-id="{{$sale->id}}" data-discount_id="@if(isset($sale->discount->discount_name)){{$sale->discount->id}}@else
             {{''}}

@@ -57,7 +57,9 @@ Route::group(['middleware' => ['admin']], function () {
    	Route::get('sales', 'Admin\PointofSaleController@index');
    	Route::get('sales/buttons', 'Admin\PointofSaleController@buttonload');
    	Route::post('sales/member_cashpayment', 'Admin\PointofSaleController@member_cashpayment');
+   	Route::post('sales/member_loadpayment', 'Admin\PointofSaleController@member_loadpayment');
    	Route::get('sales/member_autocomplete', 'Admin\PointofSaleController@member_autocomplete');
+   	Route::post('sales/member_reload', 'Admin\PointofSaleController@reload');
    	Route::get('preferences/profile', 'Admin\ProfileController@index');
    	Route::post('preferences/update_profile', 'Admin\ProfileController@edit');
    	Route::get('preferences/discounts', 'Admin\DiscountsController@index');

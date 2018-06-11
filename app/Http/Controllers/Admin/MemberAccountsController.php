@@ -111,7 +111,6 @@ class MemberAccountsController extends Controller
         $member_reload->amount_paid = $request->payment_amount;
         $member_reload->change_amount = $request->change_amount;
         $member_reload->save();
-
     }
 
     public function destroy(Request $request)

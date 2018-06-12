@@ -1,4 +1,4 @@
-@extends('layout')
+@extends('staff_layout')
 
 @section('title')
 BACKUP
@@ -16,9 +16,9 @@ BACKUP
 <h3 class="title">Backup Administration</h3>
   <nav>
     <div class="nav nav-tabs justify-content-end memberstab" id="nav-tab" role="tablist">
-      <a class="nav-item nav-link" id="nav-profile-tab"  href="/preferences/profile" role="tab" aria-controls="nav-profile" aria-selected="true">Profile
-      <a class="nav-item nav-link" id="nav-discount-tab"  href="/preferences/discounts" role="tab" aria-controls="nav-discount" aria-selected="false">Discounts</a>
-      <a class="nav-item nav-link  active" id="nav-discount-tab"  href="/preferences/backup" role="tab" aria-controls="nav-discount" aria-selected="false">Backup</a>
+      <a class="nav-item nav-link" id="nav-profile-tab"  href="/staff/preferences/profile" role="tab" aria-controls="nav-profile" aria-selected="true">Profile
+      <a class="nav-item nav-link" id="nav-discount-tab"  href="/staff/preferences/discounts" role="tab" aria-controls="nav-discount" aria-selected="false">Discounts</a>
+      <a class="nav-item nav-link  active" id="nav-discount-tab"  href="/staff/preferences/backup" role="tab" aria-controls="nav-discount" aria-selected="false">Backup</a>
       </div>
     </nav>
 <!---end of title inventory-->
@@ -29,7 +29,7 @@ BACKUP
     </div>
 
     <div class="col-md-4">
-      <form class="form ml-auto" action="/preferences/backup/search" method="GET">
+      <form class="form ml-auto" action="/staff/preferences/backup/search" method="GET">
             <div class="input-group date" id="datetimepicker4" data-target-input="nearest">
                 <input class="form-control datetimepicker-input" name="search" type="text" placeholder="Search by Date" aria-label="Search" style="padding-left: 20px; border-radius: 40px;" id="product-search" data-toggle ="datetimepicker" data-target="#datetimepicker4" autocomplete="off">
                 <div class="input-group-addon" style="margin-left: -50px; z-index: 3; border-radius: 40px; background-color: transparent; border:none;">
@@ -75,7 +75,7 @@ BACKUP
                 <td>{{ $backup['age'] }}</td>
                 <td>
                     <a class="btn btn-primary edit-btn"
-                       href="{{ url('backup/download/'.$backup['file_name']) }}"><i class="material-icons md-18">cloud_download</i>
+                       href="{{ url('staff/backup/download/'.$backup['file_name']) }}"><i class="material-icons md-18">cloud_download</i>
                     </a>
                     <button type="button" id="delete-backup" class="btn btn-xs btn-danger del-btn" data-filename="{{$backup['file_name']}}" data-toggle="modal" data-target=".delete_backup"><i class="material-icons md-18">delete</i>
                    </a>
@@ -143,7 +143,7 @@ BACKUP
 function createBackup()
 {
     localStorage.setItem("add","success");
-    window.location='{{url('backup/create') }}';
+    window.location='{{url('staff/backup/create') }}';
 }
 
 $(document).on('click', '#delete-backup', function() {
@@ -160,7 +160,7 @@ function deleteBackup(file_name)
 {
    $.ajax({
     type: 'GET',
-    url: '/backup/delete/' + file_name,
+    url: '/staff/backup/delete/' + file_name,
     data: {
       'file_name': file_name
     },
@@ -198,9 +198,9 @@ else if(localStorage.getItem("delete"))
 }
 });
 
-$(document).ready(function() {
+$(function () {
   $('#datetimepicker4').datetimepicker({
-      format: 'MMMM DD, YYYY'
+      format: "MMMM DD, YYYY"
   });
 });
 

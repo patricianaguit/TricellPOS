@@ -1,4 +1,4 @@
-@extends('stafflayout')
+@extends('staff_layout')
 
 @section('title')
 SALE
@@ -345,7 +345,7 @@ SALE
 
         <div id="mirror-pos" hidden="hidden">
           @foreach($allitems as $item)
-            <div class="col-lg-12 ">
+            <div class="col-lg-12">
               <div class="btn btn-sm btn-info full mirror-pos-button" data-id="{{$item->product_id}}" data-description="{{$item->product_name}}" data-price="{{$item->price}}" data-memprice="{{$item->member_price}}">{{str_limit($item->product_name,10)}}</div>
             </div>
           @endforeach
@@ -448,14 +448,17 @@ SALE
   }
 
   $(document).on("click",".pos-button", function() {
-      $(this).addClass('active');
+
       var id =$(this).attr("data-id");
       var price = $(this).attr("data-price");
       var description = $(this).attr("data-description");
       var checkContent =  $('#display_table').find($('.description:contains('+ description + ')')).length;
-      var checkMirror =  $('#mirror-pos').find($('[data-id="'+id +'"]')).addClass('active');
 
-
+      if(!$(this).hasClass('disabled'))
+      {
+        $(this).addClass('pos-button-active');
+        $('#mirror-pos').find($('[data-id="'+id +'"]')).addClass('pos-button-active');
+      }
 
       if($("#membercardno").val().length == 0)
       {
@@ -515,8 +518,8 @@ SALE
         var deletemirror =  $('#mirror-pos').find($('[data-description="'+description +'"]'));
         
         DeleteRow(this);
-        $(existdelete).removeClass('active');
-        $(deletemirror).removeClass('active');
+        $(existdelete).removeClass('pos-button-active');
+        $(deletemirror).removeClass('pos-button-active');
       });
   });
 
@@ -662,10 +665,10 @@ SALE
   }
 
   function update_paginate(){
-    $("#mirror-pos .btn.active").each(function(){
+    $("#mirror-pos .btn.pos-button-active").each(function(){
       var id = $(this).attr("data-id");
       var button = $('.second_div').find($('[data-id="'+ id +'"]'));
-      button.addClass("active");
+      button.addClass("pos-button-active");
     });
   };
 

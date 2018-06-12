@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\Staff;
 use App\Http\Controllers\Controller;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Collection;
@@ -48,7 +48,7 @@ class BackupController extends Controller
 
         $backups->setPath($request->url());
 
-        return view("admin.backup")->with('backups', $backups);
+        return view("staff.backup")->with('backups', $backups);
     }
 
     public function create()
@@ -108,7 +108,7 @@ class BackupController extends Controller
 
         if($search == "")
         {
-            return Redirect::to('preferences/backup');
+            return Redirect::to('staff/preferences/backup');
         }
         else
         {
@@ -160,7 +160,7 @@ class BackupController extends Controller
 
                 $totalcount = count($backupsarray);
                 $count = count($backups);
-                return view("admin.backup")->with(['backups' => $backups, 'search' => $search, 'count' => $count, 'totalcount' => $totalcount]); 
+                return view("staff.backup")->with(['backups' => $backups, 'search' => $search, 'count' => $count, 'totalcount' => $totalcount]); 
             }
             else
             {
@@ -176,7 +176,7 @@ class BackupController extends Controller
                 
                 $totalcount = count($backupsarray);
                 $count = count($backups);
-                return view("admin.backup")->with(['backups' => $backups, 'search' => $search, 'count' => $count, 'totalcount' => $totalcount]); 
+                return view("staff.backup")->with(['backups' => $backups, 'search' => $search, 'count' => $count, 'totalcount' => $totalcount]); 
             }
         }
     }

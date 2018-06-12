@@ -50,11 +50,13 @@ Route::group(['middleware' => ['admin']], function () {
 	Route::get('inventory/low_stocks', 'Admin\InventoryController@lowstocks');
 	Route::get('inventory/healthy_stocks', 'Admin\InventoryController@healthystocks');
 
-	//Logs
+	//Sales Logs
 	Route::get('logs/sales', 'Admin\SalesLogsController@index');
 	Route::post('logs/sales/showdetails', 'Admin\SalesLogsController@showdetails');
 	Route::post('logs/sales/delete_sales', 'Admin\SalesLogsController@destroy');
 	Route::get('logs/sales/filter', 'Admin\SalesLogsController@filter');
+
+	//Reload Logs
 	Route::get('logs/reload', 'Admin\ReloadLogsController@index');
 	Route::post('logs/reload/showdetails', 'Admin\ReloadLogsController@showdetails');
 	Route::get('logs/reload/filter', 'Admin\ReloadLogsController@filter');
@@ -86,6 +88,7 @@ Route::group(['middleware' => ['admin']], function () {
 });
 
 Route::group(['middleware' => ['staff']], function () {
+	//POS
 	Route::get('staff/sales', 'Staff\PointofSaleController@index');
    	Route::get('staff/sales/buttons', 'Staff\PointofSaleController@buttonload');
    	Route::post('staff/sales/member_cashpayment', 'Staff\PointofSaleController@member_cashpayment');
@@ -93,5 +96,31 @@ Route::group(['middleware' => ['staff']], function () {
    	Route::get('staff/sales/member_autocomplete', 'Staff\PointofSaleController@member_autocomplete');
    	Route::post('staff/sales/guest_cashpayment', 'Staff\PointofSaleController@guest_cashpayment');
    	Route::post('staff/sales/member_reload', 'Staff\PointofSaleController@reload');
+
+   	//Sales Logs
+   	Route::get('staff/logs/sales', 'Staff\SalesLogsController@index');
+	Route::post('staff/logs/sales/showdetails', 'Staff\SalesLogsController@showdetails');
+	Route::post('staff/logs/sales/delete_sales', 'Staff\SalesLogsController@destroy');
+	Route::get('staff/logs/sales/filter', 'Staff\SalesLogsController@filter');
+
+	//Reload Logs
+	Route::get('staff/logs/reload', 'Staff\ReloadLogsController@index');
+	Route::post('staff/logs/reload/showdetails', 'Staff\ReloadLogsController@showdetails');
+	Route::get('staff/logs/reload/filter', 'Staff\ReloadLogsController@filter');
+	Route::post('staff/logs/reload/delete_reload', 'Staff\ReloadLogsController@destroy');
+
+	//Preferences
+	Route::get('staff/preferences/backup', 'Staff\BackupController@index');
+	Route::get('staff/backup/create', 'Staff\BackupController@create');
+    Route::get('staff/backup/download/{file_name}', 'Staff\BackupController@download');
+   	Route::get('staff/backup/delete/{file_name}', 'Staff\BackupController@delete');
+   	Route::get('staff/preferences/backup/search', 'Staff\BackupController@search');
+   	Route::get('staff/preferences/profile', 'Staff\ProfileController@index');
+   	Route::post('staff/preferences/update_profile', 'Staff\ProfileController@edit');
+   	Route::get('staff/preferences/discounts', 'Staff\DiscountsController@index');
+   	Route::post('staff/preferences/add_discount', 'Staff\DiscountsController@create');
+   	Route::post('staff/preferences/update_discount', 'Staff\DiscountsController@edit');
+   	Route::post('staff/preferences/delete_discount', 'Staff\DiscountsController@destroy');
+   	Route::get('staff/preferences/discounts/search', 'Staff\DiscountsController@search');
 
 });

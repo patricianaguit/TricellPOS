@@ -19,9 +19,16 @@ class LoginController extends Controller
     public function verify(Request $request)
     {
         $credentials = $request->only('username', 'password');    
-         if (Auth::attempt($credentials)) {
+        if (Auth::attempt($credentials)) {
             // Authentication passed...
-            return redirect('/sales');
+            if(Auth::user()->role == 'admin')
+            {
+                return redirect('/sales');
+            }
+            else
+            {
+                return redirect('/staff/sales');  
+            }
         }
         else
         {

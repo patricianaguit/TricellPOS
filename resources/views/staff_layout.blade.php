@@ -1,7 +1,7 @@
 <html>
 <head>
-	<title>@yield('title')</title>
-	<meta name="viewport" content="width=device-width", initial-scale="1.0">
+  <title>@yield('title')</title>
+  <meta name="viewport" content="width=device-width", initial-scale="1.0">
   <link rel="stylesheet" type="text/css" href="@yield('css')"/>
   <link rel="stylesheet" type="text/css" href="{{ asset('imports/css/nav.css') }}"/>
   <link rel="shortcut icon" href="{{{ asset('favicon.ico') }}}">
@@ -23,34 +23,24 @@
   <script src="https://code.jquery.com/ui/1.9.1/jquery-ui.js" integrity="sha256-tXuytmakTtXe6NCDgoePBXiKe1gB+VA3xRvyBs/sq94=" crossorigin="anonymous"></script>
 </head>
 <body>
-	<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <a href="/" class="navbar-brand">Brand</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar6">
         <span class="navbar-toggler-icon"></span>
     </button>
     <div class="navbar-collapse collapse justify-content-stretch" id="navbar6">
         <ul class="navbar-nav">
-            <li class="nav-item">
-       <a class="nav-link" href="#"> DASHBOARD </a>
-     </li>
-     <li class="nav-item">
-       <a class="nav-link {{ Request::segment(1)=='sales' ? 'active' : '' }}" href="/sales"> POS </a>
-     </li>
-     <li class="nav-item dropdown" id="logsdrop">
-          <a class="nav-link dropdown-toggle {{ Request::segment(1)=='logs' ? 'active' : '' }}" href="http://example.com" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            LOGS
-          </a>
-          <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-            <a class="dropdown-item" href="/logs/sales">Sales</a>
-            <a class="dropdown-item" href="/logs/reload">Reload</a>
-      </li>
-      
-     <li class="nav-item">
-       <a class="nav-link {{ Request::segment(1)=='inventory' ? 'active' : '' }}" href="/inventory">INVENTORY</a>
-     </li>
-     <li class="nav-item">
-       <a class="nav-link {{ Request::segment(1)=='accounts' ? 'active' : '' }}" href="/accounts/members">ACCOUNTS</a>
-     </li>
+         <li class="nav-item">
+           <a class="nav-link {{ Request::segment(2)=='sales' ? 'active' : '' }}" href="/staff/sales"> POS </a>
+         </li>
+         <li class="nav-item dropdown" id="logsdrop">
+              <a class="nav-link dropdown-toggle {{ Request::segment(2)=='logs' ? 'active' : '' }}" href="http://example.com" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                LOGS
+              </a>
+              <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                <a class="dropdown-item" href="/staff/logs/sales">Sales</a>
+                <a class="dropdown-item" href="/staff/logs/reload">Reload</a>
+          </li>
         </ul>
         <ul class="navbar-nav ml-auto"> <!--right links-->
              <li class="nav-item dropdown" id="logsdrop">
@@ -58,7 +48,7 @@
             HELLO, {{strtoupper(Auth::user()->firstname)}}
           </a>
           <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-            <a class="dropdown-item" href="/preferences/profile">Preferences</a>
+            <a class="dropdown-item" href="/staff/preferences/profile">Preferences</a>
             <a class="dropdown-item" href="#">Shutdown</a>
             <a class="dropdown-item" href="/logout">Logout</a>
 
@@ -67,9 +57,9 @@
     </div>
 </nav>
 
-	@yield('content')
-	
-	<script type="text/javascript">
+  @yield('content')
+  
+  <script type="text/javascript">
    $('ul.navbar-nav li.dropdown').hover(function() {
     $(this).find('.dropdown-menu').stop(true, true).delay(200).fadeIn(400);
   }, 

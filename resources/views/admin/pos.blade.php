@@ -343,9 +343,9 @@ SALE
             @include('admin.posbuttons')
         </div> <!---end second div--->
 
-        <div id="mirror-pos"  >
+        <div id="mirror-pos" hidden="hidden">
           @foreach($allitems as $item)
-            <div class="col-lg-12 ">
+            <div class="col-lg-12">
               <div class="btn btn-sm btn-info full mirror-pos-button" data-id="{{$item->product_id}}" data-description="{{$item->product_name}}" data-price="{{$item->price}}" data-memprice="{{$item->member_price}}">{{str_limit($item->product_name,10)}}</div>
             </div>
           @endforeach

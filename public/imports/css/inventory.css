@@ -108,6 +108,24 @@ font-size: 18px;
 .nav-tabs .nav-link {
   color: #404040!important;
 }
+.page-link {
+    color: #2d3f54 !important;
+}
+
+.page-link:hover {
+
+    color: #fcfcfc !important;
+    background-color: #2d3f54 !important;
+    border-color: #2d3f54 !important;
+}
+
+.page-item.active .page-link {
+
+    color: #fcfcfc !important;
+    background-color: #2d3f54 !important;
+    border-color: #2d3f54 !important;
+
+}
 /****NAV CSS***/
 /**.nav_custom{
 

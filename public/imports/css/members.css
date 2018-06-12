@@ -163,7 +163,24 @@ padding: .375rem 2rem !important;
    max-width:1200px !important;
   }
 }
+.page-link {
+    color: #2d3f54 !important;
+}
 
+.page-link:hover {
+
+    color: #fcfcfc !important;
+    background-color: #2d3f54 !important;
+    border-color: #2d3f54 !important;
+}
+
+.page-item.active .page-link {
+
+    color: #fcfcfc !important;
+    background-color: #2d3f54 !important;
+    border-color: #2d3f54 !important;
+
+}
 
 /****NAV CSS***/
 /**.nav_custom{

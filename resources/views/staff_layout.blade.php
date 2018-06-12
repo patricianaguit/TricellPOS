@@ -41,6 +41,9 @@
                 <a class="dropdown-item" href="/staff/logs/sales">Sales</a>
                 <a class="dropdown-item" href="/staff/logs/reload">Reload</a>
           </li>
+          <li class="nav-item">
+           <a class="nav-link {{ Request::segment(2)=='preferences' ? 'active' : '' }}" href="/staff/preferences/profile"> PREFERENCES </a>
+         </li>
         </ul>
         <ul class="navbar-nav ml-auto"> <!--right links-->
              <li class="nav-item dropdown" id="logsdrop">
@@ -48,7 +51,7 @@
             HELLO, {{strtoupper(Auth::user()->firstname)}}
           </a>
           <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-            <a class="dropdown-item" href="/staff/preferences/profile">Preferences</a>
+            <a class="dropdown-item" href="#">My Account</a>
             <a class="dropdown-item" href="#">Shutdown</a>
             <a class="dropdown-item" href="/logout">Logout</a>
 

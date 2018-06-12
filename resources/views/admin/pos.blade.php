@@ -73,7 +73,7 @@ SALE
                 </tr>
                  <tr>
                   <th scope="row" class="table-light" style="width: 73%"></th>
-                  <td class="table-light">dis value</td>
+                  <td class="table-light"><span class="discountspanvalue">₱ 0.00</span></td>
                 </tr>
                 <tr>
                   <th scope="row" class="table-light" style="width: 73%">VAT</th>
@@ -486,6 +486,7 @@ SALE
         $(str_item).hide().appendTo("#display_table tbody").fadeIn(370);
         $(".quantity").focus().select();
         update_total();
+        compute_discount();
       }
       // else
       // {
@@ -535,7 +536,9 @@ SALE
       whichtr.find($(this)).val(1);
       whichtr.find($('.itemsubtotal')).text(itemprice); 
     }
+
     update_total();
+    compute_discount();
   });
   $(document).on('keydown','#qty_input',function(event){
     if (event.which == 13) {
@@ -561,6 +564,7 @@ SALE
       
       whichtr.find($('.itemsubtotal')).text(subtotal.toFixed(2));
       update_total();
+      compute_discount();
     }
     else
     {
@@ -568,13 +572,15 @@ SALE
 
       whichtr.find($('.itemsubtotal')).text(subtotal.toFixed(2));
       update_total();
+      compute_discount();
     }
   });
 
   $(document).ready(function(){
      var discount_id = $('.select-box-discount option:selected').attr('data-id');
      $('#discountvalue').attr('discount_id', discount_id);
-  })
+  });
+
   $(document).on('change', '.select-box-discount',function() {
     var discount_id = $('.select-box-discount option:selected').attr('data-id');
     var discount_name = $('.select-box-discount option:selected').attr('data-name');
@@ -585,9 +591,39 @@ SALE
     $('#discountvalue').attr('discount_name', discount_name);
     $('#discountvalue').attr('discount_type', discount_type);
     $('#discountvalue').val(discount_value);
-
     update_total();
+    compute_discount();
   });
+
+  function compute_discount()
+  {
+    var discount_id = $('.select-box-discount option:selected').attr('data-id');
+    var discount_name = $('.select-box-discount option:selected').attr('data-name');
+    var discount_type = $('.select-box-discount option:selected').attr('data-type');
+    var discount_value = $('.select-box-discount option:selected').attr('data-value');
+
+    var discount = $('#discountvalue').val();
+    var zero = 0;
+    var sum = parseFloat($('.subtotal').text());
+
+    if(discount_type == 'percentage' && discount_id == 1)
+    {
+      var vat_amount = $('#posvat').val();
+      var vat_percent = (100 + parseFloat(vat_amount)) / 100;
+      var vatexempt =  sum / vat_percent;
+      var totaldiscount = (vatexempt * discount);
+    }
+    else if(discount_type == 'percentage' && discount_id != 1)
+    {
+      var totaldiscount = sum * parseFloat(discount);
+    }
+    else
+    {
+      var totaldiscount = parseFloat(discount);
+    }
+    
+    $('.discountspanvalue').text(('₱ ' + totaldiscount.toFixed(2)));
+  }
 
   function alpha(e) {
     var k;
@@ -664,6 +700,7 @@ SALE
     $("#display_table tbody tr#"+$(this).attr("data-id")).find("td.itemsubtotal").text(subtotal.toFixed(2));
     });
     update_total();
+    compute_discount();
 
   }
 
@@ -1148,6 +1185,7 @@ SALE
         $('#membername').text(ui.item.fullname);
         $('#memberspanload').text('₱ ' + ui.item.load);
         $('#memberload').val(ui.item.load);
+        // compute_discount();
         align_price();
       }
     });

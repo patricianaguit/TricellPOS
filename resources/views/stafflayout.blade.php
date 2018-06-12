@@ -49,9 +49,6 @@
       </li>
       
      <li class="nav-item">
-       <a class="nav-link {{ Request::segment(1)=='inventory' ? 'active' : '' }}" href="/inventory">INVENTORY</a>
-     </li>
-     <li class="nav-item">
        <a class="nav-link {{ Request::segment(1)=='accounts' ? 'active' : '' }}" href="/accounts/members">ACCOUNTS</a>
      </li>
         </ul>

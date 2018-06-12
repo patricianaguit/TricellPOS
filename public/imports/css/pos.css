@@ -236,7 +236,7 @@
      height: 30px;
 }
  .table.pos-table tbody {
-     height:36VH !important;
+     height:32VH !important;
      overflow-y: auto;
 }
  .table.pos-table thead {
@@ -309,18 +309,20 @@ blink{animation: blink 1s infinite;}
 .page-link {
     background-color: #2c2c2d !important;
     border-color: #2c2c2d !important;
-    color: rgba(0,0,0,0.6) !important;
+    color: white !important;
     text-shadow: 2px 2px 3px rgba(255,255,255,0.1) !important;
-    font-size: 18px !important;
+    font-size: 15px !important;
     font-weight: bold !important;
+    text-transform: uppercase; !important;
     /*color: #8d8d8d !important;
-    background-color: #2c2c2d !important;
-    border-color: #2c2c2d !important;*/
+    background-color: #2c2c2d !important;*/
+    /*border-color: #2c2c2d !important;*/
  
 }
 .page-link:hover {
 
-    color: #b4bcb9  !important;
+    color: rgba(0,0,0,0.7) !important;
     text-shadow: 2px 2px 3px rgba(255,255,255,0.1) !important;
  
 }
+

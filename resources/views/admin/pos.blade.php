@@ -71,6 +71,10 @@ SALE
                       @endforeach
                     </select></td>
                 </tr>
+                 <tr>
+                  <th scope="row" class="table-light" style="width: 73%"></th>
+                  <td class="table-light">dis value</td>
+                </tr>
                 <tr>
                   <th scope="row" class="table-light" style="width: 73%">VAT</th>
                   <td class="table-light">{{floatval($vat->vat)}}%</td>

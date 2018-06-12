@@ -124,6 +124,14 @@ border-color: #117a8b;
     border-color: #2d3f54 !important;
 
 }
+.modal-dialog{
+  min-width:583px !important;
+}
+#view_body.modal-body{
+
+ height:600px !important;
+  overflow-y: auto !important;
+}
 /****NAV CSS***/
 /**.nav_custom{
 

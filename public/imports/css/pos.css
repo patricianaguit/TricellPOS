@@ -53,7 +53,7 @@
     /*display: flex !important;
      flex-wrap: wrap !important;
      */
-     height: auto !important;
+     height:calc(100vh - 56px) !important;
      padding: 50px;
 }
  .table.table-total td, .table.table-total th {
@@ -236,7 +236,7 @@
      height: 30px;
 }
  .table.pos-table tbody {
-     height:305px !important;
+     height:36VH !important;
      overflow-y: auto;
 }
  .table.pos-table thead {

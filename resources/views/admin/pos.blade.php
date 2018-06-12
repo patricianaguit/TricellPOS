@@ -346,7 +346,7 @@ SALE
         <div id="mirror-pos" hidden="hidden">
           @foreach($allitems as $item)
             <div class="col-lg-12">
-              <div class="btn btn-sm btn-info full mirror-pos-button" data-id="{{$item->product_id}}" data-description="{{$item->product_name}}" data-price="{{$item->price}}" data-memprice="{{$item->member_price}}">{{str_limit($item->product_name,10)}}</div>
+              <div class="btn btn-sm btn-info full mirror-pos-button" data-id="{{$item->product_id}}" data-description="{{$item->product_name}}" data-price="{{$item->price}}" data-memprice="{{$item->member_price}}" data-qty="{{$item->product_qty}}">{{str_limit($item->product_name,10)}}</div>
             </div>
           @endforeach
         </div>
@@ -545,7 +545,6 @@ SALE
     var subtotal = 0;
     var qty = $(this).val();
     var price = parseFloat(whichtr.find($('.itemprice')).text());
-    
 
     var desc = whichtr.find($('.description')).text();
     var dataqty = $('#mirror-pos').find($('[data-description="'+ desc +'"]')).attr('data-qty');
@@ -641,7 +640,7 @@ SALE
 
   function align_price()
   {
-    $("#mirror-pos .btn.active").each(function(){
+    $("#mirror-pos .btn.pos-button-active").each(function(){
     var price = $(this).attr("data-price");
 
     if($("#membercardno").val().length == 0)

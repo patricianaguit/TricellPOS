@@ -20,7 +20,7 @@ class RedirectIfAuthenticated
         if (Auth::guard($guard)->check()) {
             if(Auth::user()->role == 'admin')
             {
-                return redirect('/sales');
+                return redirect('/dashboard');
             }
             else
             {

@@ -51,7 +51,7 @@
             HELLO, {{strtoupper(Auth::user()->firstname)}}
           </a>
           <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-            <a class="dropdown-item" href="#">My Account</a>
+            <a class="dropdown-item" href="/staff/account">My Account</a>
             <a class="dropdown-item" href="#">Shutdown</a>
             <a class="dropdown-item" href="/logout">Logout</a>
 

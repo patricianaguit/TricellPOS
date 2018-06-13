@@ -31,7 +31,7 @@
     <div class="navbar-collapse collapse justify-content-stretch" id="navbar6">
         <ul class="navbar-nav">
             <li class="nav-item">
-       <a class="nav-link" href="#"> DASHBOARD </a>
+       <a class="nav-link {{ Request::segment(1)=='dashboard' ? 'active' : '' }}" href="/dashboard"> DASHBOARD </a>
      </li>
      <li class="nav-item">
        <a class="nav-link {{ Request::segment(1)=='sales' ? 'active' : '' }}" href="/sales"> POS </a>

@@ -1,0 +1,61 @@
+#new-customers{
+     background-image: linear-gradient( 135deg, #90F7EC 10%, #32CCBC 100%);
+     color: white !important;
+     height: 16% !important;
+     border-radius: 4px !important;
+     border: 1px solid white !important;
+}
+ #new-quotes{
+     background-image: linear-gradient( 135deg, #FEB692 10%, #EA5455 100%);
+     color: white !important;
+     height: 16% !important;
+     border-radius: 4px !important;
+     border: 1px solid white !important;
+}
+ #new-orders{
+     background-image: linear-gradient( 135deg, #CE9FFC 10%, #7367F0 100%);
+     color: white !important;
+     height: 16% !important;
+     border-radius: 4px !important;
+     border: 1px solid white !important;
+}
+ #new-invoices{
+     background-image: linear-gradient( 135deg, #81FBB8 10%, #28C76F 100%);
+     color: white !important;
+     height: 16% !important;
+     border-radius: 4px !important;
+     border: 1px solid white !important;
+}
+ #sales-day{
+     border: 0.5px solid #ababab !important;
+     height: 70% !important;
+     border-radius: 4px !important;
+     background-color: white !important;
+}
+ #member-walkin{
+     border: 0.5px solid #ababab !important;
+     height: 70% !important;
+     border-radius: 4px !important;
+     background-color: white !important;
+}
+ #sales-payment{
+     border: 0.5px solid #ababab !important;
+     height: 70% !important;
+     border-radius: 4px !important;
+     background-color: white !important;
+}
+ #top-products{
+     border: 0.5px solid #ababab !important;
+     height: 70% !important;
+     border-radius: 4px !important;
+     background-color: white !important;
+}
+ #active-members{
+     border: 0.5px solid #ababab !important;
+     height: 70% !important;
+     border-radius: 4px !important;
+     background-color: white !important;
+}
+ h6{
+     margin-top:0.5rem !important;
+}

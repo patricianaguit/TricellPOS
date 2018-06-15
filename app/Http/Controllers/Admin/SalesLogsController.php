@@ -51,14 +51,14 @@ class SalesLogsController extends Controller
         $payment_mode = $request->payment_mode;
         $daterange = array_map('trim', explode('-', $request->date_filter));
 
-        $date_start = date('m/d/Y',strtotime($daterange[0]));
-        $date_end = date('m/d/Y',strtotime($daterange[1]));
+        $date_start = date('Y-m-d',strtotime($daterange[0]));
+        $date_end = date('Y-m-d',strtotime($daterange[1]));
 
         if($account_type == 'Any' && $payment_mode != 'Any')
         {
             $sales = Sale::where(function($query) use ($request, $account_type, $payment_mode, $date_start, $date_end)
                 {
-                    $query->where(DB::raw("(DATE_FORMAT(transaction_date,'%m/%d/%Y'))"), '>=', $date_start)->where(DB::raw("(DATE_FORMAT(transaction_date,'%m/%d/%Y'))"), '<=', $date_end);
+                    $query->where(DB::raw("(DATE_FORMAT(transaction_date,'%Y-%m-%d'))"), '>=', $date_start)->where(DB::raw("(DATE_FORMAT(transaction_date,'%Y-%m-%d'))"), '<=', $date_end);
                 })->where('payment_mode', $payment_mode)->orderBy('transaction_date', 'desc')->paginate(7);
 
             $sales->appends($request->only('account_type', 'payment_mode', 'date_filter'));
@@ -66,17 +66,17 @@ class SalesLogsController extends Controller
             $count = $sales->count();
             $totalcount = Sale::where(function($query) use ($request, $account_type, $payment_mode, $date_start, $date_end)
                 {
-                    $query->where(DB::raw("(DATE_FORMAT(transaction_date,'%m/%d/%Y'))"), '>=', $date_start)->where(DB::raw("(DATE_FORMAT(transaction_date,'%m/%d/%Y'))"), '<=', $date_end);
+                    $query->where(DB::raw("(DATE_FORMAT(transaction_date,'%Y-%m-%d'))"), '>=', $date_start)->where(DB::raw("(DATE_FORMAT(transaction_date,'%Y-%m-%d'))"), '<=', $date_end);
                 })->where('payment_mode', $payment_mode)->count();
 
-            $sumsales = Sale::where(DB::raw("(DATE_FORMAT(transaction_date,'%m/%d/%Y'))"), '>=', $date_start)->Where(DB::raw("(DATE_FORMAT(transaction_date,'%m/%d/%Y'))"), '<=', $date_end)->where('payment_mode', $payment_mode)->sum('amount_due');
+            $sumsales = Sale::where(DB::raw("(DATE_FORMAT(transaction_date,'%Y-%m-%d'))"), '>=', $date_start)->Where(DB::raw("(DATE_FORMAT(transaction_date,'%Y-%m-%d'))"), '<=', $date_end)->where('payment_mode', $payment_mode)->sum('amount_due');
             return view('admin.sales')->with(['sales' => $sales,'count' => $count, 'account_type' => $account_type, 'payment_mode' => $payment_mode, 'date_start' => $date_start, 'date_end' => $date_end, 'sumsales' => $sumsales, 'totalcount' => $totalcount]);  
         }
         else if($account_type != 'Any' && $payment_mode == 'Any')
         {
             $sales = Sale::with('user')->where(function($query) use ($request, $account_type, $payment_mode, $date_start, $date_end)
             {
-                $query->where(DB::raw("(DATE_FORMAT(transaction_date,'%m/%d/%Y'))"), '>=', $date_start)->where(DB::raw("(DATE_FORMAT(transaction_date,'%m %d,      %Y'))"), '<=', $date_end);
+                $query->where(DB::raw("(DATE_FORMAT(transaction_date,'%Y-%m-%d'))"), '>=', $date_start)->where(DB::raw("(DATE_FORMAT(transaction_date,'%m %d,      %Y'))"), '<=', $date_end);
             })->whereHas('User', function($query) use ($account_type)
                 {
                         $query->where('role', $account_type);
@@ -87,13 +87,13 @@ class SalesLogsController extends Controller
             $count = $sales->count();
             $totalcount = Sale::with('user')->where(function($query) use ($request, $account_type, $payment_mode, $date_start, $date_end)
                 {
-                    $query->where(DB::raw("(DATE_FORMAT(transaction_date,'%m/%d/%Y'))"), '>=', $date_start)->where(DB::raw("(DATE_FORMAT(transaction_date,'%m/%d/%Y'))"), '<=', $date_end);
+                    $query->where(DB::raw("(DATE_FORMAT(transaction_date,'%Y-%m-%d'))"), '>=', $date_start)->where(DB::raw("(DATE_FORMAT(transaction_date,'%Y-%m-%d'))"), '<=', $date_end);
                 })->whereHas('User', function($query) use ($account_type)
                 {
                         $query->where('role', $account_type);
                 })->count();
 
-            $sumsales = Sale::with('user')->where(DB::raw("(DATE_FORMAT(transaction_date,'%m/%d/%Y'))"), '>=', $date_start)->Where(DB::raw("(DATE_FORMAT(transaction_date,'%m/%d/%Y'))"), '<=', $date_end)->whereHas('User', function($query) use ($account_type)
+            $sumsales = Sale::with('user')->where(DB::raw("(DATE_FORMAT(transaction_date,'%Y-%m-%d'))"), '>=', $date_start)->Where(DB::raw("(DATE_FORMAT(transaction_date,'%Y-%m-%d'))"), '<=', $date_end)->whereHas('User', function($query) use ($account_type)
                 {
                         $query->where('role', $account_type);
                 })->sum('amount_due');
@@ -103,7 +103,7 @@ class SalesLogsController extends Controller
         {
             $sales = Sale::with('user')->where(function($query) use ($request, $account_type, $payment_mode, $date_start, $date_end)
                 {
-                    $query->where(DB::raw("(DATE_FORMAT(transaction_date,'%m/%d/%Y'))"), '>=', $date_start)->where(DB::raw("(DATE_FORMAT(transaction_date,'%m/%d/%Y'))"), '<=', $date_end);
+                    $query->where(DB::raw("(DATE_FORMAT(transaction_date,'%Y-%m-%d'))"), '>=', $date_start)->where(DB::raw("(DATE_FORMAT(transaction_date,'%Y-%m-%d'))"), '<=', $date_end);
                 })->whereHas('User', function($query) use ($account_type)
                 {
                         $query->where('role', $account_type);
@@ -114,13 +114,13 @@ class SalesLogsController extends Controller
             $count = $sales->count();
             $totalcount = Sale::where(function($query) use ($request, $account_type, $payment_mode, $date_start, $date_end)
                 {
-                    $query->where(DB::raw("(DATE_FORMAT(transaction_date,'%m/%d/%Y'))"), '>=', $date_start)->where(DB::raw("(DATE_FORMAT(transaction_date,'%m/%d/%Y'))"), '<=', $date_end);
+                    $query->where(DB::raw("(DATE_FORMAT(transaction_date,'%Y-%m-%d'))"), '>=', $date_start)->where(DB::raw("(DATE_FORMAT(transaction_date,'%Y-%m-%d'))"), '<=', $date_end);
                 })->whereHas('User', function($query) use ($account_type)
                 {
                         $query->where('role', $account_type);
                 })->where('payment_mode', $payment_mode)->count();
 
-            $sumsales = Sale::where(DB::raw("(DATE_FORMAT(transaction_date,'%m/%d/%Y'))"), '>=', $date_start)->Where(DB::raw("(DATE_FORMAT(transaction_date,'%m/%d/%Y'))"), '<=', $date_end)->whereHas('User', function($query) use ($account_type)
+            $sumsales = Sale::where(DB::raw("(DATE_FORMAT(transaction_date,'%Y-%m-%d'))"), '>=', $date_start)->Where(DB::raw("(DATE_FORMAT(transaction_date,'%Y-%m-%d'))"), '<=', $date_end)->whereHas('User', function($query) use ($account_type)
                 {
                         $query->where('role', $account_type);
                 })->where('payment_mode', $payment_mode)->sum('amount_due');
@@ -130,7 +130,7 @@ class SalesLogsController extends Controller
         {
             $sales = Sale::with('user')->where(function($query) use ($request, $account_type, $payment_mode, $date_start, $date_end)
                 {
-                    $query->where(DB::raw("(DATE_FORMAT(transaction_date,'%m/%d/%Y'))"), '>=', $date_start)->where(DB::raw("(DATE_FORMAT(transaction_date,'%m/%d/%Y'))"), '<=', $date_end);
+                    $query->where(DB::raw("(DATE_FORMAT(transaction_date,'%Y-%m-%d'))"), '>=', $date_start)->where(DB::raw("(DATE_FORMAT(transaction_date,'%Y-%m-%d'))"), '<=', $date_end);
                 })->orderBy('transaction_date', 'desc')->paginate(7);
 
              $sales->appends($request->only('account_type', 'payment_mode', 'date_filter'));
@@ -138,10 +138,10 @@ class SalesLogsController extends Controller
             $count = $sales->count();
             $totalcount = Sale::where(function($query) use ($request, $account_type, $payment_mode, $date_start, $date_end)
                 {
-                    $query->where(DB::raw("(DATE_FORMAT(transaction_date,'%m/%d/%Y'))"), '>=', $date_start)->where(DB::raw("(DATE_FORMAT(transaction_date,'%m/%d/%Y'))"), '<=', $date_end);
+                    $query->where(DB::raw("(DATE_FORMAT(transaction_date,'%Y-%m-%d'))"), '>=', $date_start)->where(DB::raw("(DATE_FORMAT(transaction_date,'%Y-%m-%d'))"), '<=', $date_end);
                 })->count();
 
-            $sumsales = Sale::where(DB::raw("(DATE_FORMAT(transaction_date,'%m/%d/%Y'))"), '>=', $date_start)->Where(DB::raw("(DATE_FORMAT(transaction_date,'%m/%d/%Y'))"), '<=', $date_end)->sum('amount_due');
+            $sumsales = Sale::where(DB::raw("(DATE_FORMAT(transaction_date,'%Y-%m-%d'))"), '>=', $date_start)->Where(DB::raw("(DATE_FORMAT(transaction_date,'%Y-%m-%d'))"), '<=', $date_end)->sum('amount_due');
             return view('admin.sales')->with(['sales' => $sales,'count' => $count, 'account_type' => $account_type, 'payment_mode' => $payment_mode, 'date_start' => $date_start, 'date_end' => $date_end, 'sumsales' => $sumsales, 'totalcount' => $totalcount]); 
         }
     }

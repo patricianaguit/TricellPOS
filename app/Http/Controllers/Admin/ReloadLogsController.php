@@ -43,23 +43,23 @@ class ReloadLogsController extends Controller
         }
         else
         {
-            $date_start = date('m/d/Y',strtotime($daterange[0]));
-            $date_end = date('m/d/Y',strtotime($daterange[1]));
+            $date_start = date('Y-m-d',strtotime($daterange[0]));
+            $date_end = date('Y-m-d',strtotime($daterange[1]));
             $reloads = Reload_sale::where(function($query) use ($request, $date_start, $date_end)
                 {
-                    $query->where(DB::raw("(DATE_FORMAT(transaction_date,'%m/%d/%Y'))"), '>=', $date_start)->where(DB::raw("(DATE_FORMAT(transaction_date,'%m/%d/%Y'))"), '<=', $date_end);
+                    $query->where(DB::raw("(DATE_FORMAT(transaction_date,'%Y-%m-%d'))"), '>=', $date_start)->where(DB::raw("(DATE_FORMAT(transaction_date,'%Y-%m-%d'))"), '<=', $date_end);
                 })->orderBy('transaction_date', 'desc')->paginate(7);
             $reloads->appends($request->only('date_filter'));
                
             $count = $reloads->count();
             $totalcount = Reload_sale::where(function($query) use ($request, $date_start, $date_end)
                     {
-                        $query->where(DB::raw("(DATE_FORMAT(transaction_date,'%m/%d/%Y'))"), '>=', $date_start)->where(DB::raw("(DATE_FORMAT(transaction_date,'%m/%d/%Y'))"), '<=', $date_end);
+                        $query->where(DB::raw("(DATE_FORMAT(transaction_date,'%Y-%m-%d'))"), '>=', $date_start)->where(DB::raw("(DATE_FORMAT(transaction_date,'%Y-%m-%d'))"), '<=', $date_end);
                     })->count();
 
             $sumsales = Reload_sale::where(function($query) use ($request, $date_start, $date_end)
                     {
-                        $query->where(DB::raw("(DATE_FORMAT(transaction_date,'%m/%d/%Y'))"), '>=', $date_start)->where(DB::raw("(DATE_FORMAT(transaction_date,'%m/%d/%Y'))"), '<=', $date_end);
+                        $query->where(DB::raw("(DATE_FORMAT(transaction_date,'%Y-%m-%d'))"), '>=', $date_start)->where(DB::raw("(DATE_FORMAT(transaction_date,'%Y-%m-%d'))"), '<=', $date_end);
                     })->sum('amount_due');
             return view('admin.reload')->with(['reloads' => $reloads,'count' => $count, 'date_start' => $date_start, 'date_end' => $date_end, 'sumsales' => $sumsales, 'totalcount' => $totalcount]);  
         }

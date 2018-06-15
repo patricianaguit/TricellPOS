@@ -108,7 +108,7 @@ class PointofSaleController extends Controller
                 'sales_id' => $sale->id,
                 'product_id' => $itemsBought[$i][$y],
                 'quantity' => $itemsBought[$i][++$y],
-                'subtotal' => $itemsBought[$i][++$y],
+                'subtotal' => $itemsBought[$i][++$y] * $itemsBought[$i][--$y],
                 ];
             }
         Sales_details::insert($sales_details);
@@ -147,7 +147,7 @@ class PointofSaleController extends Controller
                 'sales_id' => $sale->id,
                 'product_id' => $itemsBought[$i][$y],
                 'quantity' => $itemsBought[$i][++$y],
-                'subtotal' => $itemsBought[$i][++$y],
+                'subtotal' => $itemsBought[$i][++$y] * $itemsBought[$i][--$y],
                 ];
             }
         Sales_details::insert($sales_details);

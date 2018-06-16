@@ -35,11 +35,11 @@ SALE
           <table class="table pos-table" id="display_table">
             <thead class="table-light">
               <tr>
-                <th scope="col">Description</th>
-                <th scope="col">Quantity</th>
-                <th scope="col">Price</th>
-                <th scope="col">Subtotal</th>
-                <th scope="col">Action</th>
+                <th class="header">Description</th>
+                <th class="header">Quantity</th>
+                <th class="header">Price</th>
+                <th class="header">Subtotal</th>
+                <th class="header2"></th>
               </tr>
             </thead>
             
@@ -365,6 +365,12 @@ SALE
   </div> <!--container-->
          
 <script>
+  $(document).ready(function(){
+    $('#member_input').val('');
+    $('#guest_input').val('');
+    $('#payment-amount-cash').val('');
+  });
+
   $(document).on('click', '.pagination a', function(e){
     e.preventDefault();
     var myurl = $(this).attr('href');
@@ -476,11 +482,11 @@ SALE
 
       if(checkContent == 0 && !$(this).hasClass('disabled'))
       {
-      var str_item = '<tr class="itemrow" id="'+ id +'"><td class="description"><b>' + description + '</b></td>' +
-          '<td><input type="text" class="quantity" onkeypress="return (event.charCode == 8 || event.charCode == 0 || event.charCode == 13) ? null : event.charCode >= 48 && event.charCode <= 57" id="qty_input" value="1" maxlength="6"></td>' +
-          '<td class="itemprice">' + price + '</td>' +
-          '<td class="itemsubtotal">' + price + '</td>' +
-          '<td><button type="submit" class="btn btn-default delete">&times;</button></tr>';
+      var str_item = '<tr class="itemrow" id="'+ id +'"><td class="description append-td"><b>' + description + '</b></td>' +
+          '<td class="append-td"><input type="text" class="quantity" onkeypress="return (event.charCode == 8 || event.charCode == 0 || event.charCode == 13) ? null : event.charCode >= 48 && event.charCode <= 57" id="qty_input" value="1" maxlength="6"></td>' +
+          '<td class="itemprice append-td">' + price + '</td>' +
+          '<td class="itemsubtotal append-td">' + price + '</td>' +
+          '<td class="append-td-2"><button type="submit" class="btn delete"><i class="material-icons" id="clear-btn">clear</i></button></td></tr>';
 
         //$("#display_table").append(str_item).fadeIn(1000);
         $(str_item).hide().appendTo("#display_table tbody").fadeIn(370);

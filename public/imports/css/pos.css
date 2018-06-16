@@ -1,3 +1,6 @@
+body{
+    font-family: 'Montserrat', sans-serif !important;
+}
 #member{
      display:none;
      border: 0.5px solid #d5dce2;
@@ -214,7 +217,7 @@
      font-size: 14px !important;
 }
  #qty_input{
-     width: 33px !important;
+     width: 55px !important;
 }
  .btn.btn-default.delete {
      padding: 0REM 0.5REM !important;
@@ -326,3 +329,47 @@ blink{animation: blink 1s infinite;}
  
 }
 
+.low_stock {
+    -webkit-animation: glow .5s infinite alternate;
+    color: #9f0000 !important;
+}
+
+@-webkit-keyframes glow {
+    to {
+        text-shadow: 0 0 10px red;
+    }
+}
+.healthy-button{
+    padding: 1.2rem 0.5rem !important;
+}
+.btn.delete{
+     padding: 0 !important;
+     background-color: transparent !important;
+}
+#clear-btn{
+
+    font-size: 12px !important;
+    color: #868484 !important;
+    font-weight: 600 !important;
+}
+
+.header{
+    width:23.74% !important;
+   
+}
+.header2{
+    width: 5% !important;
+   
+}
+.append-td{
+   width:23.74% !important;
+}
+.append-td-2{
+    width:5% !important;
+}
+::-webkit-scrollbar { 
+display: none !important; 
+}
+/*#display_table td, #display_table th{
+    text-align: center !important;
+}*/

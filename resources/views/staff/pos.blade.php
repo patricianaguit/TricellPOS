@@ -361,6 +361,13 @@ SALE
   </div> <!--container-->
          
 <script>
+
+  $(document).ready(function(){
+    $('#member_input').val('');
+    $('#guest_input').val('');
+    $('#payment-amount-cash').val('');
+  });
+
   $(document).on('click', '.pagination a', function(e){
     e.preventDefault();
     var myurl = $(this).attr('href');
@@ -476,7 +483,7 @@ SALE
           '<td><input type="text" class="quantity" onkeypress="return (event.charCode == 8 || event.charCode == 0 || event.charCode == 13) ? null : event.charCode >= 48 && event.charCode <= 57" id="qty_input" value="1" maxlength="6"></td>' +
           '<td class="itemprice">' + price + '</td>' +
           '<td class="itemsubtotal">' + price + '</td>' +
-          '<td><button type="submit" class="btn btn-default delete">&times;</button></tr>';
+          '<td><button type="submit" class="btn delete"><i class="material-icons" id="clear-btn">clear</i></button></td></tr>';
 
         //$("#display_table").append(str_item).fadeIn(1000);
         $(str_item).hide().appendTo("#display_table tbody").fadeIn(370);

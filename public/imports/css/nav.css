@@ -1,6 +1,7 @@
 body{
   background-color: #fcfcfc !important;
   overflow-x: hidden;
+  font-family: 'Montserrat', sans-serif !important;
 }
 .nav_custom {
     background-color: #29323c !important;

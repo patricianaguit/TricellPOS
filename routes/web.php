@@ -88,6 +88,10 @@ Route::group(['middleware' => ['admin']], function () {
    	Route::post('preferences/delete_discount', 'Admin\DiscountsController@destroy');
    	Route::get('preferences/discounts/search', 'Admin\DiscountsController@search');
 
+   	//Account
+   	Route::get('/account', 'Admin\AccountController@index');
+   	Route::post('/update_account', 'Admin\AccountController@edit');
+
    
 });
 

@@ -996,7 +996,16 @@ SALE
           $('#paysale').attr('disabled', true);
 
           var total_amount = $('.totalprice').text();
+          var zero = 0;
           $('#total-price-cash').val(total_amount);
+
+          if($('#total-price-cash').val() == 0)
+          {
+            $('#payment-amount-cash').val(zero.toFixed(2));
+            $('#change-amount-cash').val(zero.toFixed(2));
+            $('#payment-amount-cash').attr('disabled', true);
+            $('#paysale').removeAttr('disabled');
+          }
 
           $('#payment-amount-cash').on('input',function() {
             var total = parseFloat($('#total-price-cash').val());
@@ -1033,6 +1042,13 @@ SALE
             {
               $('#payment-amount-cash').removeAttr("style")
               $('#basic-addon-paymentamount-cash').removeAttr("style");
+              $('#paysale').removeAttr('disabled');
+            }
+            else if(($('#total-price-cash').val() == 0))
+            {
+              $('#payment-amount-cash').removeAttr("style")
+              $('#basic-addon-paymentamount-cash').removeAttr("style");
+              $('#payment-amount-cash').val('0');
               $('#paysale').removeAttr('disabled');
             }
             else
@@ -1082,7 +1098,16 @@ SALE
           $('#paysale').attr('disabled', true);
 
           var total_amount = $('.totalprice').text();
+          var zero = 0;
           $('#total-price-cash').val(total_amount);
+
+          if($('#total-price-cash').val() == 0)
+          {
+            $('#payment-amount-cash').val(zero.toFixed(2));
+            $('#change-amount-cash').val(zero.toFixed(2));
+            $('#payment-amount-cash').attr('disabled', true);
+            $('#paysale').removeAttr('disabled');
+          }
 
           $('#payment-amount-cash').on('input',function() {
             var total = parseFloat($('#total-price-cash').val());

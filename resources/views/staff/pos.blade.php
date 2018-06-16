@@ -35,11 +35,11 @@ SALE
           <table class="table pos-table" id="display_table">
             <thead class="table-light">
               <tr>
-                <th scope="col">Description</th>
-                <th scope="col">Quantity</th>
-                <th scope="col">Price</th>
-                <th scope="col">Subtotal</th>
-                <th scope="col">Action</th>
+                <th class="header">Description</th>
+                <th class="header">Quantity</th>
+                <th class="header">Price</th>
+                <th class="header">Subtotal</th>
+                <th class="header2"></th>
               </tr>
             </thead>
             
@@ -70,6 +70,10 @@ SALE
                         @endif
                       @endforeach
                     </select></td>
+                </tr>
+                 <tr>
+                  <th scope="row" class="table-light" style="width: 73%"></th>
+                  <td class="table-light"><span class="discountspanvalue">₱ 0.00</span></td>
                 </tr>
                 <tr>
                   <th scope="row" class="table-light" style="width: 73%">VAT</th>
@@ -340,13 +344,13 @@ SALE
         
         <!---second div start-->
         <div class="col-lg-7 mx-auto right second_div">
-            @include('staff.posbuttons')
+            @include('admin.posbuttons')
         </div> <!---end second div--->
 
         <div id="mirror-pos" hidden="hidden">
           @foreach($allitems as $item)
             <div class="col-lg-12">
-              <div class="btn btn-sm btn-info full mirror-pos-button" data-id="{{$item->product_id}}" data-description="{{$item->product_name}}" data-price="{{$item->price}}" data-memprice="{{$item->member_price}}">{{str_limit($item->product_name,10)}}</div>
+              <div class="btn btn-sm btn-info full mirror-pos-button" data-id="{{$item->product_id}}" data-description="{{$item->product_name}}" data-price="{{$item->price}}" data-memprice="{{$item->member_price}}" data-qty="{{$item->product_qty}}">{{str_limit($item->product_name,10)}}</div>
             </div>
           @endforeach
         </div>
@@ -361,7 +365,6 @@ SALE
   </div> <!--container-->
          
 <script>
-
   $(document).ready(function(){
     $('#member_input').val('');
     $('#guest_input').val('');
@@ -479,16 +482,17 @@ SALE
 
       if(checkContent == 0 && !$(this).hasClass('disabled'))
       {
-      var str_item = '<tr class="itemrow" id="'+ id +'"><td class="description"><b>' + description + '</b></td>' +
-          '<td><input type="text" class="quantity" onkeypress="return (event.charCode == 8 || event.charCode == 0 || event.charCode == 13) ? null : event.charCode >= 48 && event.charCode <= 57" id="qty_input" value="1" maxlength="6"></td>' +
-          '<td class="itemprice">' + price + '</td>' +
-          '<td class="itemsubtotal">' + price + '</td>' +
-          '<td><button type="submit" class="btn delete"><i class="material-icons" id="clear-btn">clear</i></button></td></tr>';
+      var str_item = '<tr class="itemrow" id="'+ id +'"><td class="description append-td"><b>' + description + '</b></td>' +
+          '<td class="append-td"><input type="text" class="quantity" onkeypress="return (event.charCode == 8 || event.charCode == 0 || event.charCode == 13) ? null : event.charCode >= 48 && event.charCode <= 57" id="qty_input" value="1" maxlength="6"></td>' +
+          '<td class="itemprice append-td">' + price + '</td>' +
+          '<td class="itemsubtotal append-td">' + price + '</td>' +
+          '<td class="append-td-2"><button type="submit" class="btn delete"><i class="material-icons" id="clear-btn">clear</i></button></td></tr>';
 
         //$("#display_table").append(str_item).fadeIn(1000);
         $(str_item).hide().appendTo("#display_table tbody").fadeIn(370);
         $(".quantity").focus().select();
         update_total();
+        compute_discount();
       }
       // else
       // {
@@ -538,7 +542,9 @@ SALE
       whichtr.find($(this)).val(1);
       whichtr.find($('.itemsubtotal')).text(itemprice); 
     }
+
     update_total();
+    compute_discount();
   });
   $(document).on('keydown','#qty_input',function(event){
     if (event.which == 13) {
@@ -552,7 +558,6 @@ SALE
     var subtotal = 0;
     var qty = $(this).val();
     var price = parseFloat(whichtr.find($('.itemprice')).text());
-    
 
     var desc = whichtr.find($('.description')).text();
     var dataqty = $('#mirror-pos').find($('[data-description="'+ desc +'"]')).attr('data-qty');
@@ -565,6 +570,7 @@ SALE
       
       whichtr.find($('.itemsubtotal')).text(subtotal.toFixed(2));
       update_total();
+      compute_discount();
     }
     else
     {
@@ -572,13 +578,15 @@ SALE
 
       whichtr.find($('.itemsubtotal')).text(subtotal.toFixed(2));
       update_total();
+      compute_discount();
     }
   });
 
   $(document).ready(function(){
      var discount_id = $('.select-box-discount option:selected').attr('data-id');
      $('#discountvalue').attr('discount_id', discount_id);
-  })
+  });
+
   $(document).on('change', '.select-box-discount',function() {
     var discount_id = $('.select-box-discount option:selected').attr('data-id');
     var discount_name = $('.select-box-discount option:selected').attr('data-name');
@@ -589,9 +597,39 @@ SALE
     $('#discountvalue').attr('discount_name', discount_name);
     $('#discountvalue').attr('discount_type', discount_type);
     $('#discountvalue').val(discount_value);
-
     update_total();
+    compute_discount();
   });
+
+  function compute_discount()
+  {
+    var discount_id = $('.select-box-discount option:selected').attr('data-id');
+    var discount_name = $('.select-box-discount option:selected').attr('data-name');
+    var discount_type = $('.select-box-discount option:selected').attr('data-type');
+    var discount_value = $('.select-box-discount option:selected').attr('data-value');
+
+    var discount = $('#discountvalue').val();
+    var zero = 0;
+    var sum = parseFloat($('.subtotal').text());
+
+    if(discount_type == 'percentage' && discount_id == 1)
+    {
+      var vat_amount = $('#posvat').val();
+      var vat_percent = (100 + parseFloat(vat_amount)) / 100;
+      var vatexempt =  sum / vat_percent;
+      var totaldiscount = (vatexempt * discount);
+    }
+    else if(discount_type == 'percentage' && discount_id != 1)
+    {
+      var totaldiscount = sum * parseFloat(discount);
+    }
+    else
+    {
+      var totaldiscount = parseFloat(discount);
+    }
+    
+    $('.discountspanvalue').text(('₱ ' + totaldiscount.toFixed(2)));
+  }
 
   function alpha(e) {
     var k;
@@ -648,7 +686,7 @@ SALE
 
   function align_price()
   {
-    $("#mirror-pos .btn.active").each(function(){
+    $("#mirror-pos .btn.pos-button-active").each(function(){
     var price = $(this).attr("data-price");
 
     if($("#membercardno").val().length == 0)
@@ -668,6 +706,7 @@ SALE
     $("#display_table tbody tr#"+$(this).attr("data-id")).find("td.itemsubtotal").text(subtotal.toFixed(2));
     });
     update_total();
+    compute_discount();
 
   }
 
@@ -1152,6 +1191,7 @@ SALE
         $('#membername').text(ui.item.fullname);
         $('#memberspanload').text('₱ ' + ui.item.load);
         $('#memberload').val(ui.item.load);
+        // compute_discount();
         align_price();
       }
     });

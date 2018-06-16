@@ -117,9 +117,9 @@ SALES
           <td class="td-center">₱ {{number_format($sale->amount_due,2, '.', '')}}</td>
           <td class="td-center">{{ucwords($sale->payment_mode)}}</td>
 
-          <td> <button type="button" class="btn btn-secondary edit-btn" id="view-receipt" data-id="{{$sale->id}}" data-discount_id="@if(isset($sale->discount->discount_name)){{$sale->discount->id}}@else
+          <td> <a href="{{ url('logs/sales/showdetails/' . $sale->id) }}"><button type="button" class="btn btn-secondary edit-btn" id="view-receipt" data-id="{{$sale->id}}" data-discount_id="@if(isset($sale->discount->discount_name)){{$sale->discount->id}}@else
             {{''}}
-            @endif"><i class="material-icons md-18">receipt</i></button>
+            @endif"><i class="material-icons md-18">receipt</i></button></a>
 		  <button type="button" class="btn btn-danger del-btn" id="delete-sales" data-id="{{$sale->id}}" data-custid="@if(isset($sale->guest->id)) {{$sale->guest->id}} @else {{$sale->user->id}} @endif" data-type="@if(isset($sale->user->role)) {{'member'}} @else {{'guest'}} @endif" data-toggle="modal" data-target=".delete"><i class="material-icons md-18">delete</i></button>
 
           </td>
@@ -185,138 +185,138 @@ SALES
 
 
 <script type="text/javascript">
-  $(document).on('click', '#view-receipt', function() {
-    $.ajax({
-    type: 'POST',
-    url: '/logs/sales/showdetails',
-    data: {
-      '_token': $('input[name=_token]').val(),
-      'sales_id': $(this).data('id'),
-      'discount_id': $(this).data('discount_id')
-    },
-    success: function(data){
+  // $(document).on('click', '#view-receipt', function() {
+  //   $.ajax({
+  //   type: 'POST',
+  //   url: '/logs/sales/showdetails',
+  //   data: {
+  //     '_token': $('input[name=_token]').val(),
+  //     'sales_id': $(this).data('id'),
+  //     'discount_id': $(this).data('discount_id')
+  //   },
+  //   success: function(data){
 
-      $('.view_details').modal('show');
-      $('#view_body').html(data);
-      var sum = 0;
+  //     $('.view_details').modal('show');
+  //     $('#view_body').html(data);
+  //     var sum = 0;
 
-      $('.totalprice').each(function() {
-         sum += parseFloat($(this).text().replace('₱', ''));
-      });
-      $('.subtotal').text(sum.toFixed(2));
+  //     $('.totalprice').each(function() {
+  //        sum += parseFloat($(this).text().replace('₱', ''));
+  //     });
+  //     $('.subtotal').text(sum.toFixed(2));
 
 
 
-      if($('#discount_id').val() == 1)
-      {
-        var subtotal = $('.subtotal').text();
-        var discount_name = $('#discount_name').val();
-        var discount_percent = $('#discount_value').val() * 100;
-        var vat_amount = $('#vat_amount').val();
-        var vat_percent = (100 + parseFloat(vat_amount)) / 100;
-        var zero = 0;
+  //     if($('#discount_id').val() == 1)
+  //     {
+  //       var subtotal = $('.subtotal').text();
+  //       var discount_name = $('#discount_name').val();
+  //       var discount_percent = $('#discount_value').val() * 100;
+  //       var vat_amount = $('#vat_amount').val();
+  //       var vat_percent = (100 + parseFloat(vat_amount)) / 100;
+  //       var zero = 0;
 
-        $('.vat').text(zero.toFixed(2));
-        $('.vatsale').text(zero.toFixed(2));
+  //       $('.vat').text(zero.toFixed(2));
+  //       $('.vatsale').text(zero.toFixed(2));
 
-        var vatexempt =  subtotal / vat_percent;
-        $('.vatexempt').text(vatexempt.toFixed(2));
+  //       var vatexempt =  subtotal / vat_percent;
+  //       $('.vatexempt').text(vatexempt.toFixed(2));
 
-        $('.zerorated').text(zero.toFixed(2));
+  //       $('.zerorated').text(zero.toFixed(2));
 
-        var percent = parseFloat($('#discount_value').val());
-        var discount = (vatexempt * percent);
-        $('.discount').text(discount.toFixed(2));
+  //       var percent = parseFloat($('#discount_value').val());
+  //       var discount = (vatexempt * percent);
+  //       $('.discount').text(discount.toFixed(2));
 
-        var total = vatexempt -  discount;
-        $('.total').text(total.toFixed(2));
+  //       var total = vatexempt -  discount;
+  //       $('.total').text(total.toFixed(2));
 
-        $('.discount_name').text('[' + discount_name + ' ' + discount_percent + '%]');
-      }
-      else if($('#discount_id').val() == undefined)
-      {
-          var zero = 0;
-          var subtotal = $('.subtotal').text();
-          var vat_amount = $('#vat_amount').val();
-          var vat_percent = (100 + parseFloat(vat_amount)) / 100;
-          var vat_pointpercent = parseFloat(vat_amount) / 100;
-          var vatsale =  subtotal / vat_percent;
-          var vat = vatsale * vat_pointpercent;
-          var discount_name = $('#discount_name').val();
-          var discount_type = $('#discount_type').val();
-          var discount_value = $('#discount_value').val();
+  //       $('.discount_name').text('[' + discount_name + ' ' + discount_percent + '%]');
+  //     }
+  //     else if($('#discount_id').val() == undefined)
+  //     {
+  //         var zero = 0;
+  //         var subtotal = $('.subtotal').text();
+  //         var vat_amount = $('#vat_amount').val();
+  //         var vat_percent = (100 + parseFloat(vat_amount)) / 100;
+  //         var vat_pointpercent = parseFloat(vat_amount) / 100;
+  //         var vatsale =  subtotal / vat_percent;
+  //         var vat = vatsale * vat_pointpercent;
+  //         var discount_name = $('#discount_name').val();
+  //         var discount_type = $('#discount_type').val();
+  //         var discount_value = $('#discount_value').val();
 
-          $('.vat').text(vat.toFixed(2));
-          $('.vatsale').text(vatsale.toFixed(2));
-          $('.vatexempt').text(zero.toFixed(2));
-          $('.zerorated').text(zero.toFixed(2));
+  //         $('.vat').text(vat.toFixed(2));
+  //         $('.vatsale').text(vatsale.toFixed(2));
+  //         $('.vatexempt').text(zero.toFixed(2));
+  //         $('.zerorated').text(zero.toFixed(2));
 
-          var total = subtotal;
-          $('.total').text(total);
-      }
-      else
-      {
-        var zero = 0;
-        var subtotal = $('.subtotal').text();
-        var vat_amount = $('#vat_amount').val();
-        var vat_percent = (100 + parseFloat(vat_amount)) / 100;
-        var vat_pointpercent = parseFloat(vat_amount) / 100;
-        var vatsale =  subtotal / vat_percent;
-        var vat = vatsale * vat_pointpercent;
-        var discount_name = $('#discount_name').val();
-        var discount_type = $('#discount_type').val();
-        var discount_value = $('#discount_value').val();
+  //         var total = subtotal;
+  //         $('.total').text(total);
+  //     }
+  //     else
+  //     {
+  //       var zero = 0;
+  //       var subtotal = $('.subtotal').text();
+  //       var vat_amount = $('#vat_amount').val();
+  //       var vat_percent = (100 + parseFloat(vat_amount)) / 100;
+  //       var vat_pointpercent = parseFloat(vat_amount) / 100;
+  //       var vatsale =  subtotal / vat_percent;
+  //       var vat = vatsale * vat_pointpercent;
+  //       var discount_name = $('#discount_name').val();
+  //       var discount_type = $('#discount_type').val();
+  //       var discount_value = $('#discount_value').val();
 
-        $('.vat').text(vat.toFixed(2));
-        $('.vatsale').text(vatsale.toFixed(2));
-        $('.vatexempt').text(zero.toFixed(2));
-        $('.zerorated').text(zero.toFixed(2));
+  //       $('.vat').text(vat.toFixed(2));
+  //       $('.vatsale').text(vatsale.toFixed(2));
+  //       $('.vatexempt').text(zero.toFixed(2));
+  //       $('.zerorated').text(zero.toFixed(2));
 
-        if(discount_type == 'deduction')
-        {
-          var discount = discount_value;
-          $('.discount').text(discount);
+  //       if(discount_type == 'deduction')
+  //       {
+  //         var discount = discount_value;
+  //         $('.discount').text(discount);
 
-          var total = subtotal -  discount;
-          if(total > 0)
-          {
-            $('.total').text(total.toFixed(2));
-          }
-          else
-          {
-            $('.total').text(zero.toFixed(2));
-          }
+  //         var total = subtotal -  discount;
+  //         if(total > 0)
+  //         {
+  //           $('.total').text(total.toFixed(2));
+  //         }
+  //         else
+  //         {
+  //           $('.total').text(zero.toFixed(2));
+  //         }
 
-          $('.discount_name').text('[' + discount_name + ' - ₱' + discount_value + ']');
-        }
-        else if(discount_type = 'percentage')
-        {
-          var discount_percent = $('#discount_value').val() * 100;
-          var percent = parseFloat($('#discount_value').val());
-          var discount = subtotal * percent;  
-          $('.discount').text(discount.toFixed(2));
+  //         $('.discount_name').text('[' + discount_name + ' - ₱' + discount_value + ']');
+  //       }
+  //       else if(discount_type = 'percentage')
+  //       {
+  //         var discount_percent = $('#discount_value').val() * 100;
+  //         var percent = parseFloat($('#discount_value').val());
+  //         var discount = subtotal * percent;  
+  //         $('.discount').text(discount.toFixed(2));
 
-          var total = subtotal -  discount;
-          if(total > 0)
-          {
-            $('.total').text(total.toFixed(2));
-          }
-          else
-          {
-            $('.total').text(zero.toFixed(2));
-          }
+  //         var total = subtotal -  discount;
+  //         if(total > 0)
+  //         {
+  //           $('.total').text(total.toFixed(2));
+  //         }
+  //         else
+  //         {
+  //           $('.total').text(zero.toFixed(2));
+  //         }
 
-          $('.discount_name').text('[' + discount_name + ' ' + discount_percent + '%]');
-        }
-      }
+  //         $('.discount_name').text('[' + discount_name + ' ' + discount_percent + '%]');
+  //       }
+  //     }
 
-    },
-    error: function(jqXHR, textStatus, errorThrown) { // What to do if we fail
-      console.log(JSON.stringify(jqXHR));
-      console.log("AJAX error: " + textStatus + ' : ' + errorThrown);
-    }
-    });
-  });
+  //   },
+  //   error: function(jqXHR, textStatus, errorThrown) { // What to do if we fail
+  //     console.log(JSON.stringify(jqXHR));
+  //     console.log("AJAX error: " + textStatus + ' : ' + errorThrown);
+  //   }
+  //   });
+  // });
 
   $(document).on('click', '#delete-sales', function() {
     $('.sales-id-delete').text($(this).data('id'));

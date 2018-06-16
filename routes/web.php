@@ -30,7 +30,7 @@ Route::group(['middleware' => ['admin']], function () {
 
 	//Sales Logs
 	Route::get('logs/sales', 'Admin\SalesLogsController@index');
-	Route::post('logs/sales/showdetails', 'Admin\SalesLogsController@showdetails');
+	Route::get('logs/sales/showdetails/{id}', 'Admin\SalesLogsController@showdetails');
 	Route::post('logs/sales/delete_sales', 'Admin\SalesLogsController@destroy');
 	Route::get('logs/sales/filter', 'Admin\SalesLogsController@filter');
 

@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 
+
+use Auth;
 use App\User;
 use App\Guest;
 use App\Balance;
@@ -62,6 +64,7 @@ class PointofSaleController extends Controller
         $sale->change_amount = $request->change_amount;
         $sale->payment_mode = 'cash';
         $sale->vat = $request->vat;
+        $sale->staff_name = Auth::user()->id;
         $sale->save();
 
         $itemsBought = $request->itemsbought;
@@ -97,6 +100,7 @@ class PointofSaleController extends Controller
         $sale->change_amount = $request->change_amount;
         $sale->payment_mode = 'cash';
         $sale->vat = $request->vat;
+        $sale->staff_name = Auth::user()->id;   
         $sale->save();
 
         $itemsBought = $request->itemsbought;
@@ -132,6 +136,7 @@ class PointofSaleController extends Controller
         $sale->change_amount = 0;
         $sale->payment_mode = 'card load';
         $sale->vat = $request->vat;
+        $sale->staff_name = Auth::user()->id;   
         $sale->save();
 
         $itemsBought = $request->itemsbought;
@@ -173,6 +178,7 @@ class PointofSaleController extends Controller
         $member_reload->amount_due = $request->reload_amount;
         $member_reload->amount_paid = $request->payment_amount;
         $member_reload->change_amount = $request->change_amount;
+        $member_reload->staff_name = Auth::user()->id;   
         $member_reload->save();
 
         return $total_load;

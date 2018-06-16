@@ -1,6 +1,33 @@
 .container-fluid{
      background-color:#E4E8E9;
 }
+.group, .reload, .add_shopping_cart, .trending_down{
+     font-size:50px !important;
+     padding-top: 4.9vh !important;
+     padding-right:1vh !important;
+     padding-left:2vh !important;
+}
+.title{
+     font-size:13px !important;
+     padding-top: 5.5vh !important;
+     padding-right:1vh !important;
+     font-weight: bold!important;
+
+}
+.top-product-price{
+     color: #66ca72 !important;
+}
+.newmember-count, .reload-sales, .product-sales, .low-stock {
+     padding-top: 4.5vh !important;
+     white-space: normal !important;
+
+      font-weight: 600!important;
+}
+
+.last-time{
+     font-size:11px !important;
+
+}
 #new-customers{
      background-image: linear-gradient( 135deg, #90F7EC 10%, #32CCBC 100%);
      color: white !important;

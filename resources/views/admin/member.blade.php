@@ -106,9 +106,9 @@ ACCOUNTS
       </br>
 
       <div class="form-group row mx-auto">
-      <label for="points" class="col-form-label col-sm-4 modal-load">Current Load:</label>
+      <label for="points" class="col-form-label col-sm-5 modal-load">Current Load:</label>
 
-        <div class="col-sm-8">
+        <div class="col-sm-7">
           <div class="input-group">
             <div class="input-group-prepend">
                 <span class="input-group-text" id="basic-addon-load">₱</span>
@@ -121,8 +121,8 @@ ACCOUNTS
       </div>
 
       <div class="form-group row mx-auto">
-      <label for="points" class="col-form-label col-sm-4 modal-points">Reload Amount:</label>
-        <div class="col-sm-8">
+      <label for="points" class="col-form-label col-sm-5 modal-points">Reload Amount:</label>
+        <div class="col-sm-7">
           <div class="input-group">
             <div class="input-group-prepend">
               <span class="input-group-text" id="basic-addon-reload-amount">₱</span>
@@ -135,9 +135,9 @@ ACCOUNTS
       </div>
 
       <div class="form-group row mx-auto">
-      <label for="points" class="col-form-label col-sm-4 modal-load">Payment Amount:</label>
+      <label for="points" class="col-form-label col-sm-5 modal-load">Payment Amount:</label>
 
-        <div class="col-sm-8">
+        <div class="col-sm-7">
           <div class="input-group">
             <div class="input-group-prepend">
                 <span class="input-group-text" id="basic-addon-payment-amount">₱</span>
@@ -150,9 +150,9 @@ ACCOUNTS
       </div>
 
       <div class="form-group row mx-auto">
-      <label for="points" class="col-form-label col-sm-4 modal-load">Change:</label>
+      <label for="points" class="col-form-label col-sm-5 modal-load">Change:</label>
 
-        <div class="col-sm-8">
+        <div class="col-sm-7">
           <div class="input-group">
             <div class="input-group-prepend">
                 <span class="input-group-text" id="basic-addon-change">₱</span>

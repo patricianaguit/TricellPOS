@@ -137,9 +137,9 @@ SALE
                     <div class="container-fluid">
                     <br>
                       <div class="form-group row mx-auto">
-                      <label for="totalprice" class="col-form-label col-sm-4 modal-pay">Total Price:</label>
+                      <label for="totalprice" class="col-form-label col-sm-5 modal-pay">Total Price:</label>
 
-                        <div class="col-sm-8">
+                        <div class="col-sm-7">
                           <div class="input-group">
                             <div class="input-group-prepend">
                                 <span class="input-group-text" id="basic-addon-totalprice-cash">₱</span>
@@ -152,9 +152,9 @@ SALE
                       </div>
 
                       <div class="form-group row mx-auto">
-                      <label for="paymentamount" class="col-form-label col-sm-4 modal-pay">Payment Amount:</label>
+                      <label for="paymentamount" class="col-form-label col-sm-5 modal-pay">Payment Amount:</label>
 
-                        <div class="col-sm-8">
+                        <div class="col-sm-7">
                           <div class="input-group">
                             <div class="input-group-prepend">
                                 <span class="input-group-text" id="basic-addon-paymentamount-cash">₱</span>
@@ -167,9 +167,9 @@ SALE
                       </div>
 
                       <div class="form-group row mx-auto">
-                      <label for="changeamount" class="col-form-label col-sm-4 modal-pay">Change:</label>
+                      <label for="changeamount" class="col-form-label col-sm-5 modal-pay">Change:</label>
 
-                        <div class="col-sm-8">
+                        <div class="col-sm-7">
                           <div class="input-group">
                             <div class="input-group-prepend">
                                 <span class="input-group-text" id="basic-addon-changeamount-cash">₱</span>
@@ -208,9 +208,9 @@ SALE
                     <div class="container-fluid">
                       <br>
                       <div class="form-group row mx-auto">
-                        <label for="currentload" class="col-form-label col-sm-4 modal-pay">Current Load:</label>
+                        <label for="currentload" class="col-form-label col-sm-5 modal-pay">Current Load:</label>
 
-                          <div class="col-sm-8">
+                          <div class="col-sm-7">
                             <div class="input-group">
                               <div class="input-group-prepend">
                                   <span class="input-group-text" id="basic-addon-currentload-card">₱</span>
@@ -222,9 +222,9 @@ SALE
                         </div>
 
                         <div class="form-group row mx-auto">
-                        <label for="loadpay" class="col-form-label col-sm-4 modal-pay">Amount to Pay:</label>
+                        <label for="loadpay" class="col-form-label col-sm-5 modal-pay">Amount to Pay:</label>
 
-                          <div class="col-sm-8">
+                          <div class="col-sm-7">
                             <div class="input-group">
                               <div class="input-group-prepend">
                                   <span class="input-group-text" id="basic-addon-loadpay-card">₱</span>
@@ -264,8 +264,8 @@ SALE
                     <div class="container-fluid">
                     <br>
                       <div class="form-group row mx-auto">
-                        <label for="points" class="col-form-label col-sm-4 modal-load">Current Load:</label>
-                          <div class="col-sm-8">
+                        <label for="points" class="col-form-label col-sm-5 modal-load">Current Load:</label>
+                          <div class="col-sm-7">
                             <div class="input-group">
                               <div class="input-group-prepend">
                                   <span class="input-group-text" id="basic-addon-load">₱</span>
@@ -278,8 +278,8 @@ SALE
                         </div>
 
                         <div class="form-group row mx-auto">
-                        <label for="points" class="col-form-label col-sm-4 modal-points">Reload Amount:</label>
-                          <div class="col-sm-8">
+                        <label for="points" class="col-form-label col-sm-5 modal-points">Reload Amount:</label>
+                          <div class="col-sm-7">
                             <div class="input-group">
                               <div class="input-group-prepend">
                                 <span class="input-group-text" id="basic-addon-reload-amount">₱</span>
@@ -292,9 +292,9 @@ SALE
                         </div>
 
                         <div class="form-group row mx-auto">
-                        <label for="points" class="col-form-label col-sm-4 modal-load">Payment Amount:</label>
+                        <label for="points" class="col-form-label col-sm-5 modal-load">Payment Amount:</label>
 
-                          <div class="col-sm-8">
+                          <div class="col-sm-7">
                             <div class="input-group">
                               <div class="input-group-prepend">
                                   <span class="input-group-text" id="basic-addon-payment-amount">₱</span>
@@ -307,9 +307,9 @@ SALE
                         </div>
 
                         <div class="form-group row mx-auto">
-                        <label for="points" class="col-form-label col-sm-4 modal-load">Change:</label>
+                        <label for="points" class="col-form-label col-sm-5 modal-load">Change:</label>
 
-                          <div class="col-sm-8">
+                          <div class="col-sm-7">
                             <div class="input-group">
                               <div class="input-group-prepend">
                                   <span class="input-group-text" id="basic-addon-change">₱</span>

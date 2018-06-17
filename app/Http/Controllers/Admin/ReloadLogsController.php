@@ -20,11 +20,22 @@ class ReloadLogsController extends Controller
         return view('admin.reload')->with(['reloads' => $reloads, 'sumsales' => $sumsales]); 
     }
 
-    public function showdetails(Request $request)
-    {
-        $reload_id = $request->reload_id;
-        $reloads = Reload_sale::where('id', $reload_id)->first();
-    	return view('admin.reloadmodal')->with('reloads', $reloads);
+    public function showdetails(Request $request, $id)
+    {   
+        $reload = Reload_sale::find($id);
+        if(!isset($reload))
+        {
+            return view('errors.404');
+        } 
+        else
+        {
+            $profile = DB::table('profile')->select('*')->where('id', 1)->first();
+            $salesdetails = Reload_sale::where('id', $reload->id)->get();
+            $subtotal = Reload_sale::selectRaw('SUM(amount_due)')->where('id', $reload->id)->pluck('SUM(amount_due)');
+            $cashier = User::find($reload->staff_name);
+            
+            return view('staff.reloadreceipt')->with(['reload' => $reload, 'salesdetails' => $salesdetails, 'cashier' => $cashier, 'profile' => $profile,'subtotal' => $subtotal]); 
+        } 
     }
 
     public function destroy(Request $request)

@@ -36,7 +36,7 @@ Route::group(['middleware' => ['admin']], function () {
 
 	//Reload Logs
 	Route::get('logs/reload', 'Admin\ReloadLogsController@index');
-	Route::post('logs/reload/showdetails', 'Admin\ReloadLogsController@showdetails');
+	Route::get('logs/reload/showdetails/{id}', 'Admin\ReloadLogsController@showdetails');
 	Route::get('logs/reload/filter', 'Admin\ReloadLogsController@filter');
 	Route::post('logs/reload/delete_reload', 'Admin\ReloadLogsController@destroy');
 
@@ -107,13 +107,13 @@ Route::group(['middleware' => ['staff']], function () {
 
    	//Sales Logs
    	Route::get('staff/logs/sales', 'Staff\SalesLogsController@index');
-	Route::post('staff/logs/sales/showdetails', 'Staff\SalesLogsController@showdetails');
+	Route::get('staff/logs/sales/showdetails/{id}', 'Staff\SalesLogsController@showdetails');
 	Route::post('staff/logs/sales/delete_sales', 'Staff\SalesLogsController@destroy');
 	Route::get('staff/logs/sales/filter', 'Staff\SalesLogsController@filter');
 
 	//Reload Logs
 	Route::get('staff/logs/reload', 'Staff\ReloadLogsController@index');
-	Route::post('staff/logs/reload/showdetails', 'Staff\ReloadLogsController@showdetails');
+	Route::get('staff/logs/reload/showdetails/{id}', 'Staff\ReloadLogsController@showdetails');
 	Route::get('staff/logs/reload/filter', 'Staff\ReloadLogsController@filter');
 	Route::post('staff/logs/reload/delete_reload', 'Staff\ReloadLogsController@destroy');
 

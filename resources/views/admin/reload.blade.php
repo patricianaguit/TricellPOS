@@ -82,7 +82,7 @@ RELOAD SALES
           <td class="td-center">{{$reload->user->firstname . " " . $reload->user->lastname}}</td>
           <td class="td-center">₱ {{number_format($reload->amount_due,2, '.', '')}}</td>
 
-          <td> <button type="button" id="view-receipt" data-id="{{$reload->id}}" class="btn btn-secondary edit-btn" data-toggle="modal" data-target=".view_details"><i class="material-icons md-18">receipt</i></button>
+          <td> <a href="{{ url('logs/reload/showdetails/' . $reload->id) }}"><button type="button" id="view-receipt" data-id="{{$reload->id}}" class="btn btn-secondary edit-btn"><i class="material-icons md-18">receipt</i></button></a>
       <button type="button" class="btn btn-danger del-btn" id="delete-reload" data-id="{{$reload->id}}" data-toggle="modal" data-target=".delete"><i class="material-icons md-18">delete</i></button> </td>
         </tr>
         @endforeach
@@ -92,23 +92,6 @@ RELOAD SALES
 
     {{$reloads->links()}}
 
-
-   <!----start of modal for view---->
-    <div class="modal fade view_details" tabindex="-1" role="dialog">
-   <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">View Receipt</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-
-         <div class="modal-body" id="view_body">
-         </div>
-      </div>
-    </div>
-    </div>
     <!----end of modal---->
    <!----start of modal for DELETE---->
     <div class="modal fade delete" tabindex="-1" role="dialog">
@@ -138,24 +121,24 @@ RELOAD SALES
 
 <script type="text/javascript">
   //view receipt
-  $(document).on('click', '#view-receipt', function() {
-    $.ajax({
-    type: 'POST',
-    url: '/logs/reload/showdetails',
-    data: {
-      '_token': $('input[name=_token]').val(),
-      'reload_id': $(this).data('id'),
-    },
-    success: function(data){
-      $('.view_details').modal('show');
-      $('#view_body').html(data);
-    },
-    error: function(jqXHR, textStatus, errorThrown) { // What to do if we fail
-      console.log(JSON.stringify(jqXHR));
-      console.log("AJAX error: " + textStatus + ' : ' + errorThrown);
-    }
-    });
-  });
+  // $(document).on('click', '#view-receipt', function() {
+  //   $.ajax({
+  //   type: 'POST',
+  //   url: '/logs/reload/showdetails',
+  //   data: {
+  //     '_token': $('input[name=_token]').val(),
+  //     'reload_id': $(this).data('id'),
+  //   },
+  //   success: function(data){
+  //     $('.view_details').modal('show');
+  //     $('#view_body').html(data);
+  //   },
+  //   error: function(jqXHR, textStatus, errorThrown) { // What to do if we fail
+  //     console.log(JSON.stringify(jqXHR));
+  //     console.log("AJAX error: " + textStatus + ' : ' + errorThrown);
+  //   }
+  //   });
+  // });
 
   //delete log
   $(document).on('click', '#delete-reload', function() {

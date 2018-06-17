@@ -46,7 +46,7 @@ class SalesLogsController extends Controller
             {
                 $discounts = '';
             }
-            return view('admin.salesmodal')->with(['sales' => $sales, 'salesdetails' => $salesdetails, 'cashier' => $cashier, 'profile' => $profile,'discounts' => $discounts, 'subtotal' => $subtotal]); 
+            return view('admin.salesreceipt')->with(['sales' => $sales, 'salesdetails' => $salesdetails, 'cashier' => $cashier, 'profile' => $profile,'discounts' => $discounts, 'subtotal' => $subtotal]); 
         } 
     }
 
@@ -91,7 +91,7 @@ class SalesLogsController extends Controller
         {
             $sales = Sale::with('user')->where(function($query) use ($request, $account_type, $payment_mode, $date_start, $date_end)
             {
-                $query->where(DB::raw("(DATE_FORMAT(transaction_date,'%Y-%m-%d'))"), '>=', $date_start)->where(DB::raw("(DATE_FORMAT(transaction_date,'%m %d,      %Y'))"), '<=', $date_end);
+                $query->where(DB::raw("(DATE_FORMAT(transaction_date,'%Y-%m-%d'))"), '>=', $date_start)->where(DB::raw("(DATE_FORMAT(transaction_date,'%Y-%m-%d'))"), '<=', $date_end);
             })->whereHas('User', function($query) use ($account_type)
                 {
                         $query->where('role', $account_type);

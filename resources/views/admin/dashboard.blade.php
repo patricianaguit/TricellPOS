@@ -219,6 +219,12 @@ DASHBOARD
             ticks: {
                beginAtZero: true,
             } 
+         }],
+         yAxes: [{
+            barThickness: 110,
+            ticks: {
+               beginAtZero: true,
+            } 
          }]
       },
       responsive:true,

@@ -83,6 +83,14 @@ DASHBOARD
       <div class="col m-1 border" id="top-products">
         <center><h6>Top Selling Products</h6></center>
         <br>
+        <div class="row">
+                <div class="col">
+                  <h5 class="label-product">Product</h5>
+                </div>
+                <div class="col">
+                  <h5 class="label-total">Total</h5>
+                </div>
+              </div>
           @foreach($topitems as $item)
             @if($loop->first)
               <div class="row">
@@ -96,10 +104,10 @@ DASHBOARD
             @else
               <div class="row">
                 <div class="col">
-                  <h6>{{$loop->iteration . ". " . $item->product_name}}</h6>
+                  <h6 class="label-product2">{{$loop->iteration . ". " . $item->product_name}}</h6>
                 </div>
                 <div class="col">
-                  <h6 class="top-product-price">₱ {{number_format($item->subtotal,2)}}</h6>
+                  <h6 class="label-total2">₱ {{number_format($item->subtotal,2)}}</h6>
                 </div>
               </div>
             @endif
@@ -113,6 +121,14 @@ DASHBOARD
       <div class="col m-1 border" id="active-members">
          <center><h6>Most Active Members</h6></center>
         <br>
+        <div class="row">
+                <div class="col">
+                  <h5 class="label-product">Member</h5>
+                </div>
+                <div class="col">
+                  <h5 class="label-total">Total Purchase</h5>
+                </div>
+              </div>
           @foreach($topmembers as $member)
             @if($loop->first)
               <div class="row">
@@ -126,10 +142,10 @@ DASHBOARD
             @else
               <div class="row">
                 <div class="col">
-                  <h6>{{$loop->iteration . ". " . $member->name}}</h6>
+                  <h6 class="label-product2">{{$loop->iteration . ". " . $member->name}}</h6>
                 </div>
                 <div class="col">
-                  <h6 class="top-product-price">₱ {{number_format($member->amount_due,2)}}</h6>
+                  <h6 class="label-total2">₱ {{number_format($member->amount_due,2)}}</h6>
                 </div>
               </div>
             @endif

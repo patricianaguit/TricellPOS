@@ -14,9 +14,9 @@
      font-weight: bold!important;
 
 }
-.top-product-price{
+/*.top-product-price{
      color: #66ca72 !important;
-}
+}*/
 .newmember-count, .reload-sales, .product-sales, .low-stock {
      padding-top: 4.5vh !important;
      white-space: normal !important;
@@ -92,4 +92,13 @@
 }
  h6{
      margin-top:0.5rem !important;
+}
+.label-product{
+     color: #eb5757 !important;
+}
+.label-total{
+    color: #66ca72 !important;
+}
+.label-product2, .label-total2{
+     color: #707982 !important;
 }

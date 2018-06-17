@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use Auth;
 use App\Http\Controllers\Controller;
 use App\User;
 use DB;
@@ -110,6 +111,7 @@ class MemberAccountsController extends Controller
         $member_reload->amount_due = $request->reload_amount;
         $member_reload->amount_paid = $request->payment_amount;
         $member_reload->change_amount = $request->change_amount;
+        $member_reload->staff_name = Auth::user()->id;
         $member_reload->save();
     }
 

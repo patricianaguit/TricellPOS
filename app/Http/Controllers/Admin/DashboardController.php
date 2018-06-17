@@ -71,8 +71,14 @@ class DashboardController extends Controller
         $membersales = array_column($membersales, 'ROUND(SUM(amount_due),2)');
         $guestsales = DB::table('sales')->selectRaw('ROUND(SUM(amount_due),2)')->where('guest_id', '!=', '0')->get()->toArray();
         $guestsales = array_column($guestsales, 'ROUND(SUM(amount_due),2)');
-   
-        return view('admin.dashboard')->with(['newmembers' => $newmembers, 'lowstock' => $lowstock, 'reloadsales' => $reloadsales, 'sales' => $sales, 'cashpay' => json_encode($cashpay,JSON_NUMERIC_CHECK), 'loadpay' => json_encode($loadpay,JSON_NUMERIC_CHECK),'yearsales' => $yearsales, 'membersales' => json_encode($membersales,JSON_NUMERIC_CHECK), 'guestsales' => json_encode($guestsales,JSON_NUMERIC_CHECK)]);
+
+        //SELECT DISTINCT product_id, SUM(subtotal) FROM sales_details  JOIN products on sales_details.product_id = products.product_id   group by(product_id)
+
+        // $topone = DB::table('sales_details')->selectRaw('DISTINCT sales_details.product_id, products.product_name, SUM(subtotal) as subtotal')->groupBy('product_id')->join('products', 'sales_details.product_id', '=', 'products.product_id')->orderBy('subtotal', 'desc')->first();
+        // dd($topone);
+        $topitems = DB::table('sales_details')->selectRaw('DISTINCT sales_details.product_id, products.product_name, SUM(subtotal) as subtotal')->groupBy('product_id')->join('products', 'sales_details.product_id', '=', 'products.product_id')->limit(10)->orderBy('subtotal', 'desc')->get()->toArray();
+
+        return view('admin.dashboard')->with(['newmembers' => $newmembers, 'lowstock' => $lowstock, 'reloadsales' => $reloadsales, 'sales' => $sales, 'cashpay' => json_encode($cashpay,JSON_NUMERIC_CHECK), 'loadpay' => json_encode($loadpay,JSON_NUMERIC_CHECK),'yearsales' => $yearsales, 'membersales' => json_encode($membersales,JSON_NUMERIC_CHECK), 'guestsales' => json_encode($guestsales,JSON_NUMERIC_CHECK), 'topitems' => $topitems]);
     }
 
 }

@@ -79,120 +79,41 @@ DASHBOARD
       </div>
    </div>
 
-   <div class="row">
+    <div class="row">
       <div class="col m-1 border" id="top-products">
-         <h6>Top Selling Products</h6>
-         <div class="row">
-            <div class="col">
-              <h3>1. Chocolates</h3>
-            </div>
-            <div class="col">
-              <h2 class="top-product-price">P 10,000</h2>
-            </div>
-         <!-- <canvas id="sales-for-year" width="350" height="350">
-         </canvas> -->
-       </div>
-       <div class="row">
-            <div class="col">
-              <h6>2. Candy</h6>
-            </div>
-            <div class="col">
-              <h6 class="top-product-price">P 5,000</h6>
-            </div>
-         <!-- <canvas id="sales-for-year" width="350" height="350">
-         </canvas> -->
-       </div>
-       <div class="row">
-            <div class="col">
-              <h6>3. Pen</h6>
-            </div>
-            <div class="col">
-              <h6 class="top-product-price">P 2,500</h6>
-            </div>
-         <!-- <canvas id="sales-for-year" width="350" height="350">
-         </canvas> -->
-       </div>
-       <div class="row">
-            <div class="col">
-              <h6>4. Paper</h6>
-            </div>
-            <div class="col">
-              <h6 class="top-product-price">P 2,000</h6>
-            </div>
-         <!-- <canvas id="sales-for-year" width="350" height="350">
-         </canvas> -->
-       </div>
-       <div class="row">
-            <div class="col">
-              <h6>5. Pencil</h6>
-            </div>
-            <div class="col">
-              <h6 class="top-product-price">P 1,000</h6>
-            </div>
-         <!-- <canvas id="sales-for-year" width="350" height="350">
-         </canvas> -->
-       </div>
-       <div class="row">
-            <div class="col">
-              <h6>6. Item 6</h6>
-            </div>
-            <div class="col">
-              <h6 class="top-product-price">P 1,000</h6>
-            </div>
-         <!-- <canvas id="sales-for-year" width="350" height="350">
-         </canvas> -->
-       </div>
-       <div class="row">
-            <div class="col">
-              <h6>7. Item 7</h6>
-            </div>
-            <div class="col">
-              <h6 class="top-product-price">P 1,000</h6>
-            </div>
-         <!-- <canvas id="sales-for-year" width="350" height="350">
-         </canvas> -->
-       </div>
-       <div class="row">
-            <div class="col">
-              <h6>8. Item 8</h6>
-            </div>
-            <div class="col">
-              <h6 class="top-product-price">P 1,000</h6>
-            </div>
-         <!-- <canvas id="sales-for-year" width="350" height="350">
-         </canvas> -->
-       </div>
-       <div class="row">
-            <div class="col">
-              <h6>9. Item 9</h6>
-            </div>
-            <div class="col">
-              <h6 class="top-product-price">P 1,000</h6>
-            </div>
-         <!-- <canvas id="sales-for-year" width="350" height="350">
-         </canvas> -->
-       </div>
-       <div class="row">
-            <div class="col">
-              <h6>10. Item 10</h6>
-            </div>
-            <div class="col">
-              <h6 class="top-product-price">P 1,000</h6>
-            </div>
-         <!-- <canvas id="sales-for-year" width="350" height="350">
-         </canvas> -->
-       </div>
+        <center><h6>Top Selling Products</h6></center>
+        <br>
+          @foreach($topitems as $item)
+            @if($loop->first)
+              <div class="row">
+                <div class="col">
+                  <h4>{{$loop->iteration . ". " . $item->product_name}}</h4>
+                </div>
+                <div class="col">
+                  <h2 class="top-product-price">₱ {{number_format($item->subtotal,2)}}</h2>
+                </div>
+              </div>
+            @else
+              <div class="row">
+                <div class="col">
+                  <h6>{{$loop->iteration . ". " . $item->product_name}}</h6>
+                </div>
+                <div class="col">
+                  <h6 class="top-product-price">₱ {{number_format($item->subtotal,2)}}</h6>
+                </div>
+              </div>
+            @endif
+          @endforeach
       </div>
+
       <div class="col m-1 border" id="sales-payment">
-      <!--    <h6>Sales by Payment Mode</h6> -->
-         <canvas id="payment-mode">
-         </canvas>
+        <canvas id="payment-mode">
+        </canvas>
       </div>
       <div class="col m-1 border" id="active-members">
-         <h6>Most Active Members</h6>
-          
+         <h6>Most Active Members</h6>  
       </div>
-   </div>
+    </div>
 
 </div>
 
@@ -226,9 +147,10 @@ DASHBOARD
       title: {
          display: true,
          text: 'Sales by Payment Mode',
-         fontSize: '17',
+         fontSize: '16',
          fontColor: 'black',
          fontStyle: 'normal',
+         fontFamily: 'Montserrat',
       },
       cutoutPercentage: 70,
       responsive:true,
@@ -265,6 +187,7 @@ DASHBOARD
          fontSize: '17',
          fontColor: 'black',
          fontStyle: 'normal',
+         fontFamily: 'Montserrat',
       },
       legend: {
          display: false
@@ -283,6 +206,9 @@ DASHBOARD
 
 
    var year = <?php echo \Carbon\Carbon::now()->format('Y') ?>;
+   var areagradient = bar_ctx.createLinearGradient(0, 0, 0, 450);
+   areagradient.addColorStop(0, '#3BD0C0');
+  areagradient.addColorStop(1, '#FFFFFF');
     new Chart(document.getElementById("sales-for-year"), {
     type: 'line',
     data: {
@@ -292,7 +218,8 @@ DASHBOARD
             label: "",
             borderWidth: 2,
             borderColor: "#3e95cd",
-            fill: 'origin',
+            fill: 'start',
+            backgroundColor:  areagradient,
          }]
       },
       options: {
@@ -302,6 +229,7 @@ DASHBOARD
             fontSize: '17',
             fontColor: 'black',
             fontStyle: 'normal',
+            fontFamily: 'Montserrat',
          },
          plugins: {
             filler: {

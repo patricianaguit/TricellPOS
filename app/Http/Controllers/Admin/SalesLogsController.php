@@ -25,24 +25,29 @@ class SalesLogsController extends Controller
     }
 
     public function showdetails(Request $request, $id)
-    {
-    	$sales = Sale::find($id); //$request->sales_id;
-        // $discount_id = $request->discount_id;
-        // $sales = Sale::where('id', $sales_id)->first();
-        $profile = DB::table('profile')->select('*')->where('id', 1)->first();
-    	$salesdetails = Sales_details::with('product')->where('sales_id', $sales->id)->get();
-        $subtotal = Sales_details::selectRaw('SUM(subtotal)')->where('sales_id', $sales->id)->pluck('SUM(subtotal)');
-        $cashier = User::find($sales->staff_name);
-        
-        if(isset($sales->discount->discount_name))
+    {   
+        $sales = Sale::find($id);
+        if(!isset($sales))
         {
-            $discounts = Discount::where('id', $sales->discount_id)->first();
-        }
+            return view('errors.404');
+        } 
         else
         {
-            $discounts = '';
-        }
-    	return view('admin.salesmodal')->with(['sales' => $sales, 'salesdetails' => $salesdetails, 'cashier' => $cashier, 'profile' => $profile,'discounts' => $discounts, 'subtotal' => $subtotal]);  
+            $profile = DB::table('profile')->select('*')->where('id', 1)->first();
+            $salesdetails = Sales_details::with('product')->where('sales_id', $sales->id)->get();
+            $subtotal = Sales_details::selectRaw('SUM(subtotal)')->where('sales_id', $sales->id)->pluck('SUM(subtotal)');
+            $cashier = User::find($sales->staff_name);
+            
+            if(isset($sales->discount->discount_name))
+            {
+                $discounts = Discount::where('id', $sales->discount_id)->first();
+            }
+            else
+            {
+                $discounts = '';
+            }
+            return view('admin.salesmodal')->with(['sales' => $sales, 'salesdetails' => $salesdetails, 'cashier' => $cashier, 'profile' => $profile,'discounts' => $discounts, 'subtotal' => $subtotal]); 
+        } 
     }
 
     public function destroy(Request $request)

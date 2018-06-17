@@ -111,7 +111,29 @@ DASHBOARD
         </canvas>
       </div>
       <div class="col m-1 border" id="active-members">
-         <h6>Most Active Members</h6>  
+         <center><h6>Most Active Members</h6></center>
+        <br>
+          @foreach($topmembers as $member)
+            @if($loop->first)
+              <div class="row">
+                <div class="col">
+                  <h4>{{$loop->iteration . ". " . $member->name}}</h4>
+                </div>
+                <div class="col">
+                  <h2 class="top-product-price">₱ {{number_format($member->amount_due,2)}}</h2>
+                </div>
+              </div>
+            @else
+              <div class="row">
+                <div class="col">
+                  <h6>{{$loop->iteration . ". " . $member->name}}</h6>
+                </div>
+                <div class="col">
+                  <h6 class="top-product-price">₱ {{number_format($member->amount_due,2)}}</h6>
+                </div>
+              </div>
+            @endif
+          @endforeach
       </div>
     </div>
 

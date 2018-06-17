@@ -21,8 +21,10 @@ class DashboardController extends Controller
     {	
         //panels
         $newmembers = User::where('role', 'member')->where('created_at', '>', Carbon::now()->subDays(7))->count();
-        $reloadsales = Reload_sale::where('transaction_date', '>', Carbon::now()->subDays(30))->count();
-        $sales = Sale::where('transaction_date', '>', Carbon::now()->subDays(30))->count();
+        $reloadsales = Reload_sale::selectRaw('ROUND(SUM(amount_due),2)')->where('transaction_date', '>', Carbon::now()->subDays(30))->pluck('ROUND(SUM(amount_due),2)')->toArray();
+        $reloadsales = implode($reloadsales);
+        $sales = Sale::selectRaw('ROUND(SUM(amount_due),2)')->where('transaction_date', '>', Carbon::now()->subDays(30))->pluck('ROUND(SUM(amount_due),2)')->toArray();
+        $sales = implode($sales);
         $stock_ind = DB::table('profile')->select('low_stock')->where('id', 1)->first();
         $lowstock = Product::where('product_qty', '<=', $stock_ind->low_stock)->count();
 

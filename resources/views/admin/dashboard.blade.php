@@ -34,7 +34,7 @@ DASHBOARD
             <p class="title">Reload Sales <span class="last-time"></br>Last 30 days</span></p>
          </div>
          <div class ="col-xs-9 mx-auto">
-            <h1 class="reload-sales">{{$reloadsales}}</h1>
+            <h1 class="reload-sales">{{number_format($reloadsales,2)}}</h1>
          </div>
         </div>
       </div>
@@ -47,7 +47,7 @@ DASHBOARD
             <p class="title">Product Sales <span class="last-time"></br>Last 30 days</span></p>
          </div>
          <div class ="col-xs-9 mx-auto">
-            <h1 class="product-sales">{{$sales}}</h1>
+            <h1 class="product-sales">{{number_format($sales,2)}}</h1>
          </div>
        </div> 
       </div>
@@ -247,7 +247,7 @@ DASHBOARD
       options: {
          title: {
             display: true,
-            text: 'Sales for ' + year,
+            text: 'Product Sales for ' + year,
             fontSize: '17',
             fontColor: 'black',
             fontStyle: 'normal',

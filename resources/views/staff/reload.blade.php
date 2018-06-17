@@ -82,7 +82,7 @@ RELOAD SALES
           <td class="td-center">{{$reload->user->firstname . " " . $reload->user->lastname}}</td>
           <td class="td-center">₱ {{number_format($reload->amount_due,2, '.', '')}}</td>
 
-          <td> <button type="button" id="view-receipt" data-id="{{$reload->id}}" class="btn btn-secondary edit-btn" data-toggle="modal" data-target=".view_details"><i class="material-icons md-18">receipt</i></button>
+        <td> <a href="{{ url('staff/logs/reload/showdetails/' . $reload->id) }}"><button type="button" id="view-receipt" data-id="{{$reload->id}}" class="btn btn-secondary edit-btn"><i class="material-icons md-18">receipt</i></button></a></td>
         </tr>
         @endforeach
 
@@ -91,24 +91,6 @@ RELOAD SALES
 
     {{$reloads->links()}}
 
-
-   <!----start of modal for view---->
-    <div class="modal fade view_details" tabindex="-1" role="dialog">
-   <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">View Receipt</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-
-         <div class="modal-body" id="view_body">
-         </div>
-      </div>
-    </div>
-    </div>
-    <!----end of modal---->
    <!----start of modal for DELETE---->
     <div class="modal fade delete" tabindex="-1" role="dialog">
     <div class="modal-dialog">

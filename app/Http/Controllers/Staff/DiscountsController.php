@@ -20,7 +20,7 @@ class DiscountsController extends Controller
     public function create(Request $request)
     {
     	$rules = array(
-        'discount_name' => 'required|unique:discounts,discount_name',
+        'discount_name' => 'bail|required|required|min:2|unique:discounts,discount_name',
         'discount_type' => 'required',
         'discount_value' => 'required|numeric'
         );
@@ -55,7 +55,7 @@ class DiscountsController extends Controller
         $discount = Discount::find($request->discount_id);
 
         $rules = array(
-        'discount_name' => "required|unique:discounts,discount_name,$discount->id",
+        'discount_name' => "required|min:2|unique:discounts,discount_name,$discount->id",
         'discount_type' => 'required',
         'discount_value' => 'required|numeric'
         );
@@ -70,7 +70,17 @@ class DiscountsController extends Controller
             $discount = Discount::find($request->discount_id);
             $discount->discount_name = $request->discount_name;
             $discount->discount_type = $request->discount_type;
-            $discount->discount_value = $request->discount_value;
+
+            if($request->discount_type == 'percentage')
+            {
+                $discount_value = $request->discount_value / 100;
+                $discount->discount_value = $discount_value;
+            }
+            else
+            {
+                $discount->discount_value = $request->discount_value;
+            }
+
             $discount->save();
         }
     }

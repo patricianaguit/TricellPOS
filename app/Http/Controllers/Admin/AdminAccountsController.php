@@ -31,7 +31,7 @@ class AdminAccountsController extends Controller
         'lastname' => 'bail|required|regex:/^[\pL\s\-]+$/u|min:2',
         'address' => 'bail|required|regex:/^[#.0-9a-zA-Z\s,-]+$/|min:6',
         'contact' => 'bail|required|digits_between:7,11',
-        'email' => 'bail|bail|required|email',
+        'email' => 'bail|required|email',
         );
 
         $validator = Validator::make($request->all(), $rules);

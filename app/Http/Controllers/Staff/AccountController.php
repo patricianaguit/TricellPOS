@@ -22,16 +22,14 @@ class AccountController extends Controller
     { 
         $staff = User::find(Auth::user()->id);
 
-        $rules = array(
-        'firstname' => 'required',
-        'lastname' => 'required',
-        'address' => 'required',
-        'contact_number' => 'required|digits_between:7,11',
-        'email' => 'required|email',
-        'username' => "required|unique:users,card_number,$staff->id",
-        'password' => 'required|confirmed',
+        'firstname' => 'bail|required|regex:/^[\pL\s\-]+$/u|min:2',
+        'lastname' => 'bail|required|regex:/^[\pL\s\-]+$/u|min:2',
+        'address' => 'bail|required|regex:/^[#.0-9a-zA-Z\s,-]+$/|min:6',
+        'contact_number' => 'bail|required|digits_between:7,11',
+        'email' => 'bail|required|email',
+        'username' => "bail|required|min:5|unique:users,card_number,$staff->id",
+        'password' => 'bail|required|min:8|confirmed',
         'password_confirmation' => 'required',
-        );
 
         $validator = Validator::make($request->all(), $rules);
         if ($validator->fails())

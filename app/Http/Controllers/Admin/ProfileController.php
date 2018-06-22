@@ -20,10 +20,10 @@ class ProfileController extends Controller
     public function edit(Request $request)
     { 
     	$rules = array(
-        'branch_name' => 'required',
-        'address' => 'required',
-        'contact_number' => 'required|digits_between:7,11',
-        'email' => 'required|email',
+        'branch_name' => 'bail|required|min:2',
+        'address' => 'bail|required|regex:/^[#.0-9a-zA-Z\s,-]+$/|min:6',
+        'contact_number' => 'bail|required|digits_between:7,11',
+        'email' => 'bail|required|email',
         'tin' => 'required',
         'vat' => 'required|numeric',
         'lowstock' => 'required|integer'

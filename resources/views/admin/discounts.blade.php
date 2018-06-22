@@ -237,7 +237,7 @@ DISCOUNTS
   {
     swal({
             title: "Success!",
-            text: "You have successfully updated the discount's information!",
+            text: "You have successfully updated the discount's details!",
             icon: "success",
             button: "Close",
           });
@@ -298,6 +298,8 @@ DISCOUNTS
 
     //remove defined values/classes
     $('#basic-addon-edit').text('');
+    $('#discount-name-edit').removeAttr('disabled');
+    $('#discount-type-edit').removeAttr('disabled');
   });
 
   //add discount
@@ -383,6 +385,13 @@ DISCOUNTS
     $('#discount-id-edit').val($(this).data('id'));
     $('#discount-name-edit').val($(this).data('name'));
     $('#discount-type-edit').val($(this).data('type'));
+
+    if($(this).data('id') == '1')
+    {
+      $('#discount-name-edit').attr('disabled', true);
+      $('#discount-type-edit').attr('disabled', true);
+    }
+
 
     $('#discount-type-edit').on('change', function (e) {
       if($(this).val() == 'percentage')

@@ -26,6 +26,30 @@ class User extends Model implements
         'password', 'remember_token',
     ];
 
+    public function getRememberToken()
+    {
+    return null; 
+    }
+
+    public function setRememberToken($value)
+    {
+
+    }
+
+    public function getRememberTokenName()
+    {
+        return null; 
+    }
+
+    public function setAttribute($key, $value)
+    {
+        $isRememberTokenAttribute = $key == $this->getRememberTokenName();
+        if (!$isRememberTokenAttribute)
+        {
+            parent::setAttribute($key, $value);
+        }
+    }
+
     public function balance()
     {
         return $this->hasOne('App\Balance', 'id');

@@ -15,7 +15,7 @@ Route::get('/', 'LoginController@index');
 Route::post('verify', 'LoginController@verify'); 
 Route::get('logout', 'LoginController@logout');
 
-Route::group(['middleware' => ['admin']], function () {
+Route::group(['middleware' => ['admin', 'timeout']], function () {
 	//Dashboard
 	Route::get('dashboard', 'Admin\DashboardController@index');
 
@@ -92,10 +92,12 @@ Route::group(['middleware' => ['admin']], function () {
    	Route::get('/account', 'Admin\AccountController@index');
    	Route::post('/update_account', 'Admin\AccountController@edit');
 
-   
+   	//Timesheet
+   	Route::get('/timesheet', 'Admin\TimesheetController@index');
+   	
 });
 
-Route::group(['middleware' => ['staff']], function () {
+Route::group(['middleware' => ['staff', 'timeout']], function () {
 	//POS
 	Route::get('staff/sales', 'Staff\PointofSaleController@index');
    	Route::get('staff/sales/buttons', 'Staff\PointofSaleController@buttonload');

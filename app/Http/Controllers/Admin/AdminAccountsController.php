@@ -23,14 +23,15 @@ class AdminAccountsController extends Controller
     public function create(Request $request)
     {
         $rules = array(
-        'username' => 'required|unique:users,username',
-        'password' => 'required|confirmed',
+        'card_number' => 'bail|required|numeric|digits:10|unique:users,card_number',
+        'username' => 'bail|required|min:5|unique:users,username',
+        'password' => 'bail|required|min:8|confirmed',
         'password_confirmation' => 'required',
-        'firstname' => 'required',
-        'lastname' => 'required',
-        'address' => 'required',
-        'contact' => 'required|digits_between:7,11',
-        'email' => 'required|email',
+        'firstname' => 'bail|required|regex:/^[\pL\s\-]+$/u|min:2',
+        'lastname' => 'bail|required|regex:/^[\pL\s\-]+$/u|min:2',
+        'address' => 'bail|required|regex:/^[#.0-9a-zA-Z\s,-]+$/|min:6',
+        'contact' => 'bail|required|digits_between:7,11',
+        'email' => 'bail|bail|required|email',
         );
 
         $validator = Validator::make($request->all(), $rules);
@@ -41,6 +42,7 @@ class AdminAccountsController extends Controller
         else
         {
             $admin = new User;
+            $admin->card_number = $request->card_number;
             $admin->username = $request->username;
             $admin->password = Hash::make($request->password);
             $admin->firstname = $request->firstname;
@@ -58,14 +60,15 @@ class AdminAccountsController extends Controller
         $admin = User::find($request->admin_id);
 
         $rules = array(
-        'username' => "required|unique:users,username,$admin->id",
-        'password' => 'required|confirmed',
+        'card_number' => "bail|required|numeric|digits:10|unique:users,card_number,$admin->id",
+        'username' => "bail|required|min:5|unique:users,username,$admin->id",
+        'password' => 'bail|required|min:8|confirmed',
         'password_confirmation' => 'required',
-        'firstname' => 'required',
-        'lastname' => 'required',
-        'address' => 'required',
-        'contact' => 'required',
-        'email' => "required|email|unique:users,email,$admin->id",
+        'firstname' => 'bail|required|regex:/^[\pL\s\-]+$/u|min:2',
+        'lastname' => 'bail|required|regex:/^[\pL\s\-]+$/u|min:2',
+        'address' => 'bail|required|regex:/^[#.0-9a-zA-Z\s,-]+$/|min:6',
+        'contact' => 'bail|required|digits_between:7,11',
+        'email' => "bail|required|email|unique:users,email,$admin->id",
         );
 
         $validator = Validator::make($request->all(), $rules);
@@ -76,6 +79,7 @@ class AdminAccountsController extends Controller
         else
         {
             $admin = User::find($request->admin_id);
+            $admin->card_number = $request->card_number;
             $admin->username = $request->username;
             $admin->password = Hash::make($request->password);
             $admin->firstname = $request->firstname;
@@ -99,14 +103,14 @@ class AdminAccountsController extends Controller
         {
             $admins = User::where('role', 'admin')->where(function($query) use ($request, $search)
                 {
-                    $query->where('username', 'LIKE', '%' . $search . '%')->orWhere('firstname', 'LIKE', '%' . $search . '%')->orwhere('lastname', 'LIKE', '%' . $search . '%')->orWhere(DB::raw('concat(firstname," ",lastname)'), 'LIKE', '%' . $search . '%');
+                    $query->where('card_number', 'LIKE', '%' . $search . '%')->orWhere('username', 'LIKE', '%' . $search . '%')->orWhere('firstname', 'LIKE', '%' . $search . '%')->orwhere('lastname', 'LIKE', '%' . $search . '%')->orWhere(DB::raw('concat(firstname," ",lastname)'), 'LIKE', '%' . $search . '%');
                 })->paginate(7);
 
             $admins->appends($request->only('search'));
             $count = $admins->count();
             $totalcount = User::where('role', 'admin')->where(function($query) use ($request, $search)
                 {
-                    $query->where('username', 'LIKE', '%' . $search . '%')->orWhere('firstname', 'LIKE', '%' . $search . '%')->orwhere('lastname', 'LIKE', '%' . $search . '%')->orWhere(DB::raw('concat(firstname," ",lastname)'), 'LIKE', '%' . $search . '%');
+                    $query->where('card_number', 'LIKE', '%' . $search . '%')->orWhere('username', 'LIKE', '%' . $search . '%')->orWhere('firstname', 'LIKE', '%' . $search . '%')->orwhere('lastname', 'LIKE', '%' . $search . '%')->orWhere(DB::raw('concat(firstname," ",lastname)'), 'LIKE', '%' . $search . '%');
                 })->count();
             return view('admin.admin')->with(['admins' => $admins, 'search' => $search, 'count' => $count, 'totalcount' => $totalcount]);  
         }

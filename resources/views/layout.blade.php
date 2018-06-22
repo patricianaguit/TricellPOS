@@ -53,6 +53,9 @@
      <li class="nav-item">
        <a class="nav-link {{ Request::segment(1)=='accounts' ? 'active' : '' }}" href="/accounts/members">ACCOUNTS</a>
      </li>
+     <li class="nav-item">
+       <a class="nav-link {{ Request::segment(1)=='timesheet' ? 'active' : '' }}" href="/timesheet">TIMESHEET</a>
+     </li>
         </ul>
         <ul class="navbar-nav ml-auto"> <!--right links-->
              <li class="nav-item dropdown" id="logsdrop">

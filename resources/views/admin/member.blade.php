@@ -191,7 +191,7 @@ ACCOUNTS
         <form class="nosubmitform">
         </br>
     <div class="row">
-    <div class ="col-md-6 members-info border-right">
+      <div class ="col-md-6 members-info border-right">
         <div class="form-group row mx-auto">
           <label for="card-no" class="col-form-label col-md-3 modal-card">Card No:</label>
           <div class="col-md-9">
@@ -491,7 +491,7 @@ ACCOUNTS
   {
     swal({
             title: "Success!",
-            text: "You have successfully updated the member's information!",
+            text: "You have successfully updated the member's details!",
             icon: "success",
             button: "Close",
           });

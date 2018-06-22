@@ -57,6 +57,7 @@ ACCOUNTS
     @csrf
       <thead class ="th_css">
         <tr>
+          <th scope="col">Card No.</th>
           <th scope="col">Username</th>
           <th scope="col">Name</th>
           <th scope="col">Contact No.</th>
@@ -67,12 +68,13 @@ ACCOUNTS
       <tbody class="td_class">
         @foreach($admins as $admin)
         <tr>
-          <td class="td-center"><b>{{ $admin->username }}</b></td>
+          <td class="td-center"><b>{{ $admin->card_number }}</b></td>
+          <td class="td-center">{{ $admin->username }}</td>
           <td class="td-center">{{ $admin->firstname . " " . $admin->lastname }}</td>
           <td class="td-center">{{ $admin->contact_number }}</td>
           <td class="td-center">{{ $admin->email }}</td>
           <td>
-            <button type="button" id="view-admin" class="btn btn-secondary view-btn" data-toggle="modal" data-target=".view_admin" data-id="{{ $admin->id}}" data-username ="{{ $admin->username }}" data-firstname="{{$admin->firstname}}" data-lastname="{{$admin->lastname}}" data-address="{{$admin->address}}" data-contact="{{$admin->contact_number}}" data-email="{{$admin->email}}"><i class="material-icons md-18">info_outline</i></button>
+            <button type="button" id="view-admin" class="btn btn-secondary view-btn" data-toggle="modal" data-target=".view_admin" data-id="{{ $admin->id}}" data-cardnumber ="{{$admin->card_number}}" data-username ="{{ $admin->username }}" data-firstname="{{$admin->firstname}}" data-lastname="{{$admin->lastname}}" data-address="{{$admin->address}}" data-contact="{{$admin->contact_number}}" data-email="{{$admin->email}}"><i class="material-icons md-18">info_outline</i></button>
           </td>
         </tr>
         @endforeach
@@ -94,6 +96,14 @@ ACCOUNTS
         </br>
 
         <form id="add-form" class="nosubmitform">
+        
+        <div class="form-group row mx-auto">
+          <label for="card-no" class="col-form-label col-md-3 modal-card">Card No:</label>
+          <div class="col-md-9">
+            <input type="text" name="card_number" class="form-control modal-card" id="cardnumber-add">
+           <p id="error-cardnumber-add" class="error-add" hidden="hidden"></p>
+          </div>
+        </div>
 
         <div class="form-group row mx-auto">
           <label for="username" class="col-form-label col-md-3 modal-user">Username:</label>
@@ -185,8 +195,16 @@ ACCOUNTS
       <form class="nosubmitform">
       <fieldset id="admin-edit-fieldset" disabled>
         <input type="hidden" name="admin_id" id="admin-id-view">
+          
+        <div class="form-group row mx-auto">
+          <label for="card-no" class="col-form-label col-md-3 modal-card">Card No:</label>
+          <div class="col-md-9">
+            <input type="text" name="card_number" class="form-control modal-card" id="cardnumber-view">
+           <p id="error-cardnumber-view" class="error-add" hidden="hidden"></p>
+          </div>
+        </div>
 
-          <div class="form-group row mx-auto">
+        <div class="form-group row mx-auto">
           <label for="username" class="col-form-label col-md-3 modal-user">Username:</label>
           <div class="col-md-9">
               <input type="text" name="username" class="form-control modal-card" id="username-view">
@@ -273,6 +291,7 @@ ACCOUNTS
 
   $(document).on('click', '#view-admin', function() {
     $('#admin-id-view').val($(this).data('id'));
+    $('#cardnumber-view').val($(this).data('cardnumber'));
     $('#username-view').val($(this).data('username'));
     $("#firstname-view").val($(this).data('firstname'));
     $("#lastname-view").val($(this).data('lastname'));
@@ -283,6 +302,7 @@ ACCOUNTS
 
   $('.add_admin').on('hide.bs.modal', function(){
      //hide error messages in modal
+    $('#error-cardnumber-add').attr("hidden", true);
     $('#error-username-add').attr("hidden", true);
     $('#error-password-add').attr("hidden", true);
     $('#error-confirm-password-add').attr("hidden", true);
@@ -293,6 +313,7 @@ ACCOUNTS
     $('#error-email-add').attr("hidden", true);
 
     //remove css style in modal
+    $('#cardnumber-add').removeAttr('style');
     $('#username-add').removeAttr('style');
     $('#password-add').removeAttr('style');
     $('#confirm-password-add').removeAttr('style');
@@ -309,6 +330,7 @@ ACCOUNTS
     $("#update-admin").hide();
     $('.confirm-password-view-div').attr("hidden", true);
 
+    $('#error-cardnumber-view').attr("hidden", true);
     $('#error-username-view').attr("hidden", true);
     $('#error-password-view').attr("hidden", true);
     $('#error-confirm-password-view').attr("hidden", true);
@@ -319,6 +341,7 @@ ACCOUNTS
     $('#error-email-view').attr("hidden", true);
 
     //remove css style in modal
+    $('#cardnumber-view').removeAttr('style');
     $('#username-view').removeAttr('style');
     $('#password-view').removeAttr('style');
     $('#confirm-password-view').removeAttr('style');
@@ -353,7 +376,7 @@ ACCOUNTS
   {
     swal({
             title: "Success!",
-            text: "You have successfully updated the admin's information!",
+            text: "You have successfully updated the admin's details!",
             icon: "success",
             button: "Close",
           });
@@ -389,6 +412,7 @@ ACCOUNTS
     data: {
             '_token': $('input[name=_token]').val(),
             'admin_id': $("#admin-id-add").val(),
+            'card_number': $("#cardnumber-add").val(),
             'username': $("#username-add").val(),
             'password': $("#password-add").val(),
             'password_confirmation': $("#confirm-password-add").val(),
@@ -401,6 +425,18 @@ ACCOUNTS
     success: function(data) {
       console.log(data);
       if ((data.errors)) {
+          if(data.errors.card_number)
+          {
+            $('#error-cardnumber-add').removeAttr("hidden");
+            $('#error-cardnumber-add').text(data.errors.card_number);
+            $('#cardnumber-add').css("border", "1px solid #cc0000");
+          }
+          else
+          {
+            $('#error-cardnumber-add').attr("hidden", true);
+            $('#cardnumber-add').removeAttr('style');
+          }
+
           if(data.errors.username)
           {
             $('#error-username-add').removeAttr("hidden");
@@ -517,6 +553,7 @@ ACCOUNTS
     url: '/accounts/update_admin',
     data: {
             '_token': $('input[name=_token]').val(),
+            'card_number': $("#cardnumber-view").val(),
             'admin_id': $("#admin-id-view").val(),
             'username': $("#username-view").val(),
             'password': $("#password-view").val(),
@@ -530,6 +567,18 @@ ACCOUNTS
     success: function(data) {
       console.log(data);
       if ((data.errors)) {
+          if(data.errors.card_number)
+          {
+            $('#error-cardnumber-view').removeAttr("hidden");
+            $('#error-cardnumber-view').text(data.errors.card_number);
+            $('#cardnumber-view').css("border", "1px solid #cc0000");
+          }
+          else
+          {
+            $('#error-cardnumber-view').attr("hidden", true);
+            $('#cardnumber-view').removeAttr('style');
+          }
+
           if(data.errors.username)
           {
             $('#error-username-view').removeAttr("hidden");

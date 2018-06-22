@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 use Illuminate\Http\Request;
+use \Carbon\Carbon;
+use App\Timesheet;
 use Auth;    
 class LoginController extends Controller
 {   
@@ -19,8 +21,12 @@ class LoginController extends Controller
     public function verify(Request $request)
     {
         $credentials = $request->only('username', 'password');    
-        if (Auth::attempt($credentials)) {
-            // Authentication passed...
+        if (Auth::attempt($credentials)) 
+        {
+            $timesheet = new Timesheet;
+            $timesheet->user_id = Auth::user()->id;
+            $timesheet->time_in = Carbon::now();
+            $timesheet->save();
             if(Auth::user()->role == 'admin')
             {
                 return redirect('/dashboard');
@@ -39,6 +45,13 @@ class LoginController extends Controller
 
     public function logout()
     {
+        if (Auth::check()) 
+        {
+            $timesheet = Timesheet::where('user_id', Auth::user()->id)->whereNull('time_out')->first();
+            $timesheet->time_out = Carbon::now();
+            $timesheet->save();
+        }
+
         Auth::logout();
         return redirect('/');
     }

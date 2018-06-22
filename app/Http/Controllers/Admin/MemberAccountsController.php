@@ -26,14 +26,14 @@ class MemberAccountsController extends Controller
     public function create(Request $request)
     {
         $rules = array(
-        'card_number' => 'required|numeric|unique:users,card_number',
-        'firstname' => 'required',
-        'lastname' => 'required',
-        'address' => 'required',
-        'contact' => 'required|digits_between:7,11',
-        'email' => 'required|email|unique:users,email',
-        'initial_amount' => 'required|numeric',
-        'payment_amount' => 'required|numeric|greater_than_equal:initial_amount'
+        'card_number' => 'bail|required|numeric|digits:10|unique:users,card_number',
+        'firstname' => 'bail|required|regex:/^[\pL\s\-]+$/u|min:2',
+        'lastname' => 'bail|required|regex:/^[\pL\s\-]+$/u|min:2',
+        'address' => 'bail|required|regex:/^[#.0-9a-zA-Z\s,-]+$/|min:6',
+        'contact' => 'bail|required|digits_between:7,11',
+        'email' => 'bail|required|email|unique:users,email',
+        'initial_amount' => 'bail|required|numeric',
+        'payment_amount' => 'bail|required|numeric|greater_than_equal:initial_amount'
         );
 
         $validator = Validator::make($request->all(), $rules);
@@ -72,12 +72,12 @@ class MemberAccountsController extends Controller
         $member = User::find($request->member_id);
 
         $rules = array(
-        'card_number' => "required|numeric|unique:users,card_number,$member->id",
-        'firstname' => 'required',
-        'lastname' => 'required',
-        'address' => 'required',
-        'contact' => 'required|digits_between:7,11',
-        'email' => "required|email|unique:users,email,$member->id",
+        'card_number' => "bail|required|numeric|digits:10|unique:users,card_number,$member->id",
+        'firstname' => 'bail|required|regex:/^[\pL\s\-]+$/u|min:2',
+        'lastname' => 'bail|required|regex:/^[\pL\s\-]+$/u|min:2',
+        'address' => 'bail|required|regex:/^[#.0-9a-zA-Z\s,-]+$/|min:6',
+        'contact' => 'bail|required|digits_between:7,11',
+        'email' => "bail|required|email|unique:users,email,$member->id",
         );
 
         $validator = Validator::make($request->all(), $rules);

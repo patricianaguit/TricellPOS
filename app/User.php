@@ -40,4 +40,9 @@ class User extends Model implements
     {
         return $this->hasMany('App\Reload_sale','member_id', 'id');
     }
+
+    public function timesheet()
+    {
+        return $this->hasMany('App\timesheet','user_id', 'id');
+    }
 }

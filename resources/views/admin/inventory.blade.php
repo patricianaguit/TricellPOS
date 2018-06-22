@@ -17,7 +17,7 @@ INVENTORY
     <h3 class="title">Inventory</h3>
     <div class="nav nav-tabs justify-content-end memberstab" id="nav-tab" role="tablist">
       
-      <a class="nav-item nav-link active " id="nav-profile-tab" href="/inventory/profile" role="tab" aria-controls="nav-profile" aria-selected="true">All Stocks
+      <a class="nav-item nav-link active " id="nav-profile-tab" href="/inventory" role="tab" aria-controls="nav-profile" aria-selected="true">All Stocks
       <a class="nav-item nav-link" id="nav-discount-tab"  href="/inventory/healthy_stocks" role="tab" aria-controls="nav-discount" aria-selected="false">Healthy Stocks</a>
       <a class="nav-item nav-link" id="nav-discount-tab"  href="/inventory/low_stocks" role="tab" aria-controls="nav-discount" aria-selected="false">Low Stocks</a>
         

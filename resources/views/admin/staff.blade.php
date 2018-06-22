@@ -58,6 +58,7 @@ ACCOUNTS
     @csrf
       <thead class ="th_css">
         <tr>
+          <th scope="col">Card No.</th>
           <th scope="col">Username</th>
           <th scope="col">Name</th>
           <th scope="col">Contact No.</th>
@@ -68,12 +69,13 @@ ACCOUNTS
       <tbody class="td_class">
         @foreach($staffs as $staff)
         <tr class="staff{{$staff->id}}">
-          <td class="td-center"><b>{{ $staff->username }}</b></td>
+          <td class="td-center"><b>{{ $staff->card_number }}</b></td>
+          <td class="td-center">{{ $staff->username }}</td>
           <td class="td-center">{{ $staff->firstname . " " . $staff->lastname }}</td>
           <td class="td-center">{{ $staff->contact_number }}</td>
           <td class="td-center">{{ $staff->email }}</td>
           <td>
-            <button type="button" id="edit-staff" class="btn btn-primary edit-btn" data-toggle="modal" data-target=".edit_staff" data-id="{{ $staff->id }}" data-username ="{{ $staff->username }}" data-firstname="{{$staff->firstname}}" data-lastname="{{$staff->lastname}}" data-address="{{$staff->address}}" data-contact="{{$staff->contact_number}}" data-email="{{$staff->email}}"><i class="material-icons md-18">mode_edit</i></button>
+            <button type="button" id="edit-staff" class="btn btn-primary edit-btn" data-toggle="modal" data-target=".edit_staff" data-id="{{ $staff->id }}" data-cardnumber="{{ $staff->card_number}}" data-username ="{{ $staff->username }}" data-firstname="{{$staff->firstname}}" data-lastname="{{$staff->lastname}}" data-address="{{$staff->address}}" data-contact="{{$staff->contact_number}}" data-email="{{$staff->email}}"><i class="material-icons md-18">mode_edit</i></button>
             <button type="button" id="delete-staff" class="btn btn-danger del-btn" data-id="{{ $staff->id }}" data-firstname="{{$staff->firstname}}" data-lastname="{{$staff->lastname}}" data-toggle="modal" data-target=".delete_staff"><i class="material-icons md-18">delete</i></button>
           </td>
         </tr>
@@ -96,6 +98,14 @@ ACCOUNTS
         </br>
 
         <form id="add-form" class="nosubmitform">
+        
+        <div class="form-group row mx-auto">
+          <label for="card-no" class="col-form-label col-md-3 modal-card">Card No:</label>
+          <div class="col-md-9">
+            <input type="text" name="card_number" class="form-control modal-card" id="cardnumber-add">
+           <p id="error-cardnumber-add" class="error-add" hidden="hidden"></p>
+          </div>
+        </div>
 
         <div class="form-group row mx-auto">
           <label for="username" class="col-form-label col-md-3 modal-user">Username:</label>
@@ -188,6 +198,14 @@ ACCOUNTS
       <form id="edit-form" class="nosubmitform">
       <input type="hidden" name="staff_id" id="staff-id-edit">
       
+      <div class="form-group row mx-auto">
+        <label for="card-no" class="col-form-label col-md-3 modal-card">Card No:</label>
+        <div class="col-md-9">
+            <input type="text" name="card_number" class="form-control modal-card" id="cardnumber-edit">
+            <p id="error-cardnumber-edit" class="error-edit" hidden="hidden"></p>
+        </div>
+      </div>
+
       <div class="form-group row mx-auto">
         <label for="username" class="col-form-label col-md-3 modal-user">Username:</label>
         <div class="col-md-9">
@@ -297,6 +315,7 @@ ACCOUNTS
 
   $('.edit_staff').on('hide.bs.modal', function(){
     //hide error messages in modal
+    $('#error-cardnumber-edit').attr("hidden", true);
     $('#error-username-edit').attr("hidden", true);
     $('#error-password-edit').attr("hidden", true);
     $('#error-confirm-password-edit').attr("hidden", true);
@@ -307,6 +326,7 @@ ACCOUNTS
     $('#error-email-edit').attr("hidden", true);
 
     //remove css style in modal
+    $('#cardnumber-edit').removeAttr('style');
     $('#username-edit').removeAttr('style');
     $('#password-edit').removeAttr('style');
     $('#confirm-password-edit').removeAttr('style');
@@ -319,6 +339,16 @@ ACCOUNTS
 
   $('.add_staff').on('hide.bs.modal', function(){
     //hide error messages in modal
+    $('#cardnumber-add').val('');
+    $('#username-add').val('');
+    $('#password-add').val('');
+    $('#confirm-password-add').val('');
+    $('#firstname-add').val('');
+    $('#lastname-add').val('');
+    $('#address-add').val('');
+    $('#contact-add').val('');
+    $('#email-add').val('');
+    $('#error-cardnumber-add').attr("hidden", true);
     $('#error-username-add').attr("hidden", true);
     $('#error-password-add').attr("hidden", true);
     $('#error-confirm-password-add').attr("hidden", true);
@@ -329,6 +359,7 @@ ACCOUNTS
     $('#error-email-add').attr("hidden", true);
 
     //remove css style in modal
+    $('#cardnumber-add').removeAttr('style');
     $('#username-add').removeAttr('style');
     $('#password-add').removeAttr('style');
     $('#confirm-password-add').removeAttr('style');
@@ -345,7 +376,7 @@ ACCOUNTS
   {
     swal({
             title: "Success!",
-            text: "You have successfully updated the staff's information!",
+            text: "You have successfully updated the staff's details!",
             icon: "success",
             button: "Close",
           });
@@ -380,6 +411,7 @@ ACCOUNTS
     url: '/accounts/add_staff',
     data: {
             '_token': $('input[name=_token]').val(),
+            'card_number': $("#cardnumber-add").val(),
             'username': $("#username-add").val(),
             'password': $("#password-add").val(),
             'password_confirmation': $("#confirm-password-add").val(),
@@ -392,6 +424,18 @@ ACCOUNTS
     success: function(data) {
       console.log(data);
       if ((data.errors)) {
+          if(data.errors.card_number)
+          {
+            $('#error-cardnumber-add').removeAttr("hidden");
+            $('#error-cardnumber-add').text(data.errors.card_number);
+            $('#cardnumber-add').css("border", "1px solid #cc0000");
+          }
+          else
+          {
+            $('#error-cardnumber-add').attr("hidden", true);
+            $('#cardnumber-add').removeAttr('style');
+          }
+
           if(data.errors.username)
           {
             $('#error-username-add').removeAttr("hidden");
@@ -505,6 +549,7 @@ ACCOUNTS
   // edit staff
   $(document).on('click', '#edit-staff', function() {
     $('#staff-id-edit').val($(this).data('id'));
+    $('#cardnumber-edit').val($(this).data('cardnumber'));
     $('#username-edit').val($(this).data('username'));
     $('#password-edit').val("");
     $('#confirm-password-edit').val("");
@@ -522,6 +567,7 @@ ACCOUNTS
     data: {
             '_token': $('input[name=_token]').val(),
             'staff_id': $("#staff-id-edit").val(),
+            'card_number': $("#cardnumber-edit").val(),
             'username': $("#username-edit").val(),
             'password': $("#password-edit").val(),
             'password_confirmation': $("#confirm-password-edit").val(),
@@ -534,6 +580,18 @@ ACCOUNTS
     success: function(data) {
       console.log(data);
       if ((data.errors)) {
+          if(data.errors.card_number)
+          {
+            $('#error-cardnumber-edit').removeAttr("hidden");
+            $('#error-cardnumber-edit').text(data.errors.card_number);
+            $('#cardnumber-edit').css("border", "1px solid #cc0000");
+          }
+          else
+          {
+            $('#error-cardnumber-edit').attr("hidden", true);
+            $('#cardnumber-edit').removeAttr('style');
+          }
+
           if(data.errors.username)
           {
             $('#error-username-edit').removeAttr("hidden");

@@ -47,7 +47,7 @@
 
 <script>
 
- //	$("#log_pass_form").after('<span class="error">helloooooo</span>');
+ // $("#log_pass_form").after('<span class="error">helloooooo</span>');
         //$(".error").animate({left: '100px'}, "slow");
         //$(".error").animate({fontSize: '3em'}, "slow");
 

@@ -38,7 +38,7 @@ SYSTEM PREFERENCES
             <div class ="col-md-6 members-info border-right">
               
               <div class="form-group row mx-auto">
-                <label for="first-name" class="col-form-label col-md-3 modal-fname">Branch Name:</label>
+                <label for="first-name" class="col-form-label col-md-3 modal-fname">Name:</label>
                 <div class="col-md-9">
                   <input type="text" name="branch_name" value="{{$profile->branch_name}}" class="form-control modal-fname" id="branch-name-profile">
                   <p id="error-branchname-profile" class="error-profile" hidden="hidden"></p>

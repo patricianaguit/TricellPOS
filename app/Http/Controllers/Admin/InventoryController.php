@@ -23,8 +23,8 @@ class InventoryController extends Controller
     public function create(Request $request)
     {
         $rules = array(
-        'product_name' => 'required|unique:products,product_name',
-        'product_desc' => 'required',
+        'product_name' => 'bail|required|min:2|unique:products,product_name',
+        'product_desc' => 'required|min:5',
         'price' => 'required|numeric',
         'member_price' => 'required|numeric',
         'product_qty' => 'required|integer'	
@@ -52,8 +52,8 @@ class InventoryController extends Controller
     	$product = Product::find($request->product_id);
 
         $rules = array(
-        'product_name' => "required|unique:products,product_name," . $product->product_id .",product_id",
-        'product_desc' => 'required',
+        'product_name' => "bail|required|min:2|unique:products,product_name," . $product->product_id .",product_id",
+        'product_desc' => 'required|min:5',
         'price' => 'required|numeric',
         'member_price' => 'required|numeric',
         'product_qty' => 'required|integer'	

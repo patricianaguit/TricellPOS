@@ -32,7 +32,7 @@ SALES
 
   <div class="col-md-4">
     <form class="form ml-auto">
-
+      <div class="row">
       <div class="col-md-6">
         <a href="/staff/logs/sales/export" class="form-control btn btn-outline-info add-item-btn">
 Export to CSV</a>
@@ -65,6 +65,7 @@ Export to CSV</a>
 '>Filter</button>
   </div>
     </form>
+    </div>
   </div>
  </div>
 

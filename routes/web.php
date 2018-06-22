@@ -33,6 +33,7 @@ Route::group(['middleware' => ['admin', 'timeout']], function () {
 	Route::get('logs/sales/showdetails/{id}', 'Admin\SalesLogsController@showdetails');
 	Route::post('logs/sales/delete_sales', 'Admin\SalesLogsController@destroy');
 	Route::get('logs/sales/filter', 'Admin\SalesLogsController@filter');
+	Route::get('logs/sales/export', 'Admin\SalesLogsController@export');
 
 	//Reload Logs
 	Route::get('logs/reload', 'Admin\ReloadLogsController@index');
@@ -94,6 +95,8 @@ Route::group(['middleware' => ['admin', 'timeout']], function () {
 
    	//Timesheet
    	Route::get('/timesheet', 'Admin\TimesheetController@index');
+   	Route::get('/timesheet/filter', 'Admin\TimesheetController@filter');
+   	Route::get('/timesheet/export', 'Admin\TimesheetController@export');
    	
 });
 
@@ -112,6 +115,7 @@ Route::group(['middleware' => ['staff', 'timeout']], function () {
 	Route::get('staff/logs/sales/showdetails/{id}', 'Staff\SalesLogsController@showdetails');
 	Route::post('staff/logs/sales/delete_sales', 'Staff\SalesLogsController@destroy');
 	Route::get('staff/logs/sales/filter', 'Staff\SalesLogsController@filter');
+	Route::get('staff/logs/sales/export', 'Staff\SalesLogsController@export');
 
 	//Reload Logs
 	Route::get('staff/logs/reload', 'Staff\ReloadLogsController@index');

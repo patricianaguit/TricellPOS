@@ -20,24 +20,24 @@ TIMESHEET
 <!---content of tabs start-->
   <div class="row">
     <div class="col-md-8">
-        <button type="button" class="btn btn-outline-info add-staff-btn">Export to CSV</button>
+        <a href="/timesheet/export/" class="btn btn-outline-info add-staff-btn">Export to CSV</a>
     </div>
     <div class="col-md-4">
-      <form class="form ml-auto" action="/accounts/search_staff" method="GET">
+    <form class="form ml-auto" action="/timesheet/filter" method="GET">
       <div class="input-group">
-          <input class="form-control" type="text" name ="search" placeholder="Search" aria-label="Search" style="padding-left: 20px; border-radius: 40px;" id="staff-search">
+          <input class="form-control" name="date_filter" type="text" placeholder="Filter by Date" aria-label="Search" style="padding-left: 20px; border-radius: 40px;" id="date_filter" autocomplete="off">
           <div class="input-group-addon" style="margin-left: -50px; z-index: 3; border-radius: 40px; background-color: transparent; border:none;">
-            <button class="btn btn-outline-info btn-sm" type="submit" style="border-radius: 100px;" id="staff-search-submit"><i class="material-icons">search</i></button>
+            <button class="btn btn-outline-info btn-sm" type="submit" style="border-radius: 100px;" id="search-btn"><i class="material-icons">search</i></button>
           </div>
       </div>
-      </form>
-    </div>
+    </form>
+  </div>
   </div>
 
-  @if(!empty($search))
+  @if((!empty($date_start) && !empty($date_end)) && ($date_start != $date_end))
       @if($totalcount > 7)
         <center><p> Showing {{$count}} out of {{$totalcount}} results
-        for <b> {{ $search }} </b> </p></center>
+          from <b>{{date('F d, Y', strtotime($date_start))}}</b> until <b>{{date('F d, Y', strtotime($date_end))}} </b> </p></center>
       @else
         <center><p> Showing {{$count}}
         @if($count > 1 || $count == 0)
@@ -45,8 +45,21 @@ TIMESHEET
         @else
           {{'result'}}
         @endif
-          for <b> {{ $search }} </b> </p></center>
+          from <b>{{date('F d, Y', strtotime($date_start))}}</b> until <b>{{date('F d, Y', strtotime($date_end))}} </b> </p></center>
       @endif
+  @elseif((!empty($date_start) && !empty($date_end)) && ($date_start == $date_end))
+      @if($totalcount > 7)
+        <center><p> Showing {{$count}} out of {{$totalcount}} results
+          for <b>{{date('F d, Y', strtotime($date_start))}}</b> </p></center>
+      @else
+        <center><p> Showing {{$count}}
+        @if($count > 1 || $count == 0)
+          {{'results'}}
+        @else
+          {{'result'}}
+        @endif
+          for <b>{{date('F d, Y', strtotime($date_start))}}</b> </p></center>
+      @endif  
   @endif
 
   <table class="table table-hover">
@@ -83,4 +96,22 @@ TIMESHEET
 
     {{$employees->links()}}
   </div>
+
+  <script type="text/javascript">
+  $('input[name="date_filter"]').daterangepicker({
+    autoUpdateInput: false,
+    opens: 'center',
+    locale: {
+        cancelLabel: 'Clear'
+    }
+  });
+
+  $('input[name="date_filter"]').on('apply.daterangepicker', function(ev, picker) {
+      $(this).val(picker.startDate.format('MM/DD/YYYY') + ' - ' + picker.endDate.format('MM/DD/YYYY'));
+  });
+
+  $('input[name="date_filter"]').on('cancel.daterangepicker', function(ev, picker) {
+      $(this).val('');
+  });
+  </script>
 @endsection

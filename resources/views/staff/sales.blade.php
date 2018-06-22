@@ -32,8 +32,13 @@ SALES
 
   <div class="col-md-4">
     <form class="form ml-auto">
-      <div class="col-md-12">
-        <button type="button" class=" form-control btn btn-outline-info add-item-btn" data-toggle="popover"  data-original-title='Filter Results <a href ="/staff/logs/sales/" class="btn btn-info btn-save-modal clear-btn" id="filter-submit">Clear</a>' data-content='
+
+      <div class="col-md-6">
+        <a href="/staff/logs/sales/export" class="form-control btn btn-outline-info add-item-btn">
+Export to CSV</a>
+      </div>
+      <div class="col-md-6">
+        <button type="button" class="form-control btn btn-outline-info add-item-btn" data-toggle="popover"  data-original-title='Filter Results <a href ="/logs/sales/" class="btn btn-info btn-save-modal clear-btn" id="filter-submit">Clear</a>' data-content='
 <form id="mainForm" action="/staff/logs/sales/filter" method="GET">
   <div class="form-group">
     <b><label for="accounttype">Account Type:</label></b>
@@ -58,11 +63,10 @@ SALES
     <center><button type="submit" class="btn btn-info btn-save-modal" id="filter-submit">Submit</button></center>
 </form>
 '>Filter</button>
-      </div>
+  </div>
     </form>
   </div>
- </div> <!----end of second row--->
- <!---table start---->
+ </div>
 
  @if(!empty($account_type) && !empty($payment_mode) && !empty($date_start) && !empty($date_end))
       @if($totalcount > 7)

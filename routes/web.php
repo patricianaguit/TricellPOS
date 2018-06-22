@@ -11,7 +11,7 @@
 |
 */
 
-Route::get('/', 'LoginController@index'); 
+Route::get('/', 'LoginController@index')->middleware('timeout'); 
 Route::post('verify', 'LoginController@verify'); 
 Route::get('logout', 'LoginController@logout');
 
@@ -40,6 +40,7 @@ Route::group(['middleware' => ['admin', 'timeout']], function () {
 	Route::get('logs/reload/showdetails/{id}', 'Admin\ReloadLogsController@showdetails');
 	Route::get('logs/reload/filter', 'Admin\ReloadLogsController@filter');
 	Route::post('logs/reload/delete_reload', 'Admin\ReloadLogsController@destroy');
+	Route::get('/logs/reload/export', 'Admin\ReloadLogsController@export');
 
 	//Inventory
 	Route::get('inventory', 'Admin\InventoryController@index');
@@ -122,6 +123,7 @@ Route::group(['middleware' => ['staff', 'timeout']], function () {
 	Route::get('staff/logs/reload/showdetails/{id}', 'Staff\ReloadLogsController@showdetails');
 	Route::get('staff/logs/reload/filter', 'Staff\ReloadLogsController@filter');
 	Route::post('staff/logs/reload/delete_reload', 'Staff\ReloadLogsController@destroy');
+	Route::get('staff/logs/reload/export', 'Staff\ReloadLogsController@export');
 
 	//Preferences
 	Route::get('staff/preferences/backup', 'Staff\BackupController@index');

@@ -23,6 +23,8 @@ RELOAD SALES
    <h3 class="text-info">Total Sales: <span style="color:dimgray">₱ {{number_format($sumsales,2)}}</span></h3>
   </div>
    <div class="col-md-4">
+        <a href="/logs/reload/export" class="form-control btn btn-outline-info add-item-btn">
+Export to CSV</a>
     <form class="form ml-auto" action="/logs/reload/filter" method="GET">
       <div class="input-group">
           <input class="form-control" name="date_filter" type="text" placeholder="Filter by Date" aria-label="Search" style="padding-left: 20px; border-radius: 40px;" id="date_filter" autocomplete="off">

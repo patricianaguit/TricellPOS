@@ -262,7 +262,7 @@ class SalesLogsController extends Controller
                     $name,
                     $account_type,
                     $discount,
-                    number_format($sale->amount_due,2, '.', ''),
+                    $sale->amount_due,
                     ucwords($sale->payment_mode)
                 ]);
             }
@@ -305,7 +305,7 @@ class SalesLogsController extends Controller
                     $name,
                     $account_type,
                     $discount,
-                    number_format($sale->amount_due,2, '.', ''),
+                    $sale->amount_due,
                     ucwords($sale->payment_mode)
                 ]);
             }
@@ -345,7 +345,7 @@ class SalesLogsController extends Controller
                     $name,
                     $account_type,
                     $discount,
-                    number_format($sale->amount_due,2, '.', ''),
+                    $sale->amount_due,
                     ucwords($sale->payment_mode)
                 ]);
             }
@@ -388,7 +388,7 @@ class SalesLogsController extends Controller
                     $name,
                     $account_type,
                     $discount,
-                    number_format($sale->amount_due,2, '.', ''),
+                    $sale->amount_due,
                     ucwords($sale->payment_mode)
                 ]);
             }
@@ -428,7 +428,7 @@ class SalesLogsController extends Controller
                     $name,
                     $account_type,
                     $discount,
-                    number_format($sale->amount_due,2, '.', ''),
+                    $sale->amount_due,
                     ucwords($sale->payment_mode)
                 ]);
             }
@@ -437,6 +437,6 @@ class SalesLogsController extends Controller
 
         fclose($handle);
 
-        return Response::download($filename, "Timesheet_Report.csv", $headers);
+        return Response::download($filename, "Sales_Report.csv", $headers);
     }
 }

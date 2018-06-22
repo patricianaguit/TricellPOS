@@ -74,8 +74,64 @@ class ReloadLogsController extends Controller
                     })->sum('amount_due');
             return view('admin.reload')->with(['reloads' => $reloads,'count' => $count, 'date_start' => $date_start, 'date_end' => $date_end, 'sumsales' => $sumsales, 'totalcount' => $totalcount]);  
         }
-        
     }
 
+    public function export(Request $request)
+    {
+        $url = url()->previous();
+
+        $parts = parse_url($url, PHP_URL_QUERY);
+        parse_str($parts, $query);
+
+        if(isset($query['date_filter']))
+        {
+            $daterange = array_map('trim', explode('-', $query['date_filter']));
+            $date_start = date('Y-m-d',strtotime($daterange[0]));
+            $date_end = date('Y-m-d',strtotime($daterange[1]));
+        }
+        else
+        {
+            $min_date = DB::table('reload_sales')->min('transaction_date');
+            $max_date = DB::table('reload_sales')->max('transaction_date');
+            $date_start = date('Y-m-d',strtotime($min_date));
+            $date_end = date('Y-m-d',strtotime($max_date));
+        }
+        $headers = array(
+        'Content-Type' => 'application/vnd.ms-excel; charset=utf-8',
+        'Cache-Control' => 'must-revalidate, post-check=0, pre-check=0',
+        'Content-Disposition' => 'attachment; filename=abc.csv',
+        'Expires' => '0',
+        'Pragma' => 'public',
+        );
+
+        $filename = "Reload_Report.csv";
+        $handle = fopen($filename, 'w');
+        fputcsv($handle, [
+            "Date",
+            "Card Number",
+            "Member Name",
+            'Amount Reloaded'
+        ]);
+
+
+        Reload_sale::where(function($query) use ($request, $date_start, $date_end)
+                {
+                    $query->where(DB::raw("(DATE_FORMAT(transaction_date,'%Y-%m-%d'))"), '>=', $date_start)->where(DB::raw("(DATE_FORMAT(transaction_date,'%Y-%m-%d'))"), '<=', $date_end);
+                })->orderBy('transaction_date', 'desc')->chunk(100, function ($data) use ($handle) {
+            foreach ($data as $member) {
+
+                fputcsv($handle, [
+                    date('F d, Y', strtotime($member->transaction_date)),
+                    $member->user->card_number,
+                    $member->user->firstname . " " . $member->user->lastname,
+                    $member->amount_due
+                ]);
+            }
+        });
+
+        fclose($handle);
+
+        return Response::download($filename, "Reload_Report.csv", $headers);
+    }
     
 }

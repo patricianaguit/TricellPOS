@@ -4,25 +4,24 @@
 	<meta name="viewport" content="width=device-width", initial-scale="1.0">
   <link rel="stylesheet" type="text/css" href="@yield('css')"/>
   <link rel="stylesheet" type="text/css" href="{{ asset('imports/css/nav.css') }}"/>
-  <link rel="shortcut icon" href="{{{ asset('favicon.ico') }}}">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
-  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
-  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-  <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
-  <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet"> 
+  <link rel="shortcut icon" href="{{ asset('favicon.ico') }}">
+  <link rel="stylesheet" href="{{ asset('imports/css/bootstrap.min.css') }}">
+  <!-- <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous"> -->
+  <link href="{{ asset('imports/css/materialicon.css') }}" rel="stylesheet">
+  <link rel="stylesheet" type="text/css" href="{{ asset('imports/css/daterangepicker.css') }}" />
+  <link href="{{ asset('imports/css/font.css') }}" rel="stylesheet"> 
   
-  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-  <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js"></script>  
-  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.0-alpha14/js/tempusdominus-bootstrap-4.min.js"></script>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.0-alpha14/css/tempusdominus-bootstrap-4.min.css" />
+  <script type="text/javascript" src="{{ asset('imports/js/jquery.min.js') }}"></script>
+  <script src="{{ asset('imports/js/jquery1-11-1.min.js') }}"></script>
+  <script src="{{ asset('imports/js/popper.min.js') }}"></script>
+  <script src="{{ asset('imports/js/bootstrap.min.js') }}"></script>
+  <script type="text/javascript" src="{{ asset('imports/js/moment.min.js') }}"></script>  
+  <script type="text/javascript" src="{{ asset('imports/js/tempusdominus-bootstrap-4.min.js') }}"></script>
+  <link rel="stylesheet" href="{{ asset('imports/css/tempusdominus-bootstrap-4.min.css') }}" />
   <script src="{{ asset('imports/js/sweetalert.min.js') }}"></script>
-  <script src="https://code.jquery.com/ui/1.9.1/jquery-ui.js" integrity="sha256-tXuytmakTtXe6NCDgoePBXiKe1gB+VA3xRvyBs/sq94=" crossorigin="anonymous"></script>
-  <script src="https://code.jquery.com/ui/1.9.1/jquery-ui.js" integrity="sha256-tXuytmakTtXe6NCDgoePBXiKe1gB+VA3xRvyBs/sq94=" crossorigin="anonymous"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.bundle.js"></script>
-  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+  <script src="{{ asset('imports/js/jquery-ui.js') }}"></script>
+  <script src="{{ asset('imports/js/Chart.bundle.js') }}"></script>
+  <script type="text/javascript" src="{{ asset('imports/js/daterangepicker.min.js') }}"></script>
 </head>
 <body>
 	<nav class="navbar navbar-expand-lg navbar-dark bg-dark">

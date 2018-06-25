@@ -39,7 +39,7 @@ class TimesheetController extends Controller
 	    }
 	    else
 	    {
-	    	$error = 'The ID you have entered doesn\'t match with your account';
+	    	$error = 'The ID you have entered doesn\'t match with your account.';
 	    	return Response::json(array('error' => $error));
 	    }
     }

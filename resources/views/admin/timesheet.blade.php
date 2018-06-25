@@ -91,6 +91,10 @@ TIMESHEET
           <td class="td-center">
             @if(empty($employee->time_out))
               {{ 'Currently in'}}
+            @elseif(date('F d, Y', strtotime($employee->time_out)) != date('F d, Y', strtotime($employee->time_in)))
+              {{ date('h:i:s A', strtotime($employee->time_out)) }}
+
+              <span style="color:red">{{ date('m-d-Y', strtotime($employee->time_out)) }}</span>
             @else
               {{ date('h:i:s A', strtotime($employee->time_out)) }}
             @endif
@@ -120,7 +124,7 @@ TIMESHEET
         <div class="form-group row mx-auto">
           <label for="card-no" class="col-form-label col-md-3 modal-card">ID No:</label>
           <div class="col-md-9">
-            <input type="text" name="card_number" class="form-control modal-card" id="cardnumber-time">
+            <input type="text" name="card_number" class="form-control modal-card" id="cardnumber-time" autocomplete="off">
            <p id="error-cardnumber-add" class="error-add" hidden="hidden"></p>
           </div>
         </div>
@@ -181,12 +185,28 @@ TIMESHEET
       $(this).val('');
   });
 
+  $('.time-in-modal').on('hide.bs.modal', function(){
+    $('#error-cardnumber-add').attr('hidden', true);
+    $('#cardnumber-time').removeAttr('style');
+    $('#cardnumber-time').val('');
+  });
+
   $(document).ready(function(){
-    if(localStorage.getItem("logged"))
+    if(localStorage.getItem("timein"))
     {
       swal({
               title: "Success!",
               text: "You have successfully logged your time-in!",
+              icon: "success",
+              button: "Close",
+            });
+      localStorage.clear();
+    }
+    else if(localStorage.getItem("timeout"))
+    {
+      swal({
+              title: "Success!",
+              text: "You have successfully logged your time-out!",
               icon: "success",
               button: "Close",
             });
@@ -211,7 +231,7 @@ TIMESHEET
         }
         else
         {
-          localStorage.setItem("logged","success");
+          localStorage.setItem("timein","success");
           window.location.reload();
         }
       },
@@ -231,7 +251,7 @@ TIMESHEET
               // 'id': $("#cardnumber-time").val()
             },
       success: function(data) {
-          localStorage.setItem("logged","success");
+          localStorage.setItem("timeout","success");
           window.location.reload();
       },
       error: function(jqXHR, textStatus, errorThrown) { // What to do if we fail

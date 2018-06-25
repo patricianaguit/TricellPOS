@@ -20,8 +20,12 @@ TIMESHEET
 <!---content of tabs start-->
   <div class="row">
     <div class="col-md-8">
-           <button type="button" class="btn btn-outline-info add-mem-btn" data-toggle="modal" data-target=".time-in-modal">Time In</button>
-           <button type="button" class="btn btn-outline-info add-mem-btn" data-toggle="modal" data-target=".time-out-modal">Time Out</button>
+           <button type="button" class="btn btn-outline-info add-mem-btn" data-toggle="modal" data-target=".time-in-modal"
+            @php if(count($time_in) >= 1) { echo 'hidden'; } @endphp
+           >Time In</button>
+           <button type="button" class="btn btn-outline-info add-mem-btn" data-toggle="modal" data-target=".time-out-modal"
+           @php if(count($time_out) < 1) { echo 'hidden'; } @endphp
+           >Time Out</button>
           <a href="/timesheet/export/" class="btn btn-outline-info add-staff-btn">Export to CSV</a>
     </div>
     <div class="col-md-4">
@@ -116,12 +120,12 @@ TIMESHEET
         <div class="form-group row mx-auto">
           <label for="card-no" class="col-form-label col-md-3 modal-card">ID No:</label>
           <div class="col-md-9">
-            <input type="text" name="card_number" class="form-control modal-card" id="cardnumber-add">
+            <input type="text" name="card_number" class="form-control modal-card" id="cardnumber-time">
            <p id="error-cardnumber-add" class="error-add" hidden="hidden"></p>
           </div>
         </div>
         <div class="modal-footer" id="modal-footer-admin-add">
-          <button type="submit" class="btn btn-info btn-savemem-modal" id= "add-admin">Time In</button>
+          <button type="submit" class="btn btn-info btn-savemem-modal" id="time-in">Time In</button>
           <button type="button" class="btn btn-secondary btn-close-modal" data-dismiss="modal">Close</button>
         </div>
       </form>
@@ -142,11 +146,11 @@ TIMESHEET
         </div>
         </br>
           <div class="modal-body">
-          <p> Are you sure you want to time out at 5:00 pm?</p>
+          <center><p> Are you sure you want to time out at {{\Carbon\Carbon::now()->format('h:i:s A')}}?</p></center>
           </div>
         
         <div class="modal-footer" id="modal-footer-admin-add">
-          <button type="submit" class="btn btn-danger btn-savemem-modal" id= "add-admin">Time Out</button>
+          <button type="submit" class="btn btn-danger btn-savemem-modal" id= "time-out">Time Out</button>
           <button type="button" class="btn btn-secondary btn-close-modal" data-dismiss="modal">Close</button>
         </div>
   
@@ -157,6 +161,10 @@ TIMESHEET
     <!----end of modal---->
 
   <script type="text/javascript">
+  $('.nosubmitform').submit(function(event){
+    event.preventDefault();
+  });
+
   $('input[name="date_filter"]').daterangepicker({
     autoUpdateInput: false,
     opens: 'center',
@@ -171,6 +179,66 @@ TIMESHEET
 
   $('input[name="date_filter"]').on('cancel.daterangepicker', function(ev, picker) {
       $(this).val('');
+  });
+
+  $(document).ready(function(){
+    if(localStorage.getItem("logged"))
+    {
+      swal({
+              title: "Success!",
+              text: "You have successfully logged your time-in!",
+              icon: "success",
+              button: "Close",
+            });
+      localStorage.clear();
+    }
+  });
+
+  $(document).on('click', '#time-in', function(){
+    $.ajax({
+      type: 'POST',
+      url: '/timesheet/time_in',
+      data: {
+              '_token': $('input[name=_token]').val(),
+              'id': $("#cardnumber-time").val()
+            },
+      success: function(data) {
+        if(data.error)
+        {
+          $('#error-cardnumber-add').removeAttr("hidden");
+          $('#error-cardnumber-add').text(data.error);
+          $('#cardnumber-time').css("border", "1px solid #cc0000");
+        }
+        else
+        {
+          localStorage.setItem("logged","success");
+          window.location.reload();
+        }
+      },
+      error: function(jqXHR, textStatus, errorThrown) { // What to do if we fail
+        console.log(JSON.stringify(jqXHR));
+        console.log("AJAX error: " + textStatus + ' : ' + errorThrown);
+      }
+    });
+  });
+
+  $(document).on('click', '#time-out', function(){
+    $.ajax({
+      type: 'GET',
+      url: '/timesheet/time_out',
+      data: {
+              '_token': $('input[name=_token]').val(),
+              // 'id': $("#cardnumber-time").val()
+            },
+      success: function(data) {
+          localStorage.setItem("logged","success");
+          window.location.reload();
+      },
+      error: function(jqXHR, textStatus, errorThrown) { // What to do if we fail
+        console.log(JSON.stringify(jqXHR));
+        console.log("AJAX error: " + textStatus + ' : ' + errorThrown);
+      }
+    });
   });
   </script>
 @endsection

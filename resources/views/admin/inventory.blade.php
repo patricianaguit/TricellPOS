@@ -282,7 +282,7 @@ if(localStorage.getItem("update"))
 {
   swal({
           title: "Success!",
-          text: "You have successfully updated the item's information!",
+          text: "You have successfully updated the item's details!",
           icon: "success",
           button: "Close",
         });

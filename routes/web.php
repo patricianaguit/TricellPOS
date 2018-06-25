@@ -40,7 +40,7 @@ Route::group(['middleware' => ['admin', 'timeout']], function () {
 	Route::get('logs/reload/showdetails/{id}', 'Admin\ReloadLogsController@showdetails');
 	Route::get('logs/reload/filter', 'Admin\ReloadLogsController@filter');
 	Route::post('logs/reload/delete_reload', 'Admin\ReloadLogsController@destroy');
-	Route::get('/logs/reload/export', 'Admin\ReloadLogsController@export');
+	Route::get('logs/reload/export', 'Admin\ReloadLogsController@export');
 
 	//Inventory
 	Route::get('inventory', 'Admin\InventoryController@index');
@@ -91,13 +91,15 @@ Route::group(['middleware' => ['admin', 'timeout']], function () {
    	Route::get('preferences/discounts/search', 'Admin\DiscountsController@search');
 
    	//Account
-   	Route::get('/account', 'Admin\AccountController@index');
-   	Route::post('/update_account', 'Admin\AccountController@edit');
+   	Route::get('account', 'Admin\AccountController@index');
+   	Route::post('update_account', 'Admin\AccountController@edit');
 
    	//Timesheet
-   	Route::get('/timesheet', 'Admin\TimesheetController@index');
-   	Route::get('/timesheet/filter', 'Admin\TimesheetController@filter');
-   	Route::get('/timesheet/export', 'Admin\TimesheetController@export');
+   	Route::get('timesheet', 'Admin\TimesheetController@index');
+   	Route::post('timesheet/time_in', 'Admin\TimesheetController@time_in');
+   	Route::get('timesheet/time_out', 'Admin\TimesheetController@time_out');
+   	Route::get('timesheet/filter', 'Admin\TimesheetController@filter');
+   	Route::get('timesheet/export', 'Admin\TimesheetController@export');
    	
 });
 

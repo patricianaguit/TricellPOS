@@ -20,7 +20,9 @@ TIMESHEET
 <!---content of tabs start-->
   <div class="row">
     <div class="col-md-8">
-        <a href="/timesheet/export/" class="btn btn-outline-info add-staff-btn">Export to CSV</a>
+           <button type="button" class="btn btn-outline-info add-mem-btn" data-toggle="modal" data-target=".time-in-modal">Time In</button>
+           <button type="button" class="btn btn-outline-info add-mem-btn" data-toggle="modal" data-target=".time-out-modal">Time Out</button>
+          <a href="/timesheet/export/" class="btn btn-outline-info add-staff-btn">Export to CSV</a>
     </div>
     <div class="col-md-4">
     <form class="form ml-auto" action="/timesheet/filter" method="GET">
@@ -96,6 +98,63 @@ TIMESHEET
 
     {{$employees->links()}}
   </div>
+
+   <!----start of modal for time in---->
+    <div class="modal fade time-in-modal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+     <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Confirm Time In</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        </br>
+
+        <form id="add-form" class="nosubmitform">
+        
+        <div class="form-group row mx-auto">
+          <label for="card-no" class="col-form-label col-md-3 modal-card">ID No:</label>
+          <div class="col-md-9">
+            <input type="text" name="card_number" class="form-control modal-card" id="cardnumber-add">
+           <p id="error-cardnumber-add" class="error-add" hidden="hidden"></p>
+          </div>
+        </div>
+        <div class="modal-footer" id="modal-footer-admin-add">
+          <button type="submit" class="btn btn-info btn-savemem-modal" id= "add-admin">Time In</button>
+          <button type="button" class="btn btn-secondary btn-close-modal" data-dismiss="modal">Close</button>
+        </div>
+      </form>
+      </div>
+    </div>
+    </div>
+
+    <!----end of modal---->
+    <!----start of modal for time out---->
+    <div class="modal fade time-out-modal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+     <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Confirm Time Out</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        </br>
+          <div class="modal-body">
+          <p> Are you sure you want to time out at 5:00 pm?</p>
+          </div>
+        
+        <div class="modal-footer" id="modal-footer-admin-add">
+          <button type="submit" class="btn btn-danger btn-savemem-modal" id= "add-admin">Time Out</button>
+          <button type="button" class="btn btn-secondary btn-close-modal" data-dismiss="modal">Close</button>
+        </div>
+  
+      </div>
+    </div>
+    </div>
+
+    <!----end of modal---->
 
   <script type="text/javascript">
   $('input[name="date_filter"]').daterangepicker({

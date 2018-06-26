@@ -1,4 +1,4 @@
-@extends('layout')
+@extends('staff_layout')
 
 @section('title')
 TIMESHEET
@@ -20,16 +20,19 @@ TIMESHEET
 <!---content of tabs start-->
   <div class="row">
     <div class="col-md-8">
+      <div class="row">
+        <div class="col-md-3">
            <button type="button" class="btn btn-outline-info add-mem-btn" data-toggle="modal" data-target=".time-in-modal"
             <?php if(count($time_in) >= 1) { echo 'hidden'; } ?>
-           >Time In</button>
+           style="padding-left: 30px; padding-right: 30px">Time In</button>
            <button type="button" class="btn btn-outline-info add-mem-btn" data-toggle="modal" data-target=".time-out-modal"
            <?php if(count($time_out) < 1) { echo 'hidden'; } ?>
-           >Time Out</button>
-          <a href="/timesheet/export/" class="btn btn-outline-info add-staff-btn">Export to CSV</a>
+           style="padding-left: 30px; padding-right: 30px">Time Out</button>
+        </div>
+      </div>
     </div>
     <div class="col-md-4">
-    <form class="form ml-auto" action="/timesheet/filter" method="GET">
+    <form class="form ml-auto" action="/staff/timesheet/filter" method="GET">
       <div class="input-group">
           <input class="form-control" name="date_filter" type="text" placeholder="Filter by Date" aria-label="Search" style="padding-left: 20px; border-radius: 40px;" id="date_filter" autocomplete="off">
           <div class="input-group-addon" style="margin-left: -50px; z-index: 3; border-radius: 40px; background-color: transparent; border:none;">
@@ -217,7 +220,7 @@ TIMESHEET
   $(document).on('click', '#time-in', function(){
     $.ajax({
       type: 'POST',
-      url: '/timesheet/time_in',
+      url: '/staff/timesheet/time_in',
       data: {
               '_token': $('input[name=_token]').val(),
               'id': $("#cardnumber-time").val()
@@ -245,7 +248,7 @@ TIMESHEET
   $(document).on('click', '#time-out', function(){
     $.ajax({
       type: 'GET',
-      url: '/timesheet/time_out',
+      url: '/staff/timesheet/time_out',
       data: {
               '_token': $('input[name=_token]').val(),
               // 'id': $("#cardnumber-time").val()

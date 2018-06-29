@@ -99,7 +99,7 @@ BACKUP
 </div>
 <div class="modal-body">
     <center>  <p> Are you sure you want to create a new backup? </p> </center>
-    <center>  <p> Note: Backups are automatically created daily at 12:00 AM.</p> </center>
+    <!-- <center>  <p> Note: Backups are automatically created daily at 12:00 AM.</p> </center> -->
 </div> 
 
 <div class="modal-footer" id="modal-footer-create-backup">

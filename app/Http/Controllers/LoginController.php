@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use \Carbon\Carbon;
-use App\Timesheet;
 use Auth;    
 class LoginController extends Controller
 {   

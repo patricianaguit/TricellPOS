@@ -21,8 +21,9 @@ class TimesheetController extends Controller
     public function index()
     {
         $employees = Timesheet::orderBy('id', 'desc')->where('user_id', Auth::user()->id)->paginate(7);
-        $now = Carbon::now()->format('Y-m-d');
-        $time_in = Timesheet::where('user_id', Auth::user()->id)->where(DB::raw("(DATE_FORMAT(time_in,'%Y-%m-%d'))"), '=', $now)->whereNotNull('time_in')->whereNull('time_out')->get();
+        // $now = Carbon::now()->format('Y-m-d');
+        // ->where(DB::raw("(DATE_FORMAT(time_in,'%Y-%m-%d'))"), '=', $now)
+        $time_in = Timesheet::where('user_id', Auth::user()->id)->whereNotNull('time_in')->whereNull('time_out')->get();
         $time_out = Timesheet::where('user_id', Auth::user()->id)->whereNull('time_out')->get();
 
         return view('staff.timesheet')->with(['employees' => $employees, 'time_in' => $time_in, 'time_out' => $time_out]); 

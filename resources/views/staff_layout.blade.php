@@ -39,8 +39,8 @@
                 LOGS
               </a>
               <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                <a class="dropdown-item" href="/staff/logs/sales">Sales</a>
-                <a class="dropdown-item" href="/staff/logs/reload">Reload</a>
+                <a class="dropdown-item {{ Request::segment(3)=='sales' ? 'active' : '' }}" href="/staff/logs/sales">Sales</a>
+                <a class="dropdown-item {{ Request::segment(3)=='reload' ? 'active' : '' }}" href="/staff/logs/reload">Reload</a>
           </li>
           <li class="nav-item">
            <a class="nav-link {{ Request::segment(2)=='timesheet' ? 'active' : '' }}" href="/staff/timesheet"> TIMESHEET </a>
@@ -51,11 +51,11 @@
         </ul>
         <ul class="navbar-nav ml-auto"> <!--right links-->
              <li class="nav-item dropdown" id="logsdrop">
-          <a class="nav-link dropdown-toggle" href="http://example.com" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <a class="nav-link dropdown-toggle {{ Request::segment(2)=='account' ? 'active' : '' }}" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             HELLO, {{strtoupper(Auth::user()->firstname)}}
           </a>
           <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-            <a class="dropdown-item" href="/staff/account">My Account</a>
+            <a class="dropdown-item {{ Request::segment(2)=='account' ? 'active' : '' }}" href="/staff/account">My Account</a>
             <a class="dropdown-item" href="#">Shutdown</a>
             <a class="dropdown-item" href="/logout">Logout</a>
 

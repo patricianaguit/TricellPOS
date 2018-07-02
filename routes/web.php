@@ -11,11 +11,11 @@
 |
 */
 
-Route::get('/', 'LoginController@index')->middleware('timeout'); 
+Route::get('/', 'LoginController@index'); 
 Route::post('verify', 'LoginController@verify'); 
 Route::get('logout', 'LoginController@logout');
 
-Route::group(['middleware' => ['admin', 'timeout']], function () {
+Route::group(['middleware' => ['admin']], function () {
 	//Dashboard
 	Route::get('dashboard', 'Admin\DashboardController@index');
 
@@ -103,7 +103,7 @@ Route::group(['middleware' => ['admin', 'timeout']], function () {
    	
 });
 
-Route::group(['middleware' => ['staff', 'timeout']], function () {
+Route::group(['middleware' => ['staff']], function () {
 	//POS
 	Route::get('staff/sales', 'Staff\PointofSaleController@index');
    	Route::get('staff/sales/buttons', 'Staff\PointofSaleController@buttonload');

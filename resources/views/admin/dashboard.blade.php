@@ -168,6 +168,47 @@ DASHBOARD
 </div>
 
 <script type="text/javascript">
+
+  var bar_ctx = document.getElementById('payment-mode').getContext('2d');
+   var cashgradient = bar_ctx.createLinearGradient(0, 0, 0, 600);
+   cashgradient.addColorStop(0, '#7ef6b8');
+   cashgradient.addColorStop(1, '#66ca72');
+
+   var cardgradient = bar_ctx.createLinearGradient(0, 0, 0, 600);
+   cardgradient.addColorStop(0, '#f4b591');
+   cardgradient.addColorStop(1, '#eb5757');
+
+   var cash = <?php echo $cashpay; ?>;
+   var load = <?php echo $loadpay; ?>;
+   new Chart(document.getElementById("payment-mode"), {
+    type: 'doughnut',
+    data: {
+      labels: ["Cash", "Card Load"],
+      datasets: [
+        {
+          backgroundColor: [cashgradient, cardgradient],
+          hoverBackgroundColor: [cashgradient, cardgradient],
+          hoverBorderWidth: 2,
+          hoverBorderColor: [cashgradient, cardgradient],
+          data: [cash,load]
+        }
+      ]
+    },
+    options: {
+      title: {
+         display: true,
+         text: 'Sales by Payment Mode',
+         fontSize: '16',
+         fontColor: 'black',
+         fontStyle: 'normal',
+         fontFamily: 'Montserrat',
+      },
+      cutoutPercentage: 70,
+      responsive:true,
+      maintainAspectRatio: false,
+    }
+   });
+   
    var bar_ctx = document.getElementById('payment-mode').getContext('2d');
    var cashgradient = bar_ctx.createLinearGradient(0, 0, 0, 600);
    cashgradient.addColorStop(0, '#7ef6b8');

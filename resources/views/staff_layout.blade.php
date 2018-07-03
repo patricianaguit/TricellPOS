@@ -35,7 +35,7 @@
            <a class="nav-link {{ Request::segment(2)=='sales' ? 'active' : '' }}" href="/staff/sales"> BILLING </a>
          </li>
          <li class="nav-item dropdown" id="logsdrop">
-              <a class="nav-link dropdown-toggle {{ Request::segment(2)=='logs' ? 'active' : '' }}" href="http://example.com" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <a class="nav-link dropdown-toggle {{ Request::segment(2)=='logs' ? 'active' : '' }}"  id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 LOGS
               </a>
               <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
@@ -56,7 +56,7 @@
           </a>
           <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
             <a class="dropdown-item {{ Request::segment(2)=='account' ? 'active' : '' }}" href="/staff/account">My Account</a>
-            <a class="dropdown-item" href="#">Shutdown</a>
+            <a class="dropdown-item" href="/shutdown">Shutdown</a>
             <a class="dropdown-item" href="/logout">Logout</a>
 
         </li>

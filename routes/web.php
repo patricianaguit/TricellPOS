@@ -13,6 +13,7 @@
 
 Route::get('/', 'LoginController@index'); 
 Route::post('verify', 'LoginController@verify'); 
+Route::get('shutdown', 'LoginController@shutdown');
 Route::get('logout', 'LoginController@logout');
 
 Route::group(['middleware' => ['admin']], function () {

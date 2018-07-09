@@ -29,7 +29,7 @@
       <div class ="container mx-auto"><!---first cont div-->
       
       <p class="text-center logo_hp">TRICELL</p>
-      <p class="text-center logo1_hp"> TECHNOLOGIES </p>
+      <p class="text-center logo1_hp">POS SYSTEM</p>
       <div class="row mx-auto">
         
         <form action="/verify" method="post" id="submit_form" class="mx-auto">
@@ -44,9 +44,9 @@
           
           <div class="input-group mb-2 mr-sm-2 log_pass_div "> <!--pass-->
           <div class="input-group-prepend">
-            <div class="input-group-text" id="log_pass" ><i class="material-icons">lock</i></div>
+            <div class="input-group-text" id="log_pass" ><i class="material-icons" >lock</i></div>
           </div>
-          <input type="password" class="form-control" name="password" id="log_pass_form" placeholder="Password" required>
+          <input type="password" class="form-control" name="password" id="log_pass_form" placeholder="Password" required autocomplete="off">
           </div><!--pass-->
 
           

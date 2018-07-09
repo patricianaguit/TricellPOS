@@ -15,16 +15,17 @@ body {
      background-color: white;
 }
 /****LOGIN PAGE CSS***/
-.logo_hp{
+ .logo_hp{
      font-size: 98px;
      padding-top: 120px;
      font-weight: 800;
 }
 
 .logo1_hp{
-     font-size: 56px;
-     margin-top: -70px;
-     letter-spacing: -4px;
+     font-size: 45px;
+     margin-top: -60px;
+     letter-spacing: 13px;
+     padding-left: 10px;
 }
  .login_bg{
      background-color: #ECF0F1;

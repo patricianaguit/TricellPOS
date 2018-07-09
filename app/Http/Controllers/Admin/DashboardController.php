@@ -26,7 +26,7 @@ class DashboardController extends Controller
         $sales = Sale::selectRaw('ROUND(SUM(amount_due),2)')->where('transaction_date', '>', Carbon::now()->subDays(30))->pluck('ROUND(SUM(amount_due),2)')->toArray();
         $sales = implode($sales);
         $stock_ind = DB::table('profile')->select('low_stock')->where('id', 1)->first();
-        $lowstock = Product::where('product_qty', '<=', $stock_ind->low_stock)->count();
+        $lowstock = Product::where('product_qty', '<=', $stock_ind->low_stock)->where('product_qty', '>', 0)->count();
 
         //sales for the year
         $yearnow = Carbon::now()->format('Y');

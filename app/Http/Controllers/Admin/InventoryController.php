@@ -109,7 +109,7 @@ class InventoryController extends Controller
     public function lowstocks()
     {
         $lowstock = DB::table('profile')->select('low_stock')->where('id', 1)->first();
-        $products = Product::where('product_qty', '<=', $lowstock->low_stock)->orderBy('product_name', 'asc')->paginate(7);
+        $products = Product::where('product_qty', '<=', $lowstock->low_stock)->where('product_qty', '>', 0)->orderBy('product_name', 'asc')->paginate(7);
         return view('admin.inventorylow')->with('products', $products);
     }
 
@@ -128,7 +128,7 @@ class InventoryController extends Controller
                 {
                     $query->where('product_name', 'LIKE', '%' . $search . '%')->orWhere('product_desc', 'LIKE', '%' . $search . '%');})->where(function($query) use ($request, $search, $lowstock)
                 {
-                    $query->where('product_qty', '<=', $lowstock->low_stock);
+                    $query->where('product_qty', '<=', $lowstock->low_stock)->where('product_qty', '>', 0);
                 })->paginate(7);
 
             $products->appends($request->only('search'));
@@ -137,7 +137,7 @@ class InventoryController extends Controller
                 {
                     $query->where('product_name', 'LIKE', '%' . $search . '%')->orWhere('product_desc', 'LIKE', '%' . $search . '%');})->where(function($query) use ($request, $search, $lowstock)
                 {
-                    $query->where('product_qty', '<=', $lowstock->low_stock);
+                    $query->where('product_qty', '<=', $lowstock->low_stock)->where('product_qty', '>', 0);
                 })->count();
             return view('admin.inventorylow')->with(['products' => $products, 'search' => $search, 'count' => $count, 'totalcount' => $totalcount]);   
         }

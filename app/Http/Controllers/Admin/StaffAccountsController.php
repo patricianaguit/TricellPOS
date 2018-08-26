@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\User;
+use App\Timesheet;
 use DB;
 use Hash;
 use Response;
@@ -31,7 +32,7 @@ class StaffAccountsController extends Controller
         'lastname' => 'bail|required|regex:/^[\pL\s\-]+$/u|min:2',
         'address' => 'bail|required|regex:/^[#.0-9a-zA-Z\s,-]+$/|min:6',
         'contact' => 'bail|required|digits_between:7,11',
-        'email' => 'bail|required|email|unique:users,email',
+        'email' => 'bail|required|email',
         );
 
         $validator = Validator::make($request->all(), $rules);
@@ -94,6 +95,7 @@ class StaffAccountsController extends Controller
     public function destroy(Request $request)
     {
         $staff = User::find($request->staff_id)->delete();
+        $timesheet = Timesheet::where('user_id', $request->staff_id)->delete();
     }
 
     public function search(Request $request)

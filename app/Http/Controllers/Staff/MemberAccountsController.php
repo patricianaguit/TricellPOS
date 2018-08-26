@@ -118,6 +118,8 @@ class MemberAccountsController extends Controller
     public function destroy(Request $request)
     {
         $member = User::find($request->member_id)->delete();
+        $balance = Balance::where('id', $request->member_id)->delete();
+        $reload = Reload_sale::where('member_id', $request->member_id)->delete();
     }
 
     public function search(Request $request)
@@ -126,7 +128,7 @@ class MemberAccountsController extends Controller
 
         if($search == "")
         {
-            return Redirect::to('staff/accounts/members');
+            return Redirect::to('/staff/accounts/members');
         }
         else
         {
